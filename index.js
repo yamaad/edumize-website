@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-
+//
 const uni = require("./structdata/uniScript");
 const program = require("./structdata/programScript");
 const major = require("./structdata/majorScript");
