@@ -1,0 +1,19 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore .env file containing sensitive information
+.env
+
+# Ignore log files
+*.log
+
+# Ignore compiled code or build artifacts
+/build/
+/dist/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore IDE specific files
+.idea/
+.vscode/
