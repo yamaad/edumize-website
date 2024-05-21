@@ -8,6 +8,7 @@ const programServices = require("./src/services/program");
 //
 const { uniCoursesBlock, uinCoursesStyle } = require("./src/HTMLBlocks/uni");
 const { programUniversitiesBlock, ProgramUniversitiesStyle } = require("./src/HTMLBlocks/program");
+const { arrayUniqueForFilters } = require("./src/services/arrayUnique");
 //
 const getNewData = async uniExistingData => {
   let newUniData = [];
