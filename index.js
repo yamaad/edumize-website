@@ -2,10 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
-const uni = require("./structdata/uniScript");
-const program = require("./structdata/programScript");
-const major = require("./structdata/majorScript");
-const { arrayUniqueForFilters } = require("./structdata/arrayUnique");
 //
 const uniServices = require("./src/services/uni");
 const programServices = require("./src/services/program");
@@ -74,25 +70,6 @@ const getNewData = async uniExistingData => {
   return { newUniData, newProgData, newMajorData };
 };
 //
-
-// arrayUniqueForFilters("study_field");
-//
-const structUniDatabase = async () => {
-  // const uniExistingData = await uni.getExistingData();
-  // retrieve all data
-  const { newUniData, newProgData, newMajorData } = await getNewData(uniExistingData);
-
-  // university table
-  await uni.addNewData(uniExistingData, newUniData);
-
-  // program table
-  const programExistingData = await program.getExistingData();
-  await program.addNewData(programExistingData, newProgData);
-
-  // major table
-  const majorExistingData = await major.getExistingData();
-  await major.addNewData(majorExistingData, newMajorData);
-};
 
 // server
 const app = express();
