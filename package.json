@@ -2,13 +2,24 @@
   "name": "edumize-website",
   "version": "1.0.0",
   "scripts": {
-    "start": "node backend/src/index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon backend/src/index.js",
-    "client": "npm start --prefix frontend",
-    "heroku-postbuild": "npm run build --prefix frontend"
+    "start": "node server/dist/index.js",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "nodemon --watch server --exec \"ts-node server/index.ts\"",
+    "server": "node server/dist/index.js",
+    "client:dev": "npm run dev --prefix client",
+    "client": "npm run build --prefix client",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "engines": {
     "node": "14.x"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "concurrently": "^8.2.2",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "react-router-dom": "^6.23.1"
   }
 }
