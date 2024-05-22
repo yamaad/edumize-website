@@ -72,8 +72,8 @@ app.post("/program/:id/course", async (req, res) => {
 //
 
 // The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/assets"));
+app.get("/client", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/main.js"));
 });
 
 // Start the server
