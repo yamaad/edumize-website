@@ -18,8 +18,5 @@
     "concurrently": "^8.2.2",
     "nodemon": "^2.0.15",
     "ts-node": "^10.9.2"
-  },
-  "dependencies": {
-    "react-router-dom": "^6.23.1"
   }
 }

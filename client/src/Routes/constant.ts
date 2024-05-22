@@ -1,8 +1,8 @@
-export const ComponentRoute = {
-  universityCourses: "",
-  programCourses: "",
-};
 export const PageRoute = {
-  university: "",
-  program: "",
+  university: "/university",
+  program: "/program",
+};
+export const ComponentRoute = {
+  universityCourses: "course",
+  programCourses: "course",
 };

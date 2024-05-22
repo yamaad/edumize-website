@@ -8,4 +8,8 @@ export default defineConfig({
     outDir: "../backend/dist",
     emptyOutDir: true,
   },
+  server: {
+    port: 3000,
+    host: true,
+  },
 });

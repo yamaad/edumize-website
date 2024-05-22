@@ -1,13 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
 import { ComponentRoute, PageRoute } from "./Routes/constant";
+import Courses from "./Features/University/Courses.component";
 
 function App() {
   return (
     <Routes>
       <Route path={PageRoute.university}>
-        <Route index element={<></>} />
-        <Route path={ComponentRoute.universityCourses} element={<></>} />
+        <Route path={ComponentRoute.universityCourses} element={<Courses />} />
       </Route>
       <Route path={PageRoute.program}>
         <Route path={ComponentRoute.programCourses} />
