@@ -95,6 +95,7 @@ const Courses = () => {
     </>
   );
 };
-ReactDOM.createRoot(document.getElementById("university-course")!).render(<Courses />);
+const elementId = document.getElementById("card-list");
+if (elementId) ReactDOM.createRoot(elementId).render(<Courses />);
 
 export default Courses;
