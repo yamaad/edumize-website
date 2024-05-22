@@ -5,8 +5,13 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "../backend/dist",
+    outDir: "../client/dist",
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        entryFileNames: "main.js",
+      },
+    },
   },
   server: {
     port: 3000,

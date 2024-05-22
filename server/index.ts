@@ -17,9 +17,8 @@ const app = express();
 
 // Use CORS middleware
 app.use(cors());
-
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, "./../client/src/index.html")));
+app.use(express.static(path.join(__dirname, "../client/dist/assets")));
 
 app.get("/uni/elements", (req, res) => {
   const block = uniCoursesBlock();
@@ -71,13 +70,12 @@ app.post("/program/:id/course", async (req, res) => {
 });
 
 //
-app.get("/", async (req, res) => {
-  res.status(200).send("Hi there!");
-});
+
 // The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./../client/src/index.html"));
+  res.sendFile(path.join(__dirname, "../client/dist/assets"));
 });
+
 // Start the server
 const port = parseInt(process.env.PORT ?? "") || 4000;
 app.listen(port, () => {
