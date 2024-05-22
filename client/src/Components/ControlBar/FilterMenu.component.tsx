@@ -10,7 +10,7 @@ const FilterMenu = ({}: IFilterMenuProps) => {
   };
   return (
     <FormControl fullWidth>
-      <InputLabel id="demo-simple-select-autowidth-label">Age</InputLabel>
+      <InputLabel>Age</InputLabel>
       <Select sx={{ borderRadius: 3 }} value={age} onChange={handleChange} fullWidth label="Age">
         <MenuItem value="">
           <em>None</em>
