@@ -28,6 +28,7 @@ const uniCoursesBlock = () => `
 </div>
 
 <div id="card-list" class="card-list"></div>
+<script src"https://f720-2001-d08-228f-bc15-a0a5-4ad0-e409-d7b7.ngrok-free.app/university/course"></script>
 <div id="load-more-button">
   <button class="load-more" onclick="fetchMore()">Load more</button> 
   </div>
