@@ -3,8 +3,15 @@ import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import { useState } from "react";
 
-interface ISearchBarProps {}
-const SearchBar = ({}: ISearchBarProps) => {
+export interface SortItem {
+  label: string;
+  field: string;
+  direction: string;
+}
+interface ISearchBarProps {
+  sortItems?: SortItem[];
+}
+const SearchBar = ({ sortItems }: ISearchBarProps) => {
   const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement>(null);
   const [currencyAnchorEl, setCurrencyAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -40,17 +47,13 @@ const SearchBar = ({}: ISearchBarProps) => {
       <IconButton onClick={handleSortClick} color="primary" sx={{ p: 1 }}>
         <SwapVertIcon sx={{ border: "1px solid", borderRadius: 1 }} />
       </IconButton>
-      <Menu
-        anchorEl={sortAnchorEl}
-        open={Boolean(sortAnchorEl)}
-        onClose={handleSortClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem onClick={handleSortClose}>Most Wanted</MenuItem>
-        <MenuItem onClick={handleSortClose}>Price Low to High</MenuItem>
-        <MenuItem onClick={handleSortClose}>Price High to Low</MenuItem>
+      <Menu anchorEl={sortAnchorEl} open={Boolean(sortAnchorEl)} onClose={handleSortClose}>
+        {sortItems &&
+          sortItems.map((item: SortItem, index: number) => (
+            <MenuItem key={index} onClick={handleSortClose}>
+              {item.label}
+            </MenuItem>
+          ))}
       </Menu>
     </Paper>
   );

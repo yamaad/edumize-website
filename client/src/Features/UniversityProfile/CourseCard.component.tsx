@@ -1,7 +1,19 @@
 import { Box, Typography } from "@mui/material";
+import { UniversityCourseModel } from "../../services/airTable/types";
 
-interface ICourseCard {}
-const CourseCard = ({}: ICourseCard) => {
+interface ICourseCard extends UniversityCourseModel {}
+const CourseCard = ({ name, fullCost, duration, studyMode }: ICourseCard) => {
+  const years = duration.toLowerCase().includes("years") ? duration.toLowerCase().split("years")[0] + ` Years` : undefined;
+  const year = years ?? duration.toLowerCase().includes("year") ? duration.toLowerCase().split("year")[0] + ` Years` : undefined;
+  const semester = years
+    ? duration.toLowerCase().split("years").length > 1
+      ? duration.toLowerCase().split("years")[1]
+      : ""
+    : year
+    ? duration.toLowerCase().split("year").length > 1
+      ? duration.toLowerCase().split("year")[1]
+      : ""
+    : "";
   return (
     <Box
       sx={{
@@ -24,15 +36,14 @@ const CourseCard = ({}: ICourseCard) => {
       }}
     >
       <Box sx={{ textAlign: "start" }}>
-        <Typography variant="h6">$data.fields.name</Typography>
-        <Typography variant="body2">data.fields.study_mode || "-"</Typography>s
+        <Typography variant="h6">{name}</Typography>
+        <Typography variant="body2">{studyMode || "-"}</Typography>
       </Box>
       <Box>
-        <Typography>
-          {" "}
-          MYR data.fields.full_cost.toLocaleString <strong>/</strong> year ?? data.fields.duration
+        <Typography variant="body1">
+          MYR {fullCost} <strong>/</strong> {year ?? duration}
         </Typography>
-        <Typography>semester.length `{">"}` 0 ? (semester) : ""</Typography>
+        <Typography>{semester.length > 0 ? semester : ""}</Typography>
       </Box>
     </Box>
   );

@@ -1,12 +1,27 @@
-import ReactDOM from "react-dom/client";
 import CourseCard from "./CourseCard.component";
-import { Box, Button, Stack } from "@mui/material";
-import SearchBar from "../../Components/ControlBar/SearchBar.component";
-import FilterMenu from "../../Components/ControlBar/FilterMenu.component";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import SearchBar from "../../components/ControlBar/SearchBar.component";
+import FilterMenu from "../../components/ControlBar/FilterMenu.component";
+import { useGetCourseListMutation } from "../../services/airTable/airTable";
+import { useEffect } from "react";
+import { AirTableQueryBody, UniversityCourseModel } from "../../services/airTable/types";
+
 interface IUniversityProfile {
   universityId: number;
 }
-const UniversityProfile = ({ universityId }: IUniversityProfile) => {
+const UniversityProfile = ({ universityId = 212 }: IUniversityProfile) => {
+  const queryBody: AirTableQueryBody = {
+    pageSize: 5,
+    sort: [{ field: "name", direction: "asc" }],
+    fields: ["name", "study_mode", "duration", "full_cost"],
+    filterByFormula: `{uni_id}=${universityId}`,
+    offset: undefined,
+  };
+  const [getCourseList, { data, isLoading }] = useGetCourseListMutation();
+  useEffect(() => {
+    getCourseList(queryBody);
+  }, []);
+
   return (
     <Stack
       sx={{
@@ -33,26 +48,20 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
           py: 0.5,
         }}
       >
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
+        {isLoading && <Typography variant="h3">Loading...</Typography>}
+        {!isLoading && data?.length === 0 && <Typography variant="h3">No Matching Records</Typography>}
+        {data &&
+          data.map((value: UniversityCourseModel, index: number) => (
+            <CourseCard name={value.name} fullCost={value.fullCost} studyMode={value.studyMode} duration={value.duration} key={index} />
+          ))}
       </Box>
-      <Button variant="outlined" sx={{ maxWidth: "fit-content", borderRadius: 4 }}>
-        Load More
-      </Button>
+      {!isLoading && data?.length !== 0 && (
+        <Button variant="outlined" sx={{ maxWidth: "fit-content", borderRadius: 4 }}>
+          Load More
+        </Button>
+      )}
     </Stack>
   );
 };
 
-// For WebFlow Embedding
-const elementId = document.getElementById("uni-courses");
-if (elementId) {
-  try {
-    const universityId = elementId.getAttribute("universityId");
-    ReactDOM.createRoot(elementId).render(<UniversityProfile universityId={Number(universityId)} />);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-export default UniversityProfile;
+export { UniversityProfile };

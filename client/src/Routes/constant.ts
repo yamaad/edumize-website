@@ -1,4 +1,5 @@
 export const PageRoute = {
+  home: "/",
   university: "/university",
   program: "/program",
 };
