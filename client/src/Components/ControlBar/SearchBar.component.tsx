@@ -10,8 +10,9 @@ export interface SortItem {
 }
 interface ISearchBarProps {
   sortItems?: SortItem[];
+  onSearch: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
 }
-const SearchBar = ({ sortItems }: ISearchBarProps) => {
+const SearchBar = ({ sortItems, onSearch }: ISearchBarProps) => {
   const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement>(null);
   const [currencyAnchorEl, setCurrencyAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -26,7 +27,7 @@ const SearchBar = ({ sortItems }: ISearchBarProps) => {
   const handleCurrencyClose = () => setCurrencyAnchorEl(null);
   return (
     <Paper component="form" sx={{ p: 0.5, borderRadius: 3, display: "flex", alignItems: "center" }}>
-      <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search for Program Name..." />
+      <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search for Program Name..." onChange={onSearch} />
       <IconButton onClick={handleCurrencyClick} color="secondary" sx={{ p: 1 }}>
         <CurrencyExchangeIcon />
       </IconButton>

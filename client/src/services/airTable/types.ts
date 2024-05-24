@@ -5,14 +5,20 @@ export interface UniversityCourseModel {
   duration: string;
 }
 
-export interface AirTableResponse {
-  records: [];
-}
-
 export interface AirTableQueryBody {
   pageSize: number;
   sort: { field: string; direction: string }[];
   fields: string[];
   filterByFormula: string;
+  offset?: string;
+}
+
+export interface AirTableResponse {
+  offset?: string;
+  records: [];
+}
+
+export interface UniversityCourseData {
+  courseList: UniversityCourseModel[];
   offset?: string;
 }
