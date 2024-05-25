@@ -9,7 +9,7 @@ const FilterMenu = ({}: IFilterMenuProps) => {
     setAge(event.target.value);
   };
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth sx={{ borderColor: "#005360" }}>
       <InputLabel>Age</InputLabel>
       <Select sx={{ borderRadius: 3 }} value={age} onChange={handleChange} fullWidth label="Age">
         <MenuItem value="">

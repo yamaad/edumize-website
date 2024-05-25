@@ -3,55 +3,82 @@ import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import { useState } from "react";
 
+//--------------
+// interfaces
+//--------------
+export type SortDirection = "asc" | "desc";
 export interface SortItem {
-  label: string;
   field: string;
-  direction: string;
+  direction: SortDirection;
+}
+export interface SortOption {
+  label: string;
+  value: SortItem;
+}
+export interface SortProps {
+  sortItems: SortOption[];
+  onSelectSort: (value: SortItem) => void;
 }
 interface ISearchBarProps {
-  sortItems?: SortItem[];
+  sortProps?: SortProps;
   onSearch: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
 }
-const SearchBar = ({ sortItems, onSearch }: ISearchBarProps) => {
+//--------------
+// component
+//--------------
+
+const SearchBar = ({ sortProps, onSearch }: ISearchBarProps) => {
+  //--------------
+  // local states
+  //--------------
   const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement>(null);
   const [currencyAnchorEl, setCurrencyAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleSortClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //--------------
+  // handlers
+  //--------------
+  const openSortMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setSortAnchorEl(event.currentTarget);
   };
-  const handleCurrencyClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const openCurrencyMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setCurrencyAnchorEl(event.currentTarget);
   };
 
-  const handleSortClose = () => setSortAnchorEl(null);
-  const handleCurrencyClose = () => setCurrencyAnchorEl(null);
+  const handleSortChange = (value: SortItem) => {
+    sortProps?.onSelectSort(value);
+    setSortAnchorEl(null);
+  };
+  const handleCurrencyChange = () => {
+    setCurrencyAnchorEl(null);
+  };
+
   return (
-    <Paper component="form" sx={{ p: 0.5, borderRadius: 3, display: "flex", alignItems: "center" }}>
+    <Paper component="form" sx={{ p: 0.5, borderRadius: 3, display: "flex", alignItems: "center", borderColor: "#005360" }}>
       <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search for Program Name..." onChange={onSearch} />
-      <IconButton onClick={handleCurrencyClick} color="secondary" sx={{ p: 1 }}>
+      <IconButton onClick={openCurrencyMenu} color="secondary" sx={{ p: 1 }}>
         <CurrencyExchangeIcon />
       </IconButton>
       <Menu
         anchorEl={currencyAnchorEl}
         open={Boolean(currencyAnchorEl)}
-        onClose={handleCurrencyClose}
+        onClose={() => setCurrencyAnchorEl(null)}
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleCurrencyClose}>currency</MenuItem>
-        <MenuItem onClick={handleCurrencyClose}>currency</MenuItem>
-        <MenuItem onClick={handleCurrencyClose}>currency</MenuItem>
+        <MenuItem onClick={handleCurrencyChange}>currency</MenuItem>
+        <MenuItem onClick={handleCurrencyChange}>currency</MenuItem>
+        <MenuItem onClick={handleCurrencyChange}>currency</MenuItem>
       </Menu>
 
       <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <IconButton onClick={handleSortClick} color="primary" sx={{ p: 1 }}>
+      <IconButton onClick={openSortMenu} color="primary" sx={{ p: 1 }}>
         <SwapVertIcon sx={{ border: "1px solid", borderRadius: 1 }} />
       </IconButton>
-      <Menu anchorEl={sortAnchorEl} open={Boolean(sortAnchorEl)} onClose={handleSortClose}>
-        {sortItems &&
-          sortItems.map((item: SortItem, index: number) => (
-            <MenuItem key={index} onClick={handleSortClose}>
+      <Menu anchorEl={sortAnchorEl} open={Boolean(sortAnchorEl)} onClose={() => setSortAnchorEl(null)}>
+        {sortProps &&
+          sortProps.sortItems.map((item: SortOption, index: number) => (
+            <MenuItem key={index} value={item.label} onClick={() => handleSortChange(item.value)}>
               {item.label}
             </MenuItem>
           ))}

@@ -1,6 +1,6 @@
 import CourseCard from "./CourseCard.component";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import SearchBar from "../../components/ControlBar/SearchBar.component";
+import SearchBar, { SortItem, SortProps } from "../../components/ControlBar/SearchBar.component";
 import FilterMenu from "../../components/ControlBar/FilterMenu.component";
 import { useGetCourseListMutation } from "../../services/airTable/airTable";
 import { useEffect, useState } from "react";
@@ -24,6 +24,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   const [courses, setCourses] = useState<UniversityCourseModel[]>([]);
   const [offset, setOffset] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string>("");
+  const [sort, setSort] = useState<SortItem>({ field: "name", direction: "asc" });
   //-------------
   // hooks
   //-------------
@@ -34,12 +35,11 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   //-------------
   const queryBody: AirTableQueryBody = {
     pageSize: 5,
-    sort: [{ field: "name", direction: "asc" }],
+    sort: [sort],
     fields: ["name", "study_mode", "duration", "full_cost"],
     filterByFormula: `AND({uni_id}=${universityId}, SEARCH(LOWER("${debouncedSearch}"),LOWER({name})))`,
     offset,
   };
-
   //-------------
   // triggers
   //-------------
@@ -47,7 +47,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   useEffect(() => {
     setCourses([]);
     getCourseList(queryBody);
-  }, [debouncedSearch]);
+  }, [debouncedSearch, sort]);
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -64,6 +64,18 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
     setOffset(undefined);
     setSearch(event.target.value);
   };
+  const handleOnSort = (value: SortItem) => {
+    setOffset(undefined);
+    setSort(value);
+  };
+  const sortProps: SortProps = {
+    sortItems: [
+      { label: "Most Wanted", value: { field: "ranking", direction: "asc" } },
+      { label: "Price Low to Hight", value: { field: "full_cost", direction: "asc" } },
+      { label: "Price Hight to Low", value: { field: "full_cost", direction: "desc" } },
+    ],
+    onSelectSort: handleOnSort,
+  };
   return (
     <Stack
       sx={{
@@ -75,7 +87,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
     >
       {universityId}
       <Box width={"100%"}>
-        <SearchBar onSearch={handleOnSearch} />
+        <SearchBar onSearch={handleOnSearch} sortProps={sortProps} />
       </Box>
       <Stack direction={"row"} gap={1} width={"100%"}>
         <FilterMenu />

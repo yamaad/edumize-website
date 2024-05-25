@@ -8,7 +8,6 @@ import path from "path";
 const uniServices = require("./src/services/uni");
 const programServices = require("./src/services/program");
 //
-const { uniCoursesBlock, uinCoursesStyle } = require("./src/HTMLBlocks/uni");
 const { programUniversitiesBlock, ProgramUniversitiesStyle } = require("./src/HTMLBlocks/program");
 const { arrayUniqueForFilters } = require("./src/services/arrayUnique");
 
@@ -20,10 +19,9 @@ app.use(cors());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "../client/dist/assets")));
 
-app.get("/uni/elements", (req, res) => {
-  const block = uniCoursesBlock();
-  const style = uinCoursesStyle();
-  res.status(200).send({ block, style });
+//
+app.get("/client", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/main.js"));
 });
 
 app.get("/uni/:id/course", async (req, res) => {
@@ -67,13 +65,6 @@ app.post("/program/:id/course", async (req, res) => {
     console.log("log:", error.message);
     res.status(500).send({ output: "Internal Server Error, Please refresh the page" });
   }
-});
-
-//
-
-// The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
-app.get("/client", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/main.js"));
 });
 
 // Start the server
