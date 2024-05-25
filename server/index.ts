@@ -35,19 +35,6 @@ app.get("/uni/:id/course", async (req, res) => {
     res.status(500).send({ output: "Internal Server Error, Please refresh the page" });
   }
 });
-app.get("/dropdown/list", async (req, res) => {
-  const { field } = req.query;
-  try {
-    if (field) {
-      const list = await arrayUniqueForFilters(field);
-      const listOption = list.map((option: any) => `<option value="${option}">${option}</option>`).join("\n");
-      res.status(200).send({ data: listOption });
-    } else console.error("field param is required!");
-  } catch (error: any) {
-    console.log("log:", error.message);
-    res.status(500).send({ error });
-  }
-});
 //  program
 app.get("/program/elements", (req, res) => {
   const block = programUniversitiesBlock();

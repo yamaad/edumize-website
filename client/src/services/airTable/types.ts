@@ -7,7 +7,7 @@ export interface UniversityCourseModel {
 
 export interface AirTableQueryBody {
   pageSize: number;
-  sort: { field: string; direction: string }[];
+  sort?: { field: string; direction: string }[];
   fields: string[];
   filterByFormula: string;
   offset?: string;
@@ -18,6 +18,10 @@ export interface AirTableResponse {
   records: [];
 }
 
+export interface FilterOptionsData {
+  filterOptions: string[];
+  offset?: string;
+}
 export interface UniversityCourseData {
   courseList: UniversityCourseModel[];
   offset?: string;

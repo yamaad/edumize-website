@@ -8,7 +8,7 @@ function App() {
     <Routes>
       <Route path="/" element={<h1>HOME PAGE</h1>} />
       <Route path={PageRoute.university}>
-        <Route path={ComponentRoute.universityCourses} element={<UniversityProfile universityId={212} />} />
+        <Route path={ComponentRoute.universityCourses} element={<UniversityProfile universityId={213} />} />
       </Route>
       <Route path="*" element={<>404 Page not found</>} />
     </Routes>

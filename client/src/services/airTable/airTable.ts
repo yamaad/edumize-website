@@ -1,6 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AirTableQueryBody, AirTableResponse, UniversityCourseData } from "./types";
+import { AirTableQueryBody, AirTableResponse, FilterOptionsData, UniversityCourseData } from "./types";
 
 // Define a service using a base URL and expected endpoints
 export const airTableApi = createApi({
@@ -27,9 +27,25 @@ export const airTableApi = createApi({
         return transformed;
       },
     }),
+    getFilterOptions: builder.mutation<FilterOptionsData, AirTableQueryBody>({
+      query: queryBody => ({
+        url: "/major/listRecords",
+        method: "POST",
+        headers: { "Authorization": `Bearer ${import.meta.env.VITE_AIR_TABLE_AUTH_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify(queryBody),
+      }),
+      transformResponse: (response: AirTableResponse, _, queryBody): FilterOptionsData => {
+        const transformed = new Set(
+          response.records.map((record: any) =>
+            record.fields[`${queryBody.fields[0]}`] ? record.fields[`${queryBody.fields[0]}`].toLowerCase().trim() : ""
+          )
+        );
+        return { filterOptions: [...transformed], offset: response.offset };
+      },
+    }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetCourseListMutation } = airTableApi;
+export const { useGetCourseListMutation, useGetFilterOptionsMutation } = airTableApi;

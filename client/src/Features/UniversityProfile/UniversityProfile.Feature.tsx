@@ -25,6 +25,9 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   const [offset, setOffset] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string>("");
   const [sort, setSort] = useState<SortItem>({ field: "name", direction: "asc" });
+  const [studyLevelFilter, setStudyLevelFilter] = useState<string>();
+  const [studyFieldFilter, setStudyFieldFilter] = useState<string>();
+  const [studyModeFilter, setStudyModeFilter] = useState<string>();
   //-------------
   // hooks
   //-------------
@@ -37,7 +40,11 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
     pageSize: 5,
     sort: [sort],
     fields: ["name", "study_mode", "duration", "full_cost"],
-    filterByFormula: `AND({uni_id}=${universityId}, SEARCH(LOWER("${debouncedSearch}"),LOWER({name})))`,
+    filterByFormula: `AND({uni_id}=${universityId}, SEARCH(LOWER("${debouncedSearch}"),LOWER({name})) 
+    ${studyLevelFilter ? `,TRIM(LOWER({degree}))=LOWER("${studyLevelFilter}")` : ""}
+    ${studyFieldFilter ? `,TRIM(LOWER({study_field}))=LOWER("${studyFieldFilter}")` : ""}
+    ${studyModeFilter ? `,TRIM(LOWER({study_mode}))=LOWER("${studyModeFilter}")` : ""}
+  )`,
     offset,
   };
   //-------------
@@ -47,7 +54,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   useEffect(() => {
     setCourses([]);
     getCourseList(queryBody);
-  }, [debouncedSearch, sort]);
+  }, [debouncedSearch, sort, studyLevelFilter, studyFieldFilter, studyModeFilter]);
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -56,7 +63,6 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
       setOffset(data?.offset);
     }
   }, [data]);
-
   //-------------
   // handlers
   //-------------
@@ -81,18 +87,38 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
       sx={{
         maxWidth: "100%",
         px: 2.5,
-        gap: 1,
+        gap: 2,
         alignItems: "center",
       }}
     >
-      {universityId}
       <Box width={"100%"}>
         <SearchBar onSearch={handleOnSearch} sortProps={sortProps} />
       </Box>
       <Stack direction={"row"} gap={1} width={"100%"}>
-        <FilterMenu />
-        <FilterMenu />
-        <FilterMenu />
+        <FilterMenu
+          fieldName="degree"
+          label="Study Level"
+          onFilter={(value: string) => {
+            setOffset(undefined);
+            setStudyLevelFilter(value);
+          }}
+        />
+        <FilterMenu
+          fieldName="study_field"
+          label="Study field"
+          onFilter={(value: string) => {
+            setOffset(undefined);
+            setStudyFieldFilter(value);
+          }}
+        />
+        <FilterMenu
+          fieldName="study_mode"
+          label="Study mode"
+          onFilter={(value: string) => {
+            setOffset(undefined);
+            setStudyModeFilter(value);
+          }}
+        />
       </Stack>
       <Box
         sx={{

@@ -33,6 +33,7 @@ const SearchBar = ({ sortProps, onSearch }: ISearchBarProps) => {
   //--------------
   const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement>(null);
   const [currencyAnchorEl, setCurrencyAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedSortIndex, setSelectedSortIndex] = useState<number>();
 
   //--------------
   // handlers
@@ -44,7 +45,8 @@ const SearchBar = ({ sortProps, onSearch }: ISearchBarProps) => {
     setCurrencyAnchorEl(event.currentTarget);
   };
 
-  const handleSortChange = (value: SortItem) => {
+  const handleSortChange = (value: SortItem, index: number) => {
+    setSelectedSortIndex(index);
     sortProps?.onSelectSort(value);
     setSortAnchorEl(null);
   };
@@ -78,7 +80,13 @@ const SearchBar = ({ sortProps, onSearch }: ISearchBarProps) => {
       <Menu anchorEl={sortAnchorEl} open={Boolean(sortAnchorEl)} onClose={() => setSortAnchorEl(null)}>
         {sortProps &&
           sortProps.sortItems.map((item: SortOption, index: number) => (
-            <MenuItem key={index} value={item.label} onClick={() => handleSortChange(item.value)}>
+            <MenuItem
+              selected={selectedSortIndex === index}
+              disabled={selectedSortIndex === index}
+              key={index}
+              value={item.label}
+              onClick={() => handleSortChange(item.value, index)}
+            >
               {item.label}
             </MenuItem>
           ))}
