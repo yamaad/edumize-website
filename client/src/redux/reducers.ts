@@ -1,5 +1,5 @@
-import { airTableApi } from "../services/airTable/airTable";
+import { airTableBase } from "../services/airTable/base";
 
 export default {
-  [airTableApi.reducerPath]: airTableApi.reducer,
+  [airTableBase.reducerPath]: airTableBase.reducer,
 };

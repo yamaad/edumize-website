@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useEffect, useState } from "react";
 import { AirTableQueryBody } from "../../services/airTable/types";
-import { useGetFilterOptionListMutation } from "../../services/airTable/airTable";
+import { useGetFilterOptionListMutation } from "../../services/airTable/endpoints/course";
 
 //-------------
 // interfaces

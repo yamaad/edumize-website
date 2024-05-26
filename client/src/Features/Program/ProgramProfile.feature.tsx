@@ -1,11 +1,11 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import SearchBar, { SortItem, SortProps } from "../../components/ControlBar/SearchBar.component";
 import FilterMenu from "../../components/ControlBar/FilterMenu.component";
-import { useGetCourseListMutation } from "../../services/airTable/airTable";
 import { useEffect, useState } from "react";
-import { AirTableQueryBody, UniversityCourseModel } from "../../services/airTable/types";
+import { AirTableQueryBody } from "../../services/airTable/types";
 import useDebounce from "../../hooks/useDebounce";
 import ProgramCourseCard from "./components/CourseCard.component";
+import { CourseModel, useGetCourseListMutation } from "../../services/airTable/endpoints/course";
 
 //--------------
 // interfaces
@@ -21,7 +21,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
   //-------------
   // local states
   //-------------
-  const [courses, setCourses] = useState<UniversityCourseModel[]>([]);
+  const [courses, setCourses] = useState<CourseModel[]>([]);
   const [offset, setOffset] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string>("");
   const [sort, setSort] = useState<SortItem>({ field: "name", direction: "asc" });
@@ -119,7 +119,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
             No Matching Records
           </Typography>
         )}
-        {courses.map((value: UniversityCourseModel, index: number) => (
+        {courses.map((value: CourseModel, index: number) => (
           <ProgramCourseCard name={value.name} fullCost={value.fullCost} studyMode={value.studyMode} duration={value.duration} key={index} />
         ))}
       </Box>

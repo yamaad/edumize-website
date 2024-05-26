@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import reducer from "./reducers";
-import { airTableApi } from "../services/airTable/airTable";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { airTableBase } from "../services/airTable/base";
 
 export const store = configureStore({
   reducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(airTableApi.middleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(airTableBase.middleware),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
