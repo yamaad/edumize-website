@@ -1,6 +1,6 @@
-import { ComponentRoute, PageRoute } from "./routes/constant.ts";
-import { ProgramProfile } from "./feature/programs/ProgramProfile.feature.tsx";
-import { UniversityProfile } from "./feature/universityProfiles/UniversityProfile.feature.tsx";
+import { ComponentRoute, PageRoute } from "./route/constant.ts";
+import { ProgramProfile } from "./features/programProfile/ProgramProfile.feature.tsx";
+import { UniversityProfile } from "./features/universityProfile/UniversityProfile.feature.tsx";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
