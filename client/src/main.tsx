@@ -4,8 +4,9 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
-import { UniversityProfile } from "./features/UniversityProfile/UniversityProfile.feature.tsx";
 import { ProgramProfile } from "./features/Program/ProgramProfile.feature.tsx";
+import { UniversityProfile } from "./features/UniversityProfile/UniversityProfile.feature.tsx";
+
 
 // For WebFlow Embedding
 const webFlowEmbedders = [

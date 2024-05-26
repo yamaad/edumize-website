@@ -1,7 +1,8 @@
-import { Route, Routes } from "react-router-dom";
 import { ComponentRoute, PageRoute } from "./routes/constant";
+import { ProgramProfile } from "features/Program/ProgramProfile.feature";
+import { Route, Routes } from "react-router-dom";
 import { UniversityProfile } from "./features/UniversityProfile/UniversityProfile.feature";
-import { ProgramProfile } from "./features/Program/ProgramProfile.feature";
+
 // import ReactDOM from "react-dom/client";
 // import { Provider } from "react-redux";
 // import { store } from "./redux/store.ts";
@@ -20,6 +21,5 @@ function App() {
     </Routes>
   );
 }
-
 
 export default App;
