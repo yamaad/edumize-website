@@ -14,7 +14,7 @@ app.use(cors());
 
 //
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/main.js"));
+  res.sendFile(path.join(__dirname, process.env.CLIENT_PATH || ""));
 });
 
 // Start the server
