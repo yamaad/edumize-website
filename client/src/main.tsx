@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "redux/store";
 import { UniversityProfile } from "features/universityProfile/UniversityProfile.feature.tsx";
-import { ProgramProfile } from "features/programProfile/programProfile.feature.tsx";
+import { ProgramProfile } from "features/programProfile/ProgramProfile.feature.tsx";
 
 
 // For WebFlow Embedding
