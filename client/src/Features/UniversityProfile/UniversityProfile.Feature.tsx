@@ -2,10 +2,11 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import SearchBar, { SortItem, SortProps } from "../../components/ControlBar/SearchBar.component";
 import FilterMenu from "../../components/ControlBar/FilterMenu.component";
 import { useEffect, useState } from "react";
-import { AirTableQueryBody } from "../../services/airTable/types";
+import { AirTableQueryBody } from "../../redux/services/airtable/types";
 import useDebounce from "../../hooks/useDebounce";
 import UniversityCourseCard from "./components/CourseCard.component";
-import { CourseModel, useGetCourseListMutation } from "../../services/airTable/endpoints/course";
+import { useGetCourseListMutation } from "../../redux/services/airtable/course/courseApi";
+import { CourseModel } from "../../redux/services/airtable/course/types";
 
 //--------------
 // interfaces
@@ -144,7 +145,12 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
         ))}
       </Box>
       {offset && (
-        <Button disabled={isLoading} onClick={() => getCourseList(queryBody)} variant="outlined" sx={{ maxWidth: "fit-content", borderRadius: 4 }}>
+        <Button
+          disabled={isLoading}
+          onClick={() => getCourseList(queryBody)}
+          variant="outlined"
+          sx={{ maxWidth: "fit-content", borderRadius: 4, color: "#ee8c00", borderColor: "#ee8c00" }}
+        >
           {isLoading ? "Loading..." : "Load More"}
         </Button>
       )}

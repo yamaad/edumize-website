@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import { CourseModel } from "../../../services/airTable/endpoints/course";
+import { Box, Paper, Typography } from "@mui/material";
+import { CourseModel } from "../../../redux/services/airtable/course/types";
 
 interface IUniversityCourseCard extends CourseModel {}
 const UniversityCourseCard = ({ name, fullCost, duration, studyMode }: IUniversityCourseCard) => {
@@ -15,7 +15,8 @@ const UniversityCourseCard = ({ name, fullCost, duration, studyMode }: IUniversi
       : ""
     : "";
   return (
-    <Box
+    <Paper
+      elevation={3}
       sx={{
         display: "grid",
         gridTemplateColumns: " 3fr 1fr",
@@ -32,20 +33,21 @@ const UniversityCourseCard = ({ name, fullCost, duration, studyMode }: IUniversi
         justifyItems: "stretch",
         rowGap: 0.5,
         columnGap: 1,
-        boxShadow: "0px 18px 36px -18px rgba(0, 0, 0, 0.1), 0px 30px 45px -30px rgba(50, 50, 93, 0.25)",
       }}
     >
       <Box sx={{ textAlign: "start" }}>
-        <Typography variant="h6">{name}</Typography>
-        <Typography variant="body2">{studyMode || "-"}</Typography>
+        <Typography fontSize="12px" fontWeight="bold">
+          {name}
+        </Typography>
+        <Typography fontSize="12px">{studyMode || "-"}</Typography>
       </Box>
       <Box>
-        <Typography variant="body1">
+        <Typography fontSize="12px">
           MYR {fullCost} <strong>/</strong> {year ?? duration}
         </Typography>
         <Typography>{semester.length > 0 ? semester : ""}</Typography>
       </Box>
-    </Box>
+    </Paper>
   );
 };
 export default UniversityCourseCard;

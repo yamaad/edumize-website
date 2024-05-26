@@ -1,11 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import reducer from "./reducers";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { airTableBase } from "../services/airTable/base";
+import { courseApi } from "./services/airtable/course/courseApi";
+import { filterApi } from "./services/airtable/dynamicFilters/filterApi";
+import { universityApi } from "./services/airtable/university/universityApi";
+import { universityTypeApi } from "./services/airtable/universityType/universityType";
 
 export const store = configureStore({
   reducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(airTableBase.middleware),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware()
+      .concat(courseApi.middleware)
+      .concat(filterApi.middleware)
+      .concat(universityApi.middleware)
+      .concat(universityTypeApi.middleware),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

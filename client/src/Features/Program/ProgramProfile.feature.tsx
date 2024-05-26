@@ -2,10 +2,12 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import SearchBar, { SortItem, SortProps } from "../../components/ControlBar/SearchBar.component";
 import FilterMenu from "../../components/ControlBar/FilterMenu.component";
 import { useEffect, useState } from "react";
-import { AirTableQueryBody } from "../../services/airTable/types";
+import { AirTableQueryBody } from "../../redux/services/airtable/types";
 import useDebounce from "../../hooks/useDebounce";
-import ProgramCourseCard from "./components/CourseCard.component";
-import { CourseModel, useGetCourseListMutation } from "../../services/airTable/endpoints/course";
+import ProgramCourseCard, { IProgramCourseCard } from "./components/CourseCard.component";
+import { useGetCourseListMutation } from "../../redux/services/airtable/course/courseApi";
+import { useGetUniversityListQuery } from "../../redux/services/airtable/university/universityApi";
+import { useGetUniversityTypeListQuery } from "../../redux/services/airtable/universityType/universityType";
 
 //--------------
 // interfaces
@@ -13,7 +15,6 @@ import { CourseModel, useGetCourseListMutation } from "../../services/airTable/e
 interface IProgramProfile {
   programId: string;
 }
-
 //---------------
 // component
 //---------------
@@ -21,7 +22,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
   //-------------
   // local states
   //-------------
-  const [courses, setCourses] = useState<CourseModel[]>([]);
+  const [courses, setCourses] = useState<IProgramCourseCard[]>([]);
   const [offset, setOffset] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string>("");
   const [sort, setSort] = useState<SortItem>({ field: "name", direction: "asc" });
@@ -30,7 +31,10 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
   // hooks
   //-------------
   const [getCourseList, { data, isLoading, isSuccess }] = useGetCourseListMutation();
+  const { currentData: universityData } = useGetUniversityListQuery();
+  const { currentData: typeData } = useGetUniversityTypeListQuery();
   const debouncedSearch = useDebounce(search, 500);
+
   //-------------
   // constants
   //-------------
@@ -46,19 +50,27 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
   //-------------
   // triggers
   //-------------
-
   useEffect(() => {
     setCourses([]);
     getCourseList(queryBody);
-  }, [debouncedSearch, sort, studyModeFilter]);
+  }, [debouncedSearch, sort, studyModeFilter, universityData, typeData]);
 
   useEffect(() => {
     if (!isLoading && data) {
       const { courseList } = data;
-      setCourses(prev => [...prev, ...courseList]);
+      const programCourseList: IProgramCourseCard[] = courseList.map(course => {
+        const university = universityData?.universityList.find(university => course.universityId === university.id);
+        const type = typeData?.universityTypeList.find(type => type.type === university?.type);
+        return {
+          ...course,
+          logoImage: university?.image || university?.name || "",
+          typeImage: type?.image || type?.type || "",
+        };
+      });
+      setCourses(prev => [...prev, ...programCourseList]);
       setOffset(data?.offset);
     }
-  }, [data]);
+  }, [data, universityData, typeData]);
   //-------------
   // handlers
   //-------------
@@ -119,12 +131,25 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
             No Matching Records
           </Typography>
         )}
-        {courses.map((value: CourseModel, index: number) => (
-          <ProgramCourseCard name={value.name} fullCost={value.fullCost} studyMode={value.studyMode} duration={value.duration} key={index} />
+        {courses.map((value: IProgramCourseCard, index: number) => (
+          <ProgramCourseCard
+            name={value.name}
+            fullCost={value.fullCost}
+            studyMode={value.studyMode}
+            duration={value.duration}
+            logoImage={value.logoImage}
+            typeImage={value.typeImage}
+            key={index}
+          />
         ))}
       </Box>
       {offset && (
-        <Button disabled={isLoading} onClick={() => getCourseList(queryBody)} variant="outlined" sx={{ maxWidth: "fit-content", borderRadius: 4 }}>
+        <Button
+          disabled={isLoading}
+          onClick={() => getCourseList(queryBody)}
+          variant="outlined"
+          sx={{ maxWidth: "fit-content", borderRadius: 4, color: "#ee8c00", borderColor: "#ee8c00" }}
+        >
           {isLoading ? "Loading..." : "Load More"}
         </Button>
       )}

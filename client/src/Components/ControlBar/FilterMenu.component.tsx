@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useEffect, useState } from "react";
-import { AirTableQueryBody } from "../../services/airTable/types";
-import { useGetFilterOptionListMutation } from "../../services/airTable/endpoints/course";
+import { AirTableQueryBody } from "../../redux/services/airtable/types";
+import { useGetFilterOptionListMutation } from "../../redux/services/airtable/dynamicFilters/filterApi";
 
 //-------------
 // interfaces
@@ -66,10 +66,20 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
   }, [filterList]);
 
   return (
-    <FormControl fullWidth>
-      <InputLabel>{label}</InputLabel>
+    <FormControl
+      fullWidth
+      sx={{
+        ".MuiInputLabel-shrink": { top: "3px" },
+      }}
+    >
+      <InputLabel sx={{ fontSize: "12px", top: "-7px" }}>{label}</InputLabel>
       <Select
-        sx={{ borderRadius: 6, backgroundColor: "#eff4f7", height: "50px" }}
+        sx={{
+          borderRadius: 6,
+          backgroundColor: "#eff4f7",
+          fontSize: "12px",
+          ".MuiInputBase-input": { p: 1 },
+        }}
         value={isLoading ? "loading..." : filterList.length <= 0 ? "no option available" : filterValue}
         disabled={filterList.length <= 0 || isLoading}
         onChange={handleChange}
