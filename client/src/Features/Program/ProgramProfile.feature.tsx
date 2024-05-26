@@ -5,19 +5,19 @@ import { useGetCourseListMutation } from "../../services/airTable/airTable";
 import { useEffect, useState } from "react";
 import { AirTableQueryBody, UniversityCourseModel } from "../../services/airTable/types";
 import useDebounce from "../../hooks/useDebounce";
-import UniversityCourseCard from "./components/CourseCard.component";
+import ProgramCourseCard from "./components/CourseCard.component";
 
 //--------------
 // interfaces
 //--------------
-interface IUniversityProfile {
-  universityId: number;
+interface IProgramProfile {
+  programId: string;
 }
 
 //---------------
 // component
 //---------------
-const UniversityProfile = ({ universityId }: IUniversityProfile) => {
+const ProgramProfile = ({ programId }: IProgramProfile) => {
   //-------------
   // local states
   //-------------
@@ -25,8 +25,6 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   const [offset, setOffset] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string>("");
   const [sort, setSort] = useState<SortItem>({ field: "name", direction: "asc" });
-  const [studyLevelFilter, setStudyLevelFilter] = useState<string>();
-  const [studyFieldFilter, setStudyFieldFilter] = useState<string>();
   const [studyModeFilter, setStudyModeFilter] = useState<string>();
   //-------------
   // hooks
@@ -39,10 +37,8 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   const queryBody: AirTableQueryBody = {
     pageSize: 5,
     sort: [sort],
-    fields: ["name", "study_mode", "duration", "full_cost"],
-    filterByFormula: `AND({uni_id}=${universityId}, SEARCH(LOWER("${debouncedSearch}"),LOWER({name})) 
-    ${studyLevelFilter ? `,TRIM(LOWER({degree}))=LOWER("${studyLevelFilter}")` : ""}
-    ${studyFieldFilter ? `,TRIM(LOWER({study_field}))=LOWER("${studyFieldFilter}")` : ""}
+    fields: ["name", "study_mode", "duration", "full_cost", "uni_id"],
+    filterByFormula: `AND({program_id}="${programId}", SEARCH(LOWER("${debouncedSearch}"),LOWER({name}))
     ${studyModeFilter ? `,TRIM(LOWER({study_mode}))=LOWER("${studyModeFilter}")` : ""}
   )`,
     offset,
@@ -54,7 +50,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   useEffect(() => {
     setCourses([]);
     getCourseList(queryBody);
-  }, [debouncedSearch, sort, studyLevelFilter, studyFieldFilter, studyModeFilter]);
+  }, [debouncedSearch, sort, studyModeFilter]);
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -96,22 +92,6 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
       </Box>
       <Stack direction={"row"} gap={1} width={"100%"}>
         <FilterMenu
-          fieldName="degree"
-          label="Study Level"
-          onFilter={(value: string) => {
-            setOffset(undefined);
-            setStudyLevelFilter(value);
-          }}
-        />
-        <FilterMenu
-          fieldName="study_field"
-          label="Study field"
-          onFilter={(value: string) => {
-            setOffset(undefined);
-            setStudyFieldFilter(value);
-          }}
-        />
-        <FilterMenu
           fieldName="study_mode"
           label="Study mode"
           onFilter={(value: string) => {
@@ -140,7 +120,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
           </Typography>
         )}
         {courses.map((value: UniversityCourseModel, index: number) => (
-          <UniversityCourseCard name={value.name} fullCost={value.fullCost} studyMode={value.studyMode} duration={value.duration} key={index} />
+          <ProgramCourseCard name={value.name} fullCost={value.fullCost} studyMode={value.studyMode} duration={value.duration} key={index} />
         ))}
       </Box>
       {offset && (
@@ -152,4 +132,4 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   );
 };
 
-export { UniversityProfile };
+export { ProgramProfile };

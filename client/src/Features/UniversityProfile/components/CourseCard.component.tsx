@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import { UniversityCourseModel } from "../../services/airTable/types";
+import { UniversityCourseModel } from "../../../services/airTable/types";
 
-interface ICourseCard extends UniversityCourseModel {}
-const CourseCard = ({ name, fullCost, duration, studyMode }: ICourseCard) => {
+interface IUniversityCourseCard extends UniversityCourseModel {}
+const UniversityCourseCard = ({ name, fullCost, duration, studyMode }: IUniversityCourseCard) => {
   const years = duration.toLowerCase().includes("years") ? duration.toLowerCase().split("years")[0] + ` Years` : undefined;
   const year = years ?? duration.toLowerCase().includes("year") ? duration.toLowerCase().split("year")[0] + ` Years` : undefined;
   const semester = years
@@ -48,4 +48,4 @@ const CourseCard = ({ name, fullCost, duration, studyMode }: ICourseCard) => {
     </Box>
   );
 };
-export default CourseCard;
+export default UniversityCourseCard;

@@ -1,15 +1,13 @@
 import express from "express";
-import "../.env";
+// import "../.env";
 import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 import cors from "cors";
 import path from "path";
 //
-const uniServices = require("./src/services/uni");
 const programServices = require("./src/services/program");
 //
 const { programUniversitiesBlock, ProgramUniversitiesStyle } = require("./src/HTMLBlocks/program");
-const { arrayUniqueForFilters } = require("./src/services/arrayUnique");
 
 // server
 const app = express();
@@ -24,17 +22,6 @@ app.get("/client", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/main.js"));
 });
 
-app.get("/uni/:id/course", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { search, offset, studyLevel, studyField, sort, studyMode } = req.query;
-    const { output, offset: newOffset } = await uniServices.getData(id, search, offset ?? "", studyLevel, studyField, sort, studyMode);
-    res.status(200).send({ output, offset: newOffset });
-  } catch (error: any) {
-    console.log("log:", error.message);
-    res.status(500).send({ output: "Internal Server Error, Please refresh the page" });
-  }
-});
 //  program
 app.get("/program/elements", (req, res) => {
   const block = programUniversitiesBlock();

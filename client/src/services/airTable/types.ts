@@ -4,6 +4,10 @@ export interface UniversityCourseModel {
   fullCost: number;
   duration: string;
 }
+export interface UniversityModel {
+  type: string;
+  image: string;
+}
 
 export interface AirTableQueryBody {
   pageSize: number;
@@ -20,6 +24,10 @@ export interface AirTableResponse {
 
 export interface FilterOptionsData {
   filterOptions: string[];
+  offset?: string;
+}
+export interface UniversityData {
+  universityList: UniversityModel[];
   offset?: string;
 }
 export interface UniversityCourseData {

@@ -55,7 +55,7 @@ const SearchBar = ({ sortProps, onSearch }: ISearchBarProps) => {
   };
 
   return (
-    <Paper component="form" sx={{ p: 0.5, borderRadius: 3, display: "flex", alignItems: "center", borderColor: "#005360" }}>
+    <Paper component="form" sx={{ px: 0.5, borderRadius: 6, display: "flex", alignItems: "center", backgroundColor: "#eff4f7" }}>
       <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search for Program Name..." onChange={onSearch} />
       <IconButton onClick={openCurrencyMenu} color="secondary" sx={{ p: 1 }}>
         <CurrencyExchangeIcon />

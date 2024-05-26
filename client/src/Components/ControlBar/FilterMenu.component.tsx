@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useEffect, useState } from "react";
 import { AirTableQueryBody } from "../../services/airTable/types";
-import { useGetFilterOptionsMutation } from "../../services/airTable/airTable";
+import { useGetFilterOptionListMutation } from "../../services/airTable/airTable";
 
 //-------------
 // interfaces
@@ -24,7 +24,7 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
   //-------------
   // hooks
   //-------------
-  const [getFilterOptions, { data, isLoading, isSuccess }] = useGetFilterOptionsMutation();
+  const [getFilterOptionList, { data, isLoading, isSuccess }] = useGetFilterOptionListMutation();
 
   //-------------
   // constants
@@ -52,7 +52,7 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
   // triggers
   //-------------
   useEffect(() => {
-    getFilterOptions(filterListQueryBody);
+    getFilterOptionList(filterListQueryBody);
   }, []);
   useEffect(() => {
     if (isSuccess) {
@@ -62,14 +62,14 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
     }
   }, [data]);
   useEffect(() => {
-    if (data?.offset) getFilterOptions(filterListQueryBody);
+    if (data?.offset) getFilterOptionList(filterListQueryBody);
   }, [filterList]);
 
   return (
-    <FormControl fullWidth sx={{ borderColor: "#005360" }}>
+    <FormControl fullWidth>
       <InputLabel>{label}</InputLabel>
       <Select
-        sx={{ borderRadius: 3 }}
+        sx={{ borderRadius: 6, backgroundColor: "#eff4f7", height: "50px" }}
         value={isLoading ? "loading..." : filterList.length <= 0 ? "no option available" : filterValue}
         disabled={filterList.length <= 0 || isLoading}
         onChange={handleChange}

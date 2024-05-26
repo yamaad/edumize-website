@@ -1,19 +1,6 @@
 const ProgramUniversitiesStyle = () => `
-.card-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  padding: 20px 5px;
-}
-.card {
-  display: grid;
-  grid-template-columns: 3fr 5fr 2fr 1fr;
-  grid-template-rows: auto auto;
-}
+
 .course-item {
-  background-color: #e6e5e68c;
-  border-radius: 10px;
   text-align: start;
   padding: 10px 5px 5px 7px;
   align-items: start;
@@ -124,42 +111,11 @@ h6, p {
 .course-item *{
   margin: 0;
 }
-.course-item #uni-logo{
-  width: 135px;
-  align-self: center;
-}
-.course-item #uni-type{
-  width: 45px;
-}
+
 .course-item.program{
   justify-items: start;
-  border: 2px solid #ee8c00;
 }
 
-.program > img{
-  grid-row-start: 1;
-  grid-row-end: 3;
-  justify-self: center;
-}
-.uni-log{
-  align-self: center;
-}
-.course-name{
-  font-size: 12px;
-  grid-column-start: 2;
-  grid-column-end: 4;
-  align-self: end;
-  
-}
-.study-mode{
-  justify-self: end;
-
-}
-.uni-type{
-  grid-column-start: 4;
-  grid-column-end: 5;
-  align-self: start;
-}
 
 `;
 
