@@ -45,7 +45,7 @@ const UniversityCourseCard = ({ name, fullCost, duration, studyMode }: IUniversi
         <Typography fontSize="12px">
           MYR {fullCost} <strong>/</strong> {year ?? duration}
         </Typography>
-        <Typography>{semester.length > 0 ? semester : ""}</Typography>
+        <Typography fontSize="12px">{semester.length > 0 ? semester : ""}</Typography>
       </Box>
     </Paper>
   );

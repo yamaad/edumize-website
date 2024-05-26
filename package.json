@@ -7,7 +7,7 @@
     "dev:server": "nodemon --watch server/index.ts --exec \"ts-node server/index.ts\"",
     "dev:client": "npm run dev --prefix client",
     "client": "npm run build --prefix client",
-    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client && npm install --prefix server && npm run build --prefix server"
   },
   "engines": {
     "node": "14.x"
