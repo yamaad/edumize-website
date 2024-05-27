@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "node -r tsconfig-paths/register dist/index.js",
-    "dev": "nodemon -r tsconfig-paths/register index.ts"
+    "start": "tsc -p tsconfig.prod.json && node -r tsconfig-paths/register dist/index.js",
+    "dev": "tsc -p tsconfig.dev.json && nodemon -r tsconfig-paths/register index.ts"
   },
   "keywords": [],
   "author": "",
