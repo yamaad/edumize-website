@@ -3,7 +3,6 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { errorHandler } from "@middlewares/errorhandler";
-import { loggerMiddleware } from "@middlewares/logger";
 import currencyRoutes from "@routes/currencyRoutes";
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });

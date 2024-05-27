@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "./",
+    "baseUrl": "./dist",
     "paths": {
       "@routes/*": ["src/routes/*"],
       "@controllers/*": ["src/controllers/*"],
