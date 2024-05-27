@@ -1,22 +1,32 @@
-import express from "express";
 import dotenv from "dotenv";
-dotenv.config({ path: "./.env" });
+import express from "express";
 import cors from "cors";
 import path from "path";
+import { errorHandler } from "@middlewares/errorhandler";
+import { loggerMiddleware } from "@middlewares/logger";
+import currencyRoutes from "@routes/currencyRoutes";
+
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 // server
 const app = express();
 
 // Use CORS middleware
 app.use(cors());
-// Serve static files from the React app
-// app.use(express.static(path.join(__dirname, "../client/dist")));
 
-//
-app.get("*", (req, res) => {
+// use logger middleware
+//TODO app.use(loggerMiddleware);
+// use routers
+app.use("/api/currency", currencyRoutes);
+
+// serve static file
+app.use(express.static(__dirname));
+app.get("/client", (req, res) => {
   res.sendFile(path.join(__dirname, process.env.CLIENT_PATH || ""));
 });
 
+// Use error handler middleware
+app.use(errorHandler);
 // Start the server
 const port = parseInt(process.env.PORT ?? "") || 4000;
 app.listen(port, () => {
