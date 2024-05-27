@@ -17,11 +17,13 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 // define props
 type PropsFromRedux = ConnectedProps<typeof connector>;
-export interface IProgramCourseCard extends PropsFromRedux, CourseModel {
+export interface IProgramCourseCard extends CourseModel {
   typeImage: string;
   logoImage: string;
 }
-const ProgramCourseCard = ({ name, fullCost, duration, studyMode, typeImage, logoImage, currency, currencyRate }: IProgramCourseCard) => {
+interface ProgramCourseCardProps extends IProgramCourseCard, PropsFromRedux {}
+
+const ProgramCourseCard = ({ name, fullCost, duration, studyMode, typeImage, logoImage, currency, currencyRate }: ProgramCourseCardProps) => {
   const years = duration.toLowerCase().includes("years") ? duration.toLowerCase().split("years")[0] + ` Years` : undefined;
   const year = years ?? duration.toLowerCase().includes("year") ? duration.toLowerCase().split("year")[0] + ` Years` : undefined;
   const semester = years

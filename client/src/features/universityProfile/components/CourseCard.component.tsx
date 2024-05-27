@@ -19,6 +19,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IUniversityCourseCard extends PropsFromRedux, CourseModel {}
+
 const UniversityCourseCard = ({ name, fullCost, duration, studyMode, currencyRate, currency }: IUniversityCourseCard) => {
   const years = duration.toLowerCase().includes("years") ? duration.toLowerCase().split("years")[0] + ` Years` : undefined;
   const year = years ?? duration.toLowerCase().includes("year") ? duration.toLowerCase().split("year")[0] + ` Years` : undefined;
