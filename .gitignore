@@ -30,4 +30,4 @@ dist-ssr
 .env
 .env.production
 
-.package-lock.json
+package-lock.json

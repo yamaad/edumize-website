@@ -2,7 +2,7 @@
   "name": "edumize-website",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server/dist/index.js",
+    "start": "npm start --prefix server",
     "server": "node server/dist/index.js",
     "dev:server": "npm run dev --prefix server",
     "dev:client": "npm run dev --prefix client",
