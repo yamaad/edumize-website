@@ -5,6 +5,7 @@ import { courseApi } from "./services/airtable/course/courseApi";
 import { filterApi } from "./services/airtable/dynamicFilters/filterApi";
 import { universityApi } from "./services/airtable/university/universityApi";
 import { universityTypeApi } from "./services/airtable/universityType/universityType";
+import { currencyApi } from "./services/edumizeApi/currency/currency";
 
 export const store = configureStore({
   reducer,
@@ -13,7 +14,8 @@ export const store = configureStore({
       .concat(courseApi.middleware)
       .concat(filterApi.middleware)
       .concat(universityApi.middleware)
-      .concat(universityTypeApi.middleware),
+      .concat(universityTypeApi.middleware)
+      .concat(currencyApi.middleware),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

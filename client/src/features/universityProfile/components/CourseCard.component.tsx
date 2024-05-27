@@ -1,8 +1,25 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { CourseModel } from "../../../redux/services/airtable/course/types";
+import { RootState } from "redux/store";
+import { ConnectedProps, connect } from "react-redux";
 
-interface IUniversityCourseCard extends CourseModel {}
-const UniversityCourseCard = ({ name, fullCost, duration, studyMode }: IUniversityCourseCard) => {
+// map state to props
+const mapStateToProps = (state: RootState) => ({
+  currency: state.currency.currency,
+  currencyRate: state.currency.rate,
+});
+
+// map dispatch to props
+const mapDispatchToProps = {};
+
+// connect to redux
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+// define props
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+interface IUniversityCourseCard extends PropsFromRedux, CourseModel {}
+const UniversityCourseCard = ({ name, fullCost, duration, studyMode, currencyRate, currency }: IUniversityCourseCard) => {
   const years = duration.toLowerCase().includes("years") ? duration.toLowerCase().split("years")[0] + ` Years` : undefined;
   const year = years ?? duration.toLowerCase().includes("year") ? duration.toLowerCase().split("year")[0] + ` Years` : undefined;
   const semester = years
@@ -43,11 +60,12 @@ const UniversityCourseCard = ({ name, fullCost, duration, studyMode }: IUniversi
       </Box>
       <Box>
         <Typography fontSize="12px">
-          MYR {fullCost} <strong>/</strong> {year ?? duration}
+          {currency} {Math.ceil(fullCost * currencyRate).toLocaleString()} <strong>/</strong> {year ?? duration}
         </Typography>
         <Typography fontSize="12px">{semester.length > 0 ? semester : ""}</Typography>
       </Box>
     </Paper>
   );
 };
-export default UniversityCourseCard;
+export { UniversityCourseCard };
+export default connector(UniversityCourseCard);

@@ -28,3 +28,4 @@ dist-ssr
 
 # Ignore .env file containing sensitive information
 .env
+.env.production

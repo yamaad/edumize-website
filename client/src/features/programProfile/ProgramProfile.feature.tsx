@@ -1,6 +1,6 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import SearchBar, { SortItem, SortProps } from "../../components/controlBar/SearchBar.component";
-import FilterMenu from "../../components/controlBar/FilterMenu.component";
+import FilterMenu from "../../components/filterMenu.tsx/FilterMenu.component";
 import { useEffect, useState } from "react";
 import { AirTableQueryBody } from "../../redux/services/airtable/types";
 import useDebounce from "../../hooks/useDebounce";

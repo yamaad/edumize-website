@@ -1,11 +1,27 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { CourseModel } from "../../../redux/services/airtable/course/types";
+import { ConnectedProps, connect } from "react-redux";
+import { RootState } from "redux/store";
 
-export interface IProgramCourseCard extends CourseModel {
+// map state to props
+const mapStateToProps = (state: RootState) => ({
+  currency: state.currency.currency,
+  currencyRate: state.currency.rate,
+});
+
+// map dispatch to props
+const mapDispatchToProps = {};
+
+// connect to redux
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+// define props
+type PropsFromRedux = ConnectedProps<typeof connector>;
+export interface IProgramCourseCard extends PropsFromRedux, CourseModel {
   typeImage: string;
   logoImage: string;
 }
-const ProgramCourseCard = ({ name, fullCost, duration, studyMode, typeImage, logoImage }: IProgramCourseCard) => {
+const ProgramCourseCard = ({ name, fullCost, duration, studyMode, typeImage, logoImage, currency, currencyRate }: IProgramCourseCard) => {
   const years = duration.toLowerCase().includes("years") ? duration.toLowerCase().split("years")[0] + ` Years` : undefined;
   const year = years ?? duration.toLowerCase().includes("year") ? duration.toLowerCase().split("year")[0] + ` Years` : undefined;
   const semester = years
@@ -55,7 +71,7 @@ const ProgramCourseCard = ({ name, fullCost, duration, studyMode, typeImage, log
         src={typeImage}
       />
       <Typography fontSize="12px" alignSelf="start" justifySelf="start">
-        MYR {fullCost} <strong>/</strong> {year ?? duration}
+        {currency} {Math.ceil(fullCost * currencyRate).toLocaleString()} <strong>/</strong> {year ?? duration}
         {semester.length > 0 ? semester : ""}
       </Typography>
       <Typography fontSize="12px" sx={{ justifySelf: "end" }}>
@@ -64,4 +80,5 @@ const ProgramCourseCard = ({ name, fullCost, duration, studyMode, typeImage, log
     </Paper>
   );
 };
-export default ProgramCourseCard;
+export { ProgramCourseCard };
+export default connector(ProgramCourseCard);

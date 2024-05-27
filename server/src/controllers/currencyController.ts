@@ -5,7 +5,7 @@ export class currencyController {
   public static getCurrencyList = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const currency = await CurrencyServices.getCurrencyList();
-      res.json({ currency });
+      res.json(currency);
     } catch (error: any) {
       next(error);
     }
@@ -14,7 +14,7 @@ export class currencyController {
   public static getCurrencyRate = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const rates = await CurrencyServices.getCurrencyRates();
-      res.json({ rates });
+      res.json(rates);
     } catch (error: any) {
       next(error);
     }
