@@ -1,5 +1,5 @@
-import CurrencyServices from "@services/currency/currencyServices";
 import { Request, Response, NextFunction } from "express";
+import CurrencyServices from "../services/currency/currencyServices";
 
 export class currencyController {
   public static getCurrencyList = async (req: Request, res: Response, next: NextFunction) => {

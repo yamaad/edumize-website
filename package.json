@@ -2,8 +2,7 @@
   "name": "edumize-website",
   "version": "1.0.0",
   "scripts": {
-    "start": "node -r tsconfig-paths/register server/dist/index.js",
-    "server": "node server/dist/index.js",
+    "start": "npm start --prefix server",
     "dev:server": "npm run dev --prefix server",
     "dev:client": "npm run dev --prefix client",
     "client": "npm run build --prefix client",

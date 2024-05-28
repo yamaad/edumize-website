@@ -2,8 +2,8 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import path from "path";
-import { errorHandler } from "@middlewares/errorhandler";
-import currencyRoutes from "@routes/currencyRoutes";
+import { errorHandler } from "./src/middlewares/errorhandler";
+import currencyRoutes from "./src/routes/currencyRoutes";
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 

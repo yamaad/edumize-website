@@ -1,4 +1,4 @@
-import { BadRequestError } from "@middlewares/errorhandler";
+import { BadRequestError } from "../../middlewares/errorhandler";
 import { Currencies, Rates } from "./types";
 
 //TODO set a proper caching
