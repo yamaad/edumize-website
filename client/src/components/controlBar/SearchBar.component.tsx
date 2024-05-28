@@ -1,7 +1,7 @@
 import { Divider, IconButton, InputAdornment, InputBase, Menu, MenuItem, Paper, TextField, Typography } from "@mui/material";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useGetCurrencyQuery, useGetCurrencyRateQuery } from "redux/services/edumizeApi/currency/currency";
 import { setSelectedCurrency } from "redux/features/currencySlice";
 import { ConnectedProps, connect } from "react-redux";
@@ -56,12 +56,9 @@ const SearchBar = ({ sortProps, onSearch, selectedCurrency, setSelectedCurrency 
   //--------------
   // hooks
   //--------------
-  const { currentData: currencyList, error: currencyError } = useGetCurrencyQuery();
-  const { currentData: currencyRateList, error: rateError } = useGetCurrencyRateQuery();
+  const { currentData: currencyList } = useGetCurrencyQuery();
+  const { currentData: currencyRateList } = useGetCurrencyRateQuery();
   const currencySelectRef = useRef<HTMLInputElement | null>(null);
-  useEffect(() => {
-    console.log({ currencyList, currencyError, currencyRateList, rateError });
-  }, [currencyList, currencyError, currencyRateList, rateError]);
   //--------------
   // handlers
   //--------------
@@ -107,15 +104,15 @@ const SearchBar = ({ sortProps, onSearch, selectedCurrency, setSelectedCurrency 
           },
         }}
       >
-        {currencyList ? (
+        {currencyList &&
           Object.keys(currencyList).map((value: string, index) => (
             <MenuItem key={index} value={value}>
               <Typography sx={{ fontSize: "12px" }}>
                 <strong>{value} </strong> ({currencyList[value]})
               </Typography>
             </MenuItem>
-          ))
-        ) : (
+          ))}
+        {!currencyList && (
           <MenuItem value={selectedCurrency.currency}>
             <Typography sx={{ fontSize: "12px" }}>
               <strong>{selectedCurrency.currency} </strong>
