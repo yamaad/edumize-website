@@ -47,9 +47,6 @@ interface ISearchBarProps extends PropsFromRedux {
 //--------------
 
 const SearchBar = ({ sortProps, onSearch, selectedCurrency, setSelectedCurrency }: ISearchBarProps) => {
-  useEffect(() => {
-    console.log(selectedCurrency);
-  }, [selectedCurrency]);
   //--------------
   // local states
   //--------------
@@ -59,9 +56,12 @@ const SearchBar = ({ sortProps, onSearch, selectedCurrency, setSelectedCurrency 
   //--------------
   // hooks
   //--------------
-  const { currentData: currencyList } = useGetCurrencyQuery();
-  const { currentData: currencyRateList } = useGetCurrencyRateQuery();
+  const { currentData: currencyList, error: currencyError } = useGetCurrencyQuery();
+  const { currentData: currencyRateList, error: rateError } = useGetCurrencyRateQuery();
   const currencySelectRef = useRef<HTMLInputElement | null>(null);
+  useEffect(() => {
+    console.log({ currencyList, currencyError, currencyRateList, rateError });
+  }, [currencyList, currencyError, currencyRateList, rateError]);
   //--------------
   // handlers
   //--------------
