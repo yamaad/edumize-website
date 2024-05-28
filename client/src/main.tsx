@@ -6,7 +6,8 @@ import { Provider } from "react-redux";
 import { store } from "redux/store";
 import { UniversityProfile } from "features/universityProfile/UniversityProfile.feature.tsx";
 import { ProgramProfile } from "features/programProfile/ProgramProfile.feature.tsx";
-
+import { theme } from "theme/theme.ts";
+import { ThemeProvider } from "@mui/material/styles";
 
 // For WebFlow Embedding
 const webFlowEmbedders = [
@@ -42,7 +43,11 @@ webFlowEmbedders.map(obj => {
         return acc;
       }, {});
 
-      ReactDOM.createRoot(elementId).render(<Provider store={store}>{component(props)}</Provider>);
+      ReactDOM.createRoot(elementId).render(
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>{component(props)}</ThemeProvider>
+        </Provider>
+      );
     }
   } catch (error) {
     console.error("REACTJS-VITE", error);
@@ -52,9 +57,11 @@ webFlowEmbedders.map(obj => {
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );

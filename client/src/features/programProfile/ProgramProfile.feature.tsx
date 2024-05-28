@@ -94,7 +94,6 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
     <Stack
       sx={{
         maxWidth: "100%",
-        px: 2.5,
         gap: 2,
         alignItems: "center",
       }}

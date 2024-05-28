@@ -87,7 +87,6 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
     <Stack
       sx={{
         maxWidth: "100%",
-        px: 2.5,
         gap: 2,
         alignItems: "center",
       }}
@@ -149,7 +148,8 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
           disabled={isLoading}
           onClick={() => getCourseList(queryBody)}
           variant="outlined"
-          sx={{ maxWidth: "fit-content", borderRadius: 4, color: "#ee8c00", borderColor: "#ee8c00" }}
+          color="secondary"
+          sx={{ maxWidth: "fit-content", borderRadius: 4 }}
         >
           {isLoading ? "Loading..." : "Load More"}
         </Button>

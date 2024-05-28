@@ -76,7 +76,7 @@ const SearchBar = ({ sortProps, onSearch, selectedCurrency, setSelectedCurrency 
 
   return (
     <Paper component="form" sx={{ px: 2, borderRadius: 6, display: "flex", alignItems: "center", backgroundColor: "#eff4f7" }}>
-      <InputBase sx={{ ml: 1, flex: 1, fontSize: "12px" }} placeholder="Search for Course Name..." onChange={onSearch} />
+      <InputBase sx={{ ml: 1, flex: 1, fontSize: "12px" }} placeholder="Course Name..." onChange={onSearch} />
       <TextField
         select
         value={selectedCurrency.currency}
