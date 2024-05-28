@@ -12,14 +12,14 @@ export const currencyApi = createApi({
     getCurrency: builder.query<Currencies, void>({
       query: () => "",
       transformResponse: (response: Currencies): Currencies => {
-        console.log(response);
+        console.log({ response });
         return response;
       },
     }),
     getCurrencyRate: builder.query<Rates, void>({
       query: () => "/rate",
       transformResponse: (response: Rates): Rates => {
-        console.log(response);
+        console.log({ response });
         return response;
       },
     }),
