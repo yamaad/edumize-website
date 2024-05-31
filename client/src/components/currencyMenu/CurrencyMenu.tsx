@@ -54,7 +54,7 @@ const CurrencyMenu = ({ selectedCurrency, setSelectedCurrency }: ICurrencyMenuPr
       value={selectedCurrency.currency}
       onChange={handleCurrencyChange}
       onClick={() => setOpenCurrencySelect(prev => !prev)}
-      color="secondary"
+      color="primary"
       sx={{ maxWidth: "fit-content" }}
       InputProps={{
         startAdornment: (
@@ -77,6 +77,7 @@ const CurrencyMenu = ({ selectedCurrency, setSelectedCurrency }: ICurrencyMenuPr
           borderRadius: 6,
           fontSize: "12px",
           height: "30px",
+          backgroundColor: "primary.100",
         },
       }}
     >

@@ -8,6 +8,7 @@ import { UniversityProfile } from "features/universityProfile/UniversityProfile.
 import { ProgramProfile } from "features/programProfile/ProgramProfile.feature.tsx";
 import { edumizeTheme } from "theme/theme.ts";
 import { ThemeProvider } from "@mui/material/styles";
+import { LanguageInstitute } from "features/languageInstituteProfile/LanguageInstituteProfile.feature.tsx";
 
 // For WebFlow Embedding
 const webFlowEmbedders = [
@@ -30,6 +31,11 @@ const webFlowEmbedders = [
         attribute: "program-id",
       },
     ],
+  },
+  {
+    id: "language-institute-courses-and-fees",
+    component: () => <LanguageInstitute />,
+    parameters: [],
   },
 ];
 
