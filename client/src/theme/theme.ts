@@ -3,7 +3,8 @@ import palette from "./paletteTheme";
 import typography from "./typographyTheme";
 import components from "./componentTheme";
 
-export const theme = createTheme({
+
+export const edumizeTheme = createTheme({
   palette,
   typography,
   components,

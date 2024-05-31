@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "redux/store";
 import { UniversityProfile } from "features/universityProfile/UniversityProfile.feature.tsx";
 import { ProgramProfile } from "features/programProfile/ProgramProfile.feature.tsx";
-import { theme } from "theme/theme.ts";
+import { edumizeTheme } from "theme/theme.ts";
 import { ThemeProvider } from "@mui/material/styles";
 
 // For WebFlow Embedding
@@ -45,7 +45,7 @@ webFlowEmbedders.map(obj => {
 
       ReactDOM.createRoot(elementId).render(
         <Provider store={store}>
-          <ThemeProvider theme={theme}>{component(props)}</ThemeProvider>
+          <ThemeProvider theme={edumizeTheme}>{component(props)}</ThemeProvider>
         </Provider>
       );
     }
@@ -57,7 +57,7 @@ webFlowEmbedders.map(obj => {
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={edumizeTheme}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
