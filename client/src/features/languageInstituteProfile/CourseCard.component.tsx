@@ -145,7 +145,13 @@ const LanguageInstituteCourseCard = ({}: ILanguageInstituteCourseCard) => {
             <Button
               variant="contained"
               color="secondary"
-              sx={{ maxWidth: "fit-content", alignSelf: "center", textTransform: "capitalize", color: "content.0", boxShadow: 6 }}
+              sx={{
+                maxWidth: "fit-content",
+                alignSelf: "center",
+                textTransform: "capitalize",
+                color: "content.0",
+                boxShadow: 6,
+              }}
             >
               Claim Edumize Additional Discount
             </Button>
