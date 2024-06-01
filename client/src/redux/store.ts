@@ -6,16 +6,19 @@ import { filterApi } from "./services/airtable/dynamicFilters/filterApi";
 import { universityApi } from "./services/airtable/university/universityApi";
 import { universityTypeApi } from "./services/airtable/universityType/universityType";
 import { currencyApi } from "./services/edumizeApi/currency/currency";
+import { languageInstituteCourseApi } from "./services/airtable/languageInstituteCourse/languageInstituteCourseApi";
 
 export const store = configureStore({
   reducer,
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware()
-      .concat(courseApi.middleware)
-      .concat(filterApi.middleware)
-      .concat(universityApi.middleware)
-      .concat(universityTypeApi.middleware)
-      .concat(currencyApi.middleware),
+    getDefaultMiddleware().concat([
+      courseApi.middleware,
+      filterApi.middleware,
+      universityApi.middleware,
+      universityTypeApi.middleware,
+      currencyApi.middleware,
+      languageInstituteCourseApi.middleware,
+    ]),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

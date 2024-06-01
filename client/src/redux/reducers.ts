@@ -4,12 +4,14 @@ import { universityApi } from "./services/airtable/university/universityApi";
 import { universityTypeApi } from "./services/airtable/universityType/universityType";
 import { currencyApi } from "./services/edumizeApi/currency/currency";
 import currencyReducer from "./features/currencySlice";
+import { languageInstituteCourseApi } from "./services/airtable/languageInstituteCourse/languageInstituteCourseApi";
 
 export default {
+  currency: currencyReducer,
   [courseApi.reducerPath]: courseApi.reducer,
   [universityApi.reducerPath]: universityApi.reducer,
   [universityTypeApi.reducerPath]: universityTypeApi.reducer,
   [filterApi.reducerPath]: filterApi.reducer,
   [currencyApi.reducerPath]: currencyApi.reducer,
-  currency: currencyReducer,
+  [languageInstituteCourseApi.reducerPath]: languageInstituteCourseApi.reducer,
 };

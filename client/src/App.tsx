@@ -10,7 +10,7 @@ function App() {
       <Route path="/" element={<h1>HOME PAGE 1</h1>} />
       <Route path={PageRoute.university} element={<UniversityProfile universityId={213} />} />
       <Route path={PageRoute.program} element={<ProgramProfile programId={"E05APP0XXX"} />} />
-      <Route path={PageRoute.languageInstitute} element={<LanguageInstitute />} />
+      <Route path={PageRoute.languageInstitute} element={<LanguageInstitute instituteId={3} />} />
       <Route path="*" element={<>404 Page not found</>} />
     </Routes>
   );

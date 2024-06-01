@@ -34,8 +34,13 @@ const webFlowEmbedders = [
   },
   {
     id: "language-institute-courses-and-fees",
-    component: () => <LanguageInstitute />,
-    parameters: [],
+    component: (props: any) => <LanguageInstitute instituteId={props.instituteId} />,
+    parameters: [
+      {
+        prop: "instituteId",
+        attribute: "language-institute-id",
+      },
+    ],
   },
 ];
 

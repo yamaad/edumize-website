@@ -4,11 +4,13 @@ import { LanguageInstituteCourseCard } from "./CourseCard.component";
 //--------------
 // interfaces
 //--------------
-interface ILanguageInstitute {}
+interface ILanguageInstitute {
+  instituteId: number;
+}
 //---------------
 // component
 //---------------
-const LanguageInstitute = ({}: ILanguageInstitute) => {
+const LanguageInstitute = ({ instituteId }: ILanguageInstitute) => {
   //-------------
   // local states
   //-------------
@@ -31,7 +33,7 @@ const LanguageInstitute = ({}: ILanguageInstitute) => {
 
   return (
     <Stack>
-      <LanguageInstituteCourseCard />
+      <LanguageInstituteCourseCard instituteId={instituteId} />
     </Stack>
   );
 };

@@ -2,15 +2,22 @@ import { Box, Button, Card, CardActionArea, CardContent, Divider, IconButton, St
 import CurrencyMenu from "components/currencyMenu/CurrencyMenu";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useGetLanguageInstituteCourseQuery } from "redux/services/airtable/languageInstituteCourse/languageInstituteCourseApi";
+import { useEffect } from "react";
 
 //--------------
 // interfaces
 //--------------
-interface ILanguageInstituteCourseCard {}
+interface ILanguageInstituteCourseCard {
+  instituteId: number;
+}
 //---------------
 // component
 //---------------
-const LanguageInstituteCourseCard = ({}: ILanguageInstituteCourseCard) => {
+const LanguageInstituteCourseCard = ({ instituteId }: ILanguageInstituteCourseCard) => {
+  //-------------
+  // constants
+  //-------------
   //-------------
   // local states
   //-------------
@@ -18,7 +25,7 @@ const LanguageInstituteCourseCard = ({}: ILanguageInstituteCourseCard) => {
   //-------------
   // hooks
   //-------------
-
+  const { currentData } = useGetLanguageInstituteCourseQuery(`filterByFormula={institute_id}="${instituteId}"`);
   //-------------
   // constants
   //-------------
@@ -26,7 +33,9 @@ const LanguageInstituteCourseCard = ({}: ILanguageInstituteCourseCard) => {
   //-------------
   // triggers
   //-------------
-
+  useEffect(() => {
+    console.log(currentData);
+  }, [currentData]);
   //-------------
   // handlers
   //-------------
