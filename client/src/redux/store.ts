@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import reducer from "./reducers";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import logger from "redux-logger";
 import { courseApi } from "./services/airtable/course/courseApi";
 import { filterApi } from "./services/airtable/dynamicFilters/filterApi";
 import { universityApi } from "./services/airtable/university/universityApi";
@@ -12,6 +13,7 @@ export const store = configureStore({
   reducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat([
+      logger,
       courseApi.middleware,
       filterApi.middleware,
       universityApi.middleware,

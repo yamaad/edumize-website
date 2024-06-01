@@ -8,5 +8,5 @@ export interface AirTableQueryBody {
 
 export interface AirTableResponse {
   offset?: string;
-  records: [];
+  records: any[];
 }

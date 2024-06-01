@@ -23,15 +23,29 @@ declare module "@mui/material/Typography" {
 
 const typography: Partial<ThemeOptions["typography"]> = {
   fontFamily: "Segoe UI",
+  h1: {
+    fontWeight: 700,
+    fontSize: "3.5rem",
+  },
+  h2: {
+    fontWeight: 700,
+    fontSize: "3rem",
+  },
+  h3: {
+    fontWeight: 700,
+    fontSize: "2.5rem",
+  },
+  h4: {
+    fontWeight: 700,
+    fontSize: "2rem",
+  },
   h5: {
     fontWeight: 700,
-    fontSize: "1.125rem",
-    lineHeight: 1.425,
+    fontSize: "1.5rem",
   },
   h6: {
     fontWeight: 700,
-    fontSize: "1rem",
-    lineHeight: 1.225,
+    fontSize: "1.125rem",
   },
   bodyBold: {
     ...muiTypography.body1,

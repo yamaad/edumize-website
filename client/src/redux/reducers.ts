@@ -5,9 +5,14 @@ import { universityTypeApi } from "./services/airtable/universityType/university
 import { currencyApi } from "./services/edumizeApi/currency/currency";
 import currencyReducer from "./features/currencySlice";
 import { languageInstituteCourseApi } from "./services/airtable/languageInstituteCourse/languageInstituteCourseApi";
+import InstituteReducer from "./features/instituteSlice/instituteCourseSlice";
 
 export default {
+  // slice
   currency: currencyReducer,
+  institute: InstituteReducer,
+
+  // api
   [courseApi.reducerPath]: courseApi.reducer,
   [universityApi.reducerPath]: universityApi.reducer,
   [universityTypeApi.reducerPath]: universityTypeApi.reducer,
