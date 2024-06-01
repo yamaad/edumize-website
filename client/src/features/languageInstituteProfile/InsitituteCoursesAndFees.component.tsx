@@ -17,6 +17,7 @@ const mapStateToProps = (state: RootState) => ({
   currentInstitute: state.institute.currentInstitute,
   courseFeeList: state.institute.courseFeeList,
   selectedCourse: state.institute.selectedCourse,
+  selectedCourseFee: state.institute.selectedCourseFee,
 });
 
 // map dispatch to props
@@ -37,7 +38,13 @@ interface InstitutesCoursesAndFees extends PropsFromRedux {}
 //---------------
 // component
 //---------------
-const InstitutesCoursesAndFees = ({ currentInstitute, courseFeeList, selectedCourse, setSelectedCourseFee }: InstitutesCoursesAndFees) => {
+const InstitutesCoursesAndFees = ({
+  currentInstitute,
+  courseFeeList,
+  selectedCourse,
+  setSelectedCourseFee,
+  selectedCourseFee,
+}: InstitutesCoursesAndFees) => {
   //-------------
   // local states
   //-------------
@@ -76,33 +83,36 @@ const InstitutesCoursesAndFees = ({ currentInstitute, courseFeeList, selectedCou
             </Typography>
             <InstituteCourseCard />
           </Stack>
-          <Stack gap={2}>
-            <Typography variant="h4" color="content.500">
-              Months
-            </Typography>
-            {selectedCourseFeeList && (
+          {selectedCourseFeeList && (
+            <Stack gap={2}>
+              <Typography variant="h4" color="content.500">
+                Months
+              </Typography>
               <SliderSelect
                 valueRange={selectedCourseFeeList?.map(course => course.duration)}
                 onIndexChange={index => {
                   setSelectedCourseFee(selectedCourseFeeList[index]);
                 }}
+                renderTrigger={selectedCourse}
               />
-            )}
-          </Stack>
+            </Stack>
+          )}
         </Stack>
         <FeesDetailBox />
       </Stack>
       <Stack gap={0.5}>
-        <Stack bgcolor="secondary.100" borderRadius={2.5} p={2}>
-          <Typography variant="bodyBold" color={"primary.900"}>
-            Tuition Fees:
-          </Typography>
-          <Typography variant="bodyLight" color={"primary.900"}>
-            [[Apply for 6-Months and Get 1 extra month Tuition waiver, Free IELTS test fee, ..etc]]
-          </Typography>
-        </Stack>
+        {selectedCourseFee?.offer && (
+          <Stack bgcolor="secondary.100" borderRadius={2.5} p={2}>
+            <Typography variant="bodyBold" color={"primary.900"}>
+              Tuition Fees:
+            </Typography>
+            <Typography variant="bodyBold" color={"primary.900"}>
+              {selectedCourseFee?.offer}
+            </Typography>
+          </Stack>
+        )}
         <Typography
-          variant="bodyLight"
+          variant="bodyNormal"
           color="primary.main"
           component="a"
           href=""

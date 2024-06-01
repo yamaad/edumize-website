@@ -1,7 +1,7 @@
 import { IconButton, Stack, Typography } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //--------------
 // interfaces
@@ -9,15 +9,23 @@ import { useState } from "react";
 interface SliderSelectProps {
   valueRange: number[] | string[];
   onIndexChange: (index: number) => void;
+  renderTrigger?: any;
 }
 //---------------
 // component
 //---------------
-const SliderSelect = ({ valueRange, onIndexChange }: SliderSelectProps) => {
+const SliderSelect = ({ valueRange, onIndexChange, renderTrigger }: SliderSelectProps) => {
   //---------------
   // local states
   //---------------
   const [selectedValueIndex, setSelectedValueIndex] = useState<number>(0);
+
+  //---------------
+  // trigger
+  //---------------
+  useEffect(() => {
+    setSelectedValueIndex(0);
+  }, [renderTrigger]);
 
   //---------------
   // handlers

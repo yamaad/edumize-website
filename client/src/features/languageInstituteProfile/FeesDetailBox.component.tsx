@@ -1,6 +1,8 @@
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { Box, Button, Checkbox, Divider, Stack, Typography } from "@mui/material";
 import { ConnectedProps, connect } from "react-redux";
 import { RootState } from "redux/store";
+import CurrencyMenu from "components/currencyMenu/CurrencyMenu";
+import { useEffect, useState } from "react";
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({
@@ -28,14 +30,49 @@ interface FeesDetailBoxProps extends PropsFromRedux {}
 //---------------
 const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, selectedCurrencyRate }: FeesDetailBoxProps) => {
   //---------------
-  // constant
+  // local states
+  //---------------
+  const [totalFee, setTotalFee] = useState<number>(0);
+  const [isEdumizePickup, setIsEdumizePickup] = useState<boolean>(false);
+  const [isEdumizeDiscount, setIsEdumizeDiscount] = useState<boolean>(false);
+  //---------------
+  // constants
   //---------------
   const mapFeeListToTitles = [
     { title: "Registration Fees", fee: selectedCourseFee?.registrationFee || "Free" },
     { title: "Placement Test", fee: selectedCourseFee?.placementTest || "Free" },
-    { title: "Student Visa & Medical Insurance  ", fee: selectedCourseFee?.visaAndInsurance || "Not Offered" },
+    { title: "Student Visa & Medical Insurance", fee: selectedCourseFee?.visaAndInsurance || "Not Offered" },
     { title: "Books & Materials", fee: selectedCourseFee?.booksAndMaterials || "Free" },
+    {
+      title: "Airport & Immigration Clearance and Airport Pickup",
+      fee: selectedCourseFee?.immigrationClearanceAndAirportPickUp || "Not Offered",
+    },
   ];
+  //---------------
+  // triggers
+  //---------------
+  useEffect(() => {
+    if (selectedCourseFee) {
+      setTotalFee(
+        selectedCourseFee.registrationFee +
+          selectedCourseFee.placementTest +
+          selectedCourseFee.visaAndInsurance +
+          selectedCourseFee.booksAndMaterials +
+          selectedCourseFee.immigrationClearanceAndAirportPickUp +
+          (isEdumizePickup ? Number(import.meta.env.VITE_EDUMIZE_PICKUP_FEE) || 600 : 0) +
+          (isEdumizeDiscount
+            ? selectedCourseFee.discountedFee - selectedCourseFee.edumizeDiscountRate * selectedCourseFee.discountedFee
+            : selectedCourseFee.discountedFee)
+      );
+    }
+  }, [selectedCourseFee, isEdumizePickup, isEdumizeDiscount]);
+  useEffect(() => {
+    if (!selectedCourseFee?.immigrationClearanceAndAirportPickUp) {
+      setIsEdumizePickup(true);
+    } else {
+      setIsEdumizePickup(false);
+    }
+  }, [selectedCourseFee]);
   return (
     <>
       {selectedCourseFee && (
@@ -45,24 +82,28 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
               100% No Hidden Fees
             </Typography>
             <Stack direction={"row"} justifyContent={"space-between"} gap={1}>
-              <Typography variant="bodySemibold" color={"primary.900"}>
+              <Typography variant="h6" color={"primary.900"}>
                 {selectedCourse?.name}
               </Typography>
-              <Typography variant="bodyBold" color="content.500">
+              <Typography variant="h6" color="content.500">
                 for
               </Typography>
-              <Typography variant="bodySemibold" color={"primary.900"}>
+              <Typography variant="h6" color={"primary.900"}>
                 {selectedCourseFee.duration} Months
               </Typography>
             </Stack>
           </Stack>
           <Stack gap={1}>
-            <Typography variant="bodyBold" color="content.500">
-              Tuition Fees:
-            </Typography>
+            <Stack direction={"row"} gap={2} justifyContent={"space-between"} alignItems={"center"}>
+              <Typography variant="bodyBold" color="content.500">
+                Tuition Fees:
+              </Typography>
+              <CurrencyMenu />
+            </Stack>
             <Stack alignItems={"center"}>
-              <Box position="relative" ml={-15}>
+              <Box position="relative" ml={-20}>
                 <Typography
+                  variant="bodyBoldXS"
                   color="secondary.400"
                   sx={{
                     fontSize: "10px",
@@ -70,22 +111,28 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
                     "::before, ::after": {
                       content: '""',
                       position: "absolute",
-                      top: 7,
-                      left: 6,
-                      width: "47px",
+                      top: 8,
+                      left: -5,
+                      width: "65px",
                       height: "1px",
                       backgroundColor: "primary.900",
                       transformOrigin: "center",
-                      transform: "rotate(-9deg)",
+                      transform: "rotate(-7deg)",
                     },
                   }}
                 >
-                  {selectedCourseFee.originalFee}
+                  {selectedCurrency} {` `}
+                  {Math.ceil(selectedCourseFee.originalFee * selectedCurrencyRate).toLocaleString()}
                 </Typography>
               </Box>
 
-              <Typography variant="h6" color={"primary.900"}>
-                {selectedCourseFee.discountedFee}
+              <Typography variant="h4" color={"primary.900"}>
+                {selectedCurrency} {` `}
+                {Math.ceil(
+                  (isEdumizeDiscount
+                    ? selectedCourseFee.discountedFee - selectedCourseFee.edumizeDiscountRate * selectedCourseFee.discountedFee
+                    : selectedCourseFee.discountedFee) * selectedCurrencyRate
+                ).toLocaleString()}
               </Typography>
             </Stack>
             <Button
@@ -96,8 +143,12 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
                 alignSelf: "center",
                 textTransform: "capitalize",
                 color: "content.0",
+                fontWeight: 600,
                 boxShadow: 6,
+                borderRadius: 3,
               }}
+              disabled={isEdumizeDiscount}
+              onClick={() => setIsEdumizeDiscount(true)}
             >
               Claim Edumize Additional Discount
             </Button>
@@ -105,20 +156,35 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
           <Stack gap={2}>
             {mapFeeListToTitles.map((value, index) => (
               <Stack key={index} direction={"row"} gap={4} justifyContent={"space-between"}>
-                <Typography variant="bodyLight" color="content.500" sx={{ whiteSpace: "wrap" }}>
+                <Typography variant="bodyNormal" color="content.500" sx={{ whiteSpace: "wrap" }}>
                   {value.title}
                 </Typography>
-                <Typography variant="bodyLight" color="content.500" sx={{ whiteSpace: "nowrap" }}>
+                <Typography variant="bodyNormal" color="content.500" sx={{ whiteSpace: "nowrap" }}>
                   {typeof value.fee === "number" ? selectedCurrency + " " + Math.ceil(value.fee * selectedCurrencyRate).toLocaleString() : value.fee}
                 </Typography>
               </Stack>
             ))}
-            <Stack direction={"row"} gap={4} justifyContent={"space-between"}>
-              <Typography variant="bodyLight" color="content.500" sx={{ whiteSpace: "wrap" }}>
-                {}
-              </Typography>
-              <Typography variant="bodyLight" color="content.500" sx={{ whiteSpace: "nowrap" }}>
-                {/* {typeof value.fee === "number" ? selectedCurrency + " " + Math.ceil(value.fee * selectedCurrencyRate).toLocaleString() : value.fee} */}
+
+            <Stack
+              direction={"row"}
+              gap={4}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              sx={{ textDecoration: !!selectedCourseFee?.immigrationClearanceAndAirportPickUp ? "line-through" : "none" }}
+            >
+              <Stack direction={"row"} alignItems={"center"}>
+                <Checkbox
+                  disabled={!!selectedCourseFee?.immigrationClearanceAndAirportPickUp}
+                  checked={isEdumizePickup}
+                  onChange={event => setIsEdumizePickup(event.target.checked)}
+                  color="secondary"
+                />
+                <Typography variant="bodyNormal" color="content.500" sx={{ whiteSpace: "wrap" }}>
+                  Edumize Airport Pickup
+                </Typography>
+              </Stack>
+              <Typography variant="bodyNormal" color="content.500" sx={{ whiteSpace: "nowrap" }}>
+                {selectedCurrency + " " + Math.ceil(import.meta.env.VITE_EDUMIZE_PICKUP_FEE || 600 * selectedCurrencyRate).toLocaleString()}
               </Typography>
             </Stack>
           </Stack>
@@ -126,11 +192,14 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
             <Divider sx={{ border: "1px solid", opacity: 0.35 }} />
             <Typography variant="bodyBold" color={"content.500"}>
               Total for the entire duration: <br />
-              [[MYR 20,000]]
+              {selectedCurrency} {` `}
+              {Math.ceil(totalFee * selectedCurrencyRate).toLocaleString()}
             </Typography>
-            <Typography variant="bodyLight" color={"secondary"}>
-              Edumize Discount Applied Successfully
-            </Typography>
+            {isEdumizeDiscount && (
+              <Typography variant="bodyLight" color={"secondary"}>
+                Edumize Discount Applied Successfully
+              </Typography>
+            )}
           </Stack>
         </Stack>
       )}
