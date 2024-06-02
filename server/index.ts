@@ -21,6 +21,7 @@ app.use("/api/currency", currencyRoutes);
 // serve static file
 app.use(express.static(__dirname));
 app.get("/client", (req, res) => {
+  res.set("Cache-Control", "no-store");
   res.sendFile(path.join(__dirname, process.env.CLIENT_PATH || ""));
 });
 
