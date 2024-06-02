@@ -1,8 +1,8 @@
 import { Skeleton, Stack, Typography } from "@mui/material";
-import FeesDetailBox from "./FeesDetailBox.component";
+import FeesDetailBox from "./components/FeesDetailBox.component";
 import { RootState } from "redux/store";
 import { ConnectedProps, connect } from "react-redux";
-import InstituteCourseCard from "./InstituteCourseCard.component";
+import InstituteCourseCard from "./components/InstituteCourseCard.component";
 import {
   useGetLanguageInstituteCourseFeeListQuery,
   useGetLanguageInstituteCourseListQuery,

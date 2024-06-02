@@ -3,7 +3,7 @@ import { ConnectedProps, connect } from "react-redux";
 import { useGetLanguageInstituteQuery } from "redux/services/airtable/languageInstituteCourse/languageInstituteCourseApi";
 import { useEffect } from "react";
 import { RootState } from "redux/store";
-import InstitutesCoursesAndFees from "./InsitituteCoursesAndFees.component";
+import InstitutesCoursesAndFees from "./sections/courses&fees/InsitituteCoursesAndFees.component";
 import { setCurrentInstitute } from "redux/features/instituteSlice/instituteCourseSlice";
 
 // map state to props

@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Divider, Stack, Typography } from "@mui/material";
+import { Alert, Box, Button, Checkbox, Divider, Stack, Typography } from "@mui/material";
 import { ConnectedProps, connect } from "react-redux";
 import { RootState } from "redux/store";
 import CurrencyMenu from "components/currencyMenu/CurrencyMenu";
@@ -67,6 +67,7 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
     }
   }, [selectedCourseFee, isEdumizePickup, isEdumizeDiscount]);
   useEffect(() => {
+    setIsEdumizeDiscount(false);
     if (!selectedCourseFee?.immigrationClearanceAndAirportPickUp) {
       setIsEdumizePickup(true);
     } else {
@@ -147,7 +148,7 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
                 boxShadow: 6,
                 borderRadius: 3,
               }}
-              disabled={isEdumizeDiscount}
+              disabled={isEdumizeDiscount || !selectedCourseFee.edumizeDiscountRate}
               onClick={() => setIsEdumizeDiscount(true)}
             >
               Claim Edumize Additional Discount
@@ -196,9 +197,9 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
               {Math.ceil(totalFee * selectedCurrencyRate).toLocaleString()}
             </Typography>
             {isEdumizeDiscount && (
-              <Typography variant="bodyLight" color={"secondary"}>
+              <Alert variant="filled" severity="success">
                 Edumize Discount Applied Successfully
-              </Typography>
+              </Alert>
             )}
           </Stack>
         </Stack>
