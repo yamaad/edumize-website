@@ -1,5 +1,5 @@
-import { BadRequestError } from "../../middlewares/errorhandler";
-import { Currencies, Rates } from "./types";
+import { BadRequestError } from "../../common/middlewares/errorhandler";
+import { Currencies, Rates } from "./currency.type";
 
 //TODO set a proper caching
 //TODO move caches into a separate folder
@@ -9,8 +9,8 @@ let currencies: Currencies | undefined;
 let lastSessionUpdate: number | undefined;
 //-------------------------------------------
 
-export default class CurrencyServices {
-  public static getCurrencyList = async () => {
+class CurrencyServices {
+  getCurrencyList = async () => {
     if (currencies) return currencies;
     try {
       const response = await fetch(`https://openexchangerates.org/api/currencies.json?app_id=${process.env.OPEN_EXCHANGE_RATE_APP_ID}`);
@@ -22,9 +22,9 @@ export default class CurrencyServices {
       throw new BadRequestError(`Failed to fetch currency List: ${error.message}`);
     }
   };
-  public static getCurrencyRates = async () => {
+  getCurrencyRates = async () => {
     try {
-      if (this.isTimeToUpdateRates() || !rates) {
+      if (isTimeToUpdateRates() || !rates) {
         const response = await fetch(`https://openexchangerates.org/api/latest.json?app_id=${process.env.OPEN_EXCHANGE_RATE_APP_ID}`);
         const data = await response.json();
         if (!response.ok) throw new BadRequestError(data.message);
@@ -42,11 +42,15 @@ export default class CurrencyServices {
       throw new BadRequestError(`Failed to fetch currency rates: ${error.message}`);
     }
   };
-  private static isTimeToUpdateRates = (): boolean => {
-    if (!lastSessionUpdate) return true;
-    const timeDurationInHours = 1000 * 60 * 60 * (Number(process.env.DURATION_OF_CURRENCY_RATES_UPDATES_IN_HOURS) || 4);
-    const currentTime = Date.now();
-    const timeDifference = currentTime - lastSessionUpdate;
-    return timeDifference > timeDurationInHours;
-  };
 }
+
+export default new CurrencyServices();
+
+//TODO make the time diff a public function
+const isTimeToUpdateRates = (): boolean => {
+  if (!lastSessionUpdate) return true;
+  const timeDurationInHours = 1000 * 60 * 60 * (Number(process.env.DURATION_OF_CURRENCY_RATES_UPDATES_IN_HOURS) || 4);
+  const currentTime = Date.now();
+  const timeDifference = currentTime - lastSessionUpdate;
+  return timeDifference > timeDurationInHours;
+};

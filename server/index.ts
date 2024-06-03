@@ -2,10 +2,14 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import path from "path";
-import { errorHandler } from "./src/middlewares/errorhandler";
-import currencyRoutes from "./src/routes/currencyRoutes";
+import { errorHandler } from "./src/common/middlewares/errorhandler";
+import connectDB from "./src/common/config/db/mongoDb";
+import { currencyRouter } from "./src/modules/currency/currency.router";
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
+
+// Connect to MongoDB
+connectDB();
 
 // server
 const app = express();
@@ -16,7 +20,8 @@ app.use(cors());
 // use logger middleware
 //TODO app.use(loggerMiddleware);
 // use routers
-app.use("/api/currency", currencyRoutes);
+app.use("/api/currency", currencyRouter);
+// app.use("/api/email-check", currencyRouter);
 
 // serve static file
 app.use(express.static(__dirname));
