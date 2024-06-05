@@ -40,7 +40,6 @@ const VerifyEmailDialog = ({ showDialog, setShowDialog, onVerified }: VerifyEmai
   // triggers
   // ---------------
   useEffect(() => {
-    console.log({ resultX: result });
     if (result.isSuccess) {
       switch (result.data.emailStatus) {
         case "ERROR":

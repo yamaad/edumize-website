@@ -1,5 +1,5 @@
 import LeadODM from "./lead.model.odm";
-import { ILeadODM } from "./lead.type";
+import { EmailStatuses, ILeadODM } from "./lead.type";
 
 class LeadRepoODM {
   async findByEmail(email: string): Promise<ILeadODM | null> {
@@ -8,6 +8,9 @@ class LeadRepoODM {
 
   async createOne(lead: ILeadODM): Promise<ILeadODM> {
     return await LeadODM.create(lead);
+  }
+  async updateEmailStatus(lead: ILeadODM): Promise<ILeadODM | null> {
+    return await LeadODM.findOneAndUpdate({ email: lead.email }, lead, { new: true });
   }
 
   async updateLeadEmailEntryNumber(email: string): Promise<ILeadODM | null> {

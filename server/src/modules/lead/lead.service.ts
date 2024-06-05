@@ -6,7 +6,9 @@ class LeadService {
   async validateLeadEmail(email: string): Promise<ILeadODM> {
     const existingLead = await leadRepoODM.findByEmail(email);
     if (existingLead) {
-      leadRepoODM.updateLeadEmailEntryNumber(email);
+      if (existingLead.emailStatus !== EmailStatuses.ERROR && existingLead.emailStatus !== EmailStatuses.UNKNOWN)
+        leadRepoODM.updateEmailStatus(existingLead);
+        leadRepoODM.updateLeadEmailEntryNumber(email);
       return existingLead;
     }
     const emailValidation = await validateEmail(email);
