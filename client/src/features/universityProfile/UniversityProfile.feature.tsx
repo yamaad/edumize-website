@@ -1,12 +1,12 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import SearchBar, { SortItem, SortProps } from "../../components/controlBar/SearchBar.component";
-import FilterMenu from "../../components/filterMenu.tsx/FilterMenu.component";
+import FilterMenu from "../../components/filterMenu/FilterMenu.component";
 import { useEffect, useState } from "react";
-import { AirTableQueryBody } from "../../redux/services/airtable/types";
+import { AirTableQueryBody } from "../../redux/course/airtable.model";
 import useDebounce from "../../hooks/useDebounce";
 import UniversityCourseCard from "./components/CourseCard.component";
-import { useGetCourseListMutation } from "../../redux/services/airtable/course/courseApi";
-import { CourseModel } from "../../redux/services/airtable/course/types";
+import { useGetCourseListMutation } from "../../redux/course/course.api";
+import { CourseModel } from "../../redux/course/course.model";
 
 //--------------
 // interfaces

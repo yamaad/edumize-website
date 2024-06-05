@@ -1,7 +1,7 @@
 import { Card, CardActionArea, CardContent, Skeleton, Stack, Typography } from "@mui/material";
 import { ConnectedProps, connect } from "react-redux";
-import { setSelectedCourse } from "redux/features/instituteSlice/instituteCourseSlice";
-import { InstituteCourseModel } from "redux/features/instituteSlice/instituteModel";
+import { InstituteCourseModel } from "redux/institute/institute.model";
+import { setSelectedCourse } from "redux/institute/institute.slice";
 import { RootState } from "redux/store";
 
 // map state to props

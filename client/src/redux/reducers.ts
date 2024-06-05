@@ -1,11 +1,12 @@
-import { courseApi } from "./services/airtable/course/courseApi";
-import { filterApi } from "./services/airtable/dynamicFilters/filterApi";
-import { universityApi } from "./services/airtable/university/universityApi";
-import { universityTypeApi } from "./services/airtable/universityType/universityType";
-import { currencyApi } from "./services/edumizeApi/currency/currency";
-import currencyReducer from "./features/currencySlice";
-import { languageInstituteCourseApi } from "./services/airtable/languageInstituteCourse/languageInstituteCourseApi";
-import InstituteReducer from "./features/instituteSlice/instituteCourseSlice";
+import { courseApi } from "./course/course.api";
+import { currencyApi } from "./currency/currency.api";
+import currencyReducer from "./currency/currency.slice";
+import { filterApi } from "./dynamicFilters/filterApi";
+import { languageInstituteCourseApi } from "./institute/institute.api";
+import InstituteReducer from "./institute/institute.slice";
+import { leadApi } from "./lead/lead.api";
+import { universityApi } from "./university/universityApi";
+import { universityTypeApi } from "./university/universityType/universityType";
 
 export default {
   // slice
@@ -19,4 +20,5 @@ export default {
   [filterApi.reducerPath]: filterApi.reducer,
   [currencyApi.reducerPath]: currencyApi.reducer,
   [languageInstituteCourseApi.reducerPath]: languageInstituteCourseApi.reducer,
+  [leadApi.reducerPath]: leadApi.reducer,
 };

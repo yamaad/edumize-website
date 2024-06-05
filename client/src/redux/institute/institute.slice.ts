@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { languageInstituteCourseApi } from "redux/services/airtable/languageInstituteCourse/languageInstituteCourseApi";
-import { InstituteCourseFeeModel, InstituteCourseModel, InstituteModel } from "./instituteModel";
+import { InstituteCourseFeeModel, InstituteCourseModel, InstituteModel } from "./institute.model";
+import { languageInstituteCourseApi } from "./institute.api";
 
 interface InstituteState {
   instituteList: InstituteModel[];

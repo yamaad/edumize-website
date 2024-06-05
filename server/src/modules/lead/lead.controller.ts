@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import leadService from "./lead.service";
 
 class LeadController {
-  async emailValidate(req: Request, res: Response, next: NextFunction) {
+  public static async emailValidator(req: Request, res: Response, next: NextFunction) {
     try {
       const { email } = req.body;
       const lead = await leadService.validateLeadEmail(email);

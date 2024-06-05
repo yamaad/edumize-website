@@ -3,14 +3,12 @@ import FeesDetailBox from "./components/FeesDetailBox.component";
 import { RootState } from "redux/store";
 import { ConnectedProps, connect } from "react-redux";
 import InstituteCourseCard from "./components/InstituteCourseCard.component";
-import {
-  useGetLanguageInstituteCourseFeeListQuery,
-  useGetLanguageInstituteCourseListQuery,
-} from "redux/services/airtable/languageInstituteCourse/languageInstituteCourseApi";
+
 import { SliderSelect } from "components/sliderSelect.component.tsx/SliderSelect.component";
 import { useEffect, useState } from "react";
-import { InstituteCourseFeeModel } from "redux/features/instituteSlice/instituteModel";
-import { setSelectedCourseFee } from "redux/features/instituteSlice/instituteCourseSlice";
+import { InstituteCourseFeeModel } from "redux/institute/institute.model";
+import { setSelectedCourseFee } from "redux/institute/institute.slice";
+import { useGetLanguageInstituteCourseFeeListQuery, useGetLanguageInstituteCourseListQuery } from "redux/institute/institute.api";
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({
@@ -64,9 +62,6 @@ const InstitutesCoursesAndFees = ({
     setSelectedCourseFeeList(courseFeeList.filter(courseFee => courseFee.courseId === selectedCourse?.id));
     setSelectedCourseFee(courseFeeList.filter(courseFee => courseFee.courseId === selectedCourse?.id)[0]);
   }, [selectedCourse]);
-  //-------------
-  // handlers
-  //-------------
 
   return (
     <Stack borderRadius={2} p={1} gap={2} maxWidth={"100%"}>
@@ -116,7 +111,7 @@ const InstitutesCoursesAndFees = ({
           color="primary.main"
           component="a"
           href=""
-          sx={{ alignSelf: "start", fontWeight: 300, textDecoration: "none" }}
+          sx={{ alignSelf: "start", fontWeight: 300, textTransform: "capitalize" }}
         >
           Terms & Conditions
         </Typography>

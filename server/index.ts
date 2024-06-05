@@ -5,6 +5,7 @@ import path from "path";
 import { errorHandler } from "./src/common/middlewares/errorhandler";
 import connectDB from "./src/common/config/db/mongoDb";
 import { currencyRouter } from "./src/modules/currency/currency.router";
+import { leadRouter } from "./src/modules/lead/lead.router";
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -21,7 +22,7 @@ app.use(cors());
 //TODO app.use(loggerMiddleware);
 // use routers
 app.use("/api/currency", currencyRouter);
-// app.use("/api/email-check", currencyRouter);
+app.use("/api/lead", express.json(), leadRouter);
 
 // serve static file
 app.use(express.static(__dirname));

@@ -2,12 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import reducer from "./reducers";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import logger from "redux-logger";
-import { courseApi } from "./services/airtable/course/courseApi";
-import { filterApi } from "./services/airtable/dynamicFilters/filterApi";
-import { universityApi } from "./services/airtable/university/universityApi";
-import { universityTypeApi } from "./services/airtable/universityType/universityType";
-import { currencyApi } from "./services/edumizeApi/currency/currency";
-import { languageInstituteCourseApi } from "./services/airtable/languageInstituteCourse/languageInstituteCourseApi";
+import { courseApi } from "./course/course.api";
+import { currencyApi } from "./currency/currency.api";
+import { languageInstituteCourseApi } from "./institute/institute.api";
+import { filterApi } from "./dynamicFilters/filterApi";
+import { universityApi } from "./university/universityApi";
+import { universityTypeApi } from "./university/universityType/universityType";
+import { leadApi } from "./lead/lead.api";
 
 export const store = configureStore({
   reducer,
@@ -20,6 +21,7 @@ export const store = configureStore({
       universityTypeApi.middleware,
       currencyApi.middleware,
       languageInstituteCourseApi.middleware,
+      leadApi.middleware,
     ]),
 });
 

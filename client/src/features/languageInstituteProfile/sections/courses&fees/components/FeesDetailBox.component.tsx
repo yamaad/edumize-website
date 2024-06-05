@@ -3,6 +3,7 @@ import { ConnectedProps, connect } from "react-redux";
 import { RootState } from "redux/store";
 import CurrencyMenu from "components/currencyMenu/CurrencyMenu";
 import { useEffect, useState } from "react";
+import VerifyEmailDialog from "components/dialogs/VerifyEmailDialog";
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({
@@ -32,9 +33,12 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
   //---------------
   // local states
   //---------------
+  const [showDialog, setShowDialog] = useState<boolean>(false);
   const [totalFee, setTotalFee] = useState<number>(0);
   const [isEdumizePickup, setIsEdumizePickup] = useState<boolean>(false);
   const [isEdumizeDiscount, setIsEdumizeDiscount] = useState<boolean>(false);
+  const [discountClaimTimes, setIsDiscountClaimTimes] = useState<number>(0);
+
   //---------------
   // constants
   //---------------
@@ -48,6 +52,21 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
       fee: selectedCourseFee?.immigrationClearanceAndAirportPickUp || "Not Offered",
     },
   ];
+  //---------------
+  // handler
+  //---------------
+  const handleOnVerified = () => {
+    setIsEdumizeDiscount(true);
+    setIsDiscountClaimTimes(1);
+  };
+  const handleOnClaimDiscount = () => {
+    if (discountClaimTimes < 1 || discountClaimTimes > 2) {
+      setShowDialog(true);
+    } else {
+      setIsDiscountClaimTimes(prev => prev + 1);
+      setIsEdumizeDiscount(true);
+    }
+  };
   //---------------
   // triggers
   //---------------
@@ -149,7 +168,7 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
                 borderRadius: 3,
               }}
               disabled={isEdumizeDiscount || !selectedCourseFee.edumizeDiscountRate}
-              onClick={() => setIsEdumizeDiscount(true)}
+              onClick={handleOnClaimDiscount}
             >
               Claim Edumize Additional Discount
             </Button>
@@ -204,6 +223,7 @@ const FeesDetailBox = ({ selectedCourse, selectedCourseFee, selectedCurrency, se
           </Stack>
         </Stack>
       )}
+      <VerifyEmailDialog showDialog={showDialog} setShowDialog={setShowDialog} onVerified={handleOnVerified} />
     </>
   );
 };

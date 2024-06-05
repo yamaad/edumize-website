@@ -1,5 +1,5 @@
 import { Box, Paper, Typography } from "@mui/material";
-import { CourseModel } from "../../../redux/services/airtable/course/types";
+import { CourseModel } from "../../../redux/course/course.model";
 import { RootState } from "redux/store";
 import { ConnectedProps, connect } from "react-redux";
 

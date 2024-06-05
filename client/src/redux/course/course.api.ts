@@ -1,7 +1,7 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CourseData } from "./types";
-import { AirTableQueryBody, AirTableResponse } from "../types";
+import { CourseData } from "./course.model";
+import { AirTableQueryBody, AirTableResponse } from "./airtable.model";
 
 // Define a service using a base URL and expected endpoints
 export const courseApi = createApi({

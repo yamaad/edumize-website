@@ -1,10 +1,10 @@
 import { InputAdornment, MenuItem, TextField, Typography } from "@mui/material";
 import { ChangeEvent, useRef, useState } from "react";
 import { ConnectedProps, connect } from "react-redux";
-import { setSelectedCurrency } from "redux/features/currencySlice";
-import { useGetCurrencyQuery, useGetCurrencyRateQuery } from "redux/services/edumizeApi/currency/currency";
+import { setSelectedCurrency } from "redux/currency/currency.slice";
 import { RootState } from "redux/store";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import { useGetCurrencyQuery, useGetCurrencyRateQuery } from "redux/currency/currency.api";
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({

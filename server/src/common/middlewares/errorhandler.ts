@@ -1,19 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 
-export class BadRequestError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "BadRequestError";
-  }
-}
-
-export class NotFoundError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "NotFoundError";
-  }
-}
-
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   let statusCode = 500;
@@ -27,5 +13,19 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
     message = err.message;
   }
 
-  res.status(statusCode).json({ message });
+  return res.status(statusCode).json({ message });
 };
+
+export class BadRequestError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "BadRequestError";
+  }
+}
+
+export class NotFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "NotFoundError";
+  }
+}

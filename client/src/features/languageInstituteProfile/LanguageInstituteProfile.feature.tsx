@@ -1,10 +1,12 @@
 import { Stack } from "@mui/material";
 import { ConnectedProps, connect } from "react-redux";
-import { useGetLanguageInstituteQuery } from "redux/services/airtable/languageInstituteCourse/languageInstituteCourseApi";
+
 import { useEffect } from "react";
 import { RootState } from "redux/store";
 import InstitutesCoursesAndFees from "./sections/courses&fees/InsitituteCoursesAndFees.component";
-import { setCurrentInstitute } from "redux/features/instituteSlice/instituteCourseSlice";
+import { useGetLanguageInstituteQuery } from "redux/institute/institute.api";
+import { setCurrentInstitute } from "redux/institute/institute.slice";
+
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({
