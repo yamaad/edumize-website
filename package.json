@@ -21,6 +21,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "concurrently": "^8.2.2",
     "nodemon": "^2.0.22",
+    "redux-logger": "^3.0.6",
     "ts-node": "^10.9.2",
     "vite": "^5.2.0",
     "vite-tsconfig-paths": "^4.3.2"
