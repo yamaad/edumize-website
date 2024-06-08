@@ -54,7 +54,7 @@ const InstitutesCoursesAndFees = ({}: InstitutesCoursesAndFees) => {
           bla bla bla blabla bla bla bla bla bla bla blabla bla bla bla bla bla bla blabla bla bla blabla bla bla
         </Typography>
       </Stack>
-      <Stack>
+      <Stack gap={1}>
         <Stack direction={"row"} gap={1}>
           <Button
             variant={tabValue === 0 ? "contained" : "outlined"}
