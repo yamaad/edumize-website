@@ -151,7 +151,8 @@ const ComparePanel = ({
           py: 1,
           position: "fixed",
           bottom: 16,
-          left: "50vw",
+          left: { xs: "30vw", sm: "35vw", md: "40vw", lg: "45vw" },
+
           zIndex: 2,
         }}
         onClick={() => {
@@ -255,7 +256,7 @@ const ComparePanel = ({
             </Stack>
           </Stack>
           <Stack>
-            <Stack direction={"row"} justifyContent={"stretch"} px={{ xs: 0, md: 5 }} flexWrap={"wrap"}>
+            <Stack direction={"row"} justifyContent={"stretch"} px={{ xs: 0, md: 5 }} flexWrap={"nowrap"}>
               <Stack
                 flexGrow={1}
                 border={"1px solid #9F9F9F"}
@@ -275,7 +276,7 @@ const ComparePanel = ({
                     top: 0,
                     left: 0,
                     width: "100%",
-                    height: "100.5%",
+                    height: "100%",
                     backgroundColor: "primary.100",
                     transform: "skewX(45deg)",
                     borderTopLeftRadius: 200,
@@ -283,7 +284,7 @@ const ComparePanel = ({
                   },
                 }}
               >
-                <Typography variant={isMobileScreen ? "h4" : "h2"} color={"content.600"} sx={{ whiteSpace: "nowrap", zIndex: 2 }}>
+                <Typography variant={isMobileScreen ? "h5" : "h2"} color={"content.600"} sx={{ whiteSpace: "nowrap", zIndex: 2 }}>
                   {isLoading || !selectedTotalFee ? <Skeleton /> : currency + ` ` + Math.ceil(selectedTotalFee * currencyRate).toLocaleString()}
                 </Typography>
                 <Button
@@ -291,7 +292,7 @@ const ComparePanel = ({
                   color="secondary"
                   disabled={!currentInstitute}
                   onClick={() => setTabValue(0)}
-                  sx={{ borderRadius: 5, backgroundColor: "content.0", textTransform: "capitalize", mx: { xs: 0, sm: 5 }, zIndex: 2 }}
+                  sx={{ borderRadius: 5, backgroundColor: "content.0", textTransform: "capitalize", mx: { xs: 3, sm: 5 }, zIndex: 2 }}
                 >
                   {currentInstitute ? "Get Details" : <CircularProgress color="secondary" />}
                 </Button>
@@ -321,7 +322,7 @@ const ComparePanel = ({
                   },
                 }}
               >
-                <Typography variant={isMobileScreen ? "h4" : "h2"} color={"primary"} sx={{ whiteSpace: "nowrap", zIndex: 1 }}>
+                <Typography variant={isMobileScreen ? "h5" : "h2"} color={"primary"} sx={{ whiteSpace: "nowrap", zIndex: 1 }}>
                   {isLoading ? (
                     <Skeleton />
                   ) : comparedCourseFee ? (
@@ -340,7 +341,7 @@ const ComparePanel = ({
                       "_self"
                     );
                   }}
-                  sx={{ borderRadius: 5, textTransform: "capitalize", color: "content.0", mx: { xs: 0, sm: 5 }, zIndex: 1 }}
+                  sx={{ borderRadius: 5, textTransform: "capitalize", color: "content.0", mx: { xs: 3, sm: 5 }, zIndex: 1 }}
                 >
                   {comparedInstitute ? "Visit Page" : <CircularProgress color="secondary" />}
                 </Button>

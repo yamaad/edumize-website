@@ -111,7 +111,7 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
           py: 1,
           position: "fixed",
           bottom: 16,
-          left: "45vw",
+          left: { xs: "30vw", sm: "35vw", md: "40vw", lg: "45vw" },
           zIndex: 10,
         }}
         onClick={() => {

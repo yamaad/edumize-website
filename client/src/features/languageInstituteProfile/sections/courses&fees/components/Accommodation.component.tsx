@@ -35,7 +35,7 @@ const Accommodation = ({}: Accommodation) => {
         justifyContent={"center"}
         sx={{ borderRadius: 5, height: 200, background: "radial-gradient(circle, transparent 0%, rgba(32,79,88,0.4) 100%) " }}
       >
-        <Typography variant="h1" color={"primary.900"}>
+        <Typography variant="h2" color={"primary.900"} textAlign={"center"}>
           Coming Soon!
         </Typography>
       </Stack>
