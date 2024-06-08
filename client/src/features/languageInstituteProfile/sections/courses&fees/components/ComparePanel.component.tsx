@@ -8,7 +8,7 @@ import { InstituteCourseFeeModel, InstituteCourseModel, InstituteModel } from "r
 import InstituteCourseCard, { InstituteCourseCard as InstituteCourseCardComponent } from "./InstituteCourseCard.component";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CurrencyMenu from "components/currencyMenu/CurrencyMenu";
-import { WheelSelect } from "components/selectWheel/WheelSelect.component";
+import { WheelSelect } from "components/wheelSelect/WheelSelect.component";
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({

@@ -35,7 +35,7 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
     if (selectedValueIndex === valueRange.length - 1) return;
     setSelectedValueIndex(prev => prev + 1);
   };
-  const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+  const handleDrag = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (info.offset.y > 5) handleOnArrowUp();
     if (info.offset.y < -5) handleOnArrowDown();
   };

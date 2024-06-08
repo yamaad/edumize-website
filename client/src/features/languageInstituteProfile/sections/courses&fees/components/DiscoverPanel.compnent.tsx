@@ -7,7 +7,7 @@ import { setSelectedCourseFee } from "redux/institute/institute.slice";
 import { InstituteCourseFeeModel } from "redux/institute/institute.model";
 import InstituteCourseCard from "./InstituteCourseCard.component";
 import FeesDetailBox from "./FeesDetailBox.component";
-import { WheelSelect } from "components/selectWheel/WheelSelect.component";
+import { WheelSelect } from "components/wheelSelect/WheelSelect.component";
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({
