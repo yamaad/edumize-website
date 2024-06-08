@@ -46,8 +46,8 @@ const InstitutesCoursesAndFees = ({}: InstitutesCoursesAndFees) => {
 
   return (
     <Stack gap={3}>
-      <Stack sx={{ textAlign: "center" }}>
-        <Typography variant="h2" color={"primary"}>
+      <Stack sx={{ textAlign: "center" }} gap={1}>
+        <Typography variant="h5" color={"primary"}>
           Customize You Study Package
         </Typography>
         <Typography variant="bodyNormal" color={"content.400"}>
