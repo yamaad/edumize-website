@@ -56,7 +56,7 @@ const DiscoverPanel = ({ currentInstitute, courseFeeList, selectedCourse, setSel
     setSelectedCourseFee(courseFeeList.filter(courseFee => courseFee.courseId === selectedCourse?.id)[0]);
   }, [selectedCourse]);
   return (
-    <Stack borderRadius={2} p={1} gap={2} maxWidth={"100%"} bgcolor={"content.0"}>
+    <Stack borderRadius={2} px={2} py={3} gap={2} maxWidth={"100%"} bgcolor={"content.0"}>
       <Stack direction={"row"} gap={4} justifyContent="center" flexWrap={"wrap"}>
         <Stack flexGrow={1} gap={6}>
           {
