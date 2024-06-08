@@ -153,7 +153,7 @@ const ComparePanel = ({
           bottom: 16,
           left: { xs: "30vw", sm: "35vw", md: "40vw", lg: "45vw" },
 
-          zIndex: 2,
+          zIndex: 4,
         }}
         onClick={() => {
           const encodedMessage = encodeURIComponent("Hello Edumize, I would to your consultation on which language institute I should choose.");
@@ -273,7 +273,7 @@ const ComparePanel = ({
                     position: "absolute",
                     borderRight: "2px solid #9F9F9F",
                     borderBottom: "1px solid #9F9F9F",
-                    top: 0,
+                    top: { xs: 0, sm: 1 },
                     left: 0,
                     width: "100%",
                     height: "100%",
@@ -317,7 +317,7 @@ const ComparePanel = ({
                     height: "100%",
                     backgroundColor: "content.0",
                     transform: "skewX(45deg)",
-                    borderEndEndRadius: 200,
+                    clipPath: "ellipse(130px 140px at 10% 0%)",
                     zIndex: 0,
                   },
                 }}

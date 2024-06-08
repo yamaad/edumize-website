@@ -10,19 +10,21 @@ import { universityApi } from "./university/universityApi";
 import { universityTypeApi } from "./university/universityType/universityType";
 import { leadApi } from "./lead/lead.api";
 
+const middlewares = [
+  courseApi.middleware,
+  filterApi.middleware,
+  universityApi.middleware,
+  universityTypeApi.middleware,
+  currencyApi.middleware,
+  languageInstituteCourseApi.middleware,
+  leadApi.middleware,
+];
+if (process.env.NODE_ENV === "development") {
+  middlewares.push(logger);
+}
 export const store = configureStore({
   reducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat([
-      logger,
-      courseApi.middleware,
-      filterApi.middleware,
-      universityApi.middleware,
-      universityTypeApi.middleware,
-      currencyApi.middleware,
-      languageInstituteCourseApi.middleware,
-      leadApi.middleware,
-    ]),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(middlewares),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

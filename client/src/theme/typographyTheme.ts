@@ -40,67 +40,67 @@ const typography: Partial<ThemeOptions["typography"]> = {
   fontFamily: "Poppins, Arial, sans-serif",
   h1: {
     fontWeight: 700,
-    fontSize: "3.5rem",
+    fontSize: "2rem",
   },
   h2: {
     fontWeight: 700,
-    fontSize: "3rem",
+    fontSize: "1.5rem",
   },
   h3: {
     fontWeight: 700,
-    fontSize: "2.5rem",
+    fontSize: "1.375rem",
   },
   h4: {
     fontWeight: 700,
-    fontSize: "2rem",
+    fontSize: "1.25rem",
   },
   h5: {
     fontWeight: 700,
-    fontSize: "1.5rem",
+    fontSize: "1.125rem",
   },
   h6: {
     fontWeight: 700,
-    fontSize: "1.125rem",
+    fontSize: "1rem",
   },
   bodyBold: {
     ...muiTypography.body1,
     fontWeight: 700,
-    fontSize: "1rem",
+    fontSize: "0.875rem",
   },
   bodySemibold: {
     ...muiTypography.body1,
     fontWeight: 600,
-    fontSize: "1rem",
+    fontSize: "0.875rem",
   },
   bodyNormal: {
     ...muiTypography.body1,
     fontWeight: 400,
-    fontSize: "1rem",
+    fontSize: "0.875rem",
   },
   bodyLight: {
     ...muiTypography.body1,
     fontWeight: 300,
-    fontSize: "1rem",
+    fontSize: "0.875rem",
   },
   bodyBoldXS: {
     ...muiTypography.body1,
     fontWeight: 700,
-    fontSize: "0.8rem",
+    fontSize: "0.75rem",
   },
   bodySemiboldXS: {
     ...muiTypography.body1,
     fontWeight: 600,
-    fontSize: "0.8rem",
+    fontSize: "0.75rem",
   },
   bodyNormalXS: {
     ...muiTypography.body1,
     fontWeight: 400,
-    fontSize: "0.8rem",
+    fontSize: "0.75rem",
   },
   bodyLightXS: {
     ...muiTypography.body1,
     fontWeight: 300,
-    fontSize: "0.8rem",
+    fontSize: "0.75rem",
   },
 };
 export default typography;

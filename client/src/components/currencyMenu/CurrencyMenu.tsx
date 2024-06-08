@@ -59,7 +59,7 @@ const CurrencyMenu = ({ selectedCurrency, setSelectedCurrency }: ICurrencyMenuPr
       InputProps={{
         startAdornment: (
           <InputAdornment disablePointerEvents position="start">
-            <CurrencyExchangeIcon color="secondary" fontSize="small" />
+            <CurrencyExchangeIcon color="secondary" sx={{ fontSize: "16px" }} />
           </InputAdornment>
         ),
       }}
@@ -75,8 +75,8 @@ const CurrencyMenu = ({ selectedCurrency, setSelectedCurrency }: ICurrencyMenuPr
         },
         sx: {
           borderRadius: 6,
-          fontSize: "12px",
-          height: "30px",
+          fontSize: "10px",
+          height: "25px",
           backgroundColor: "primary.100",
         },
       }}

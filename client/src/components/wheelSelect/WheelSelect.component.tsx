@@ -74,10 +74,10 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
                   key={selectedValueIndex - 1}
                   initial={{ opacity: 0, y: 0 }}
                   animate={{ opacity: 0.1, y: -20 }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.1 }}
                   style={{ position: "absolute" }}
                 >
-                  <Typography variant="h3" color="primary.900">
+                  <Typography variant="h1" color="primary.900">
                     {valueRange[selectedValueIndex - 1]}
                   </Typography>
                 </motion.div>
@@ -86,10 +86,9 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
                 key={selectedValueIndex}
                 initial={{ opacity: 0, y: selectedValueIndex > previousValueIndex ? 60 : -20 }}
                 animate={{ opacity: 1, y: 20 }}
-                transition={{ duration: 0.5 }}
-                // style={{ position: "absolute" }}
+                transition={{ duration: 0.1, type: "spring", stiffness: 100 }}
               >
-                <Typography variant="h3" color="primary.900">
+                <Typography variant="h1" color="primary.900">
                   {valueRange[selectedValueIndex]}
                 </Typography>
               </motion.div>
@@ -99,10 +98,10 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
                   key={selectedValueIndex + 1}
                   initial={{ opacity: 0, y: 100 }}
                   animate={{ opacity: 0.1, y: 60 }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.1 }}
                   style={{ position: "absolute" }}
                 >
-                  <Typography variant="h3" color="primary.900">
+                  <Typography variant="h1" color="primary.900">
                     {valueRange[selectedValueIndex + 1]}
                   </Typography>
                 </motion.div>
