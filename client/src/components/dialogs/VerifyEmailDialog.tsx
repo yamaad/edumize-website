@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, TextField, Typography } from "@mui/material";
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, TextField, Typography } from "@mui/material";
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useValidateEmailMutation } from "redux/lead/lead.api";
 import { emailValidator } from "utils/validator";
@@ -54,7 +54,7 @@ const VerifyEmailDialog = ({ showDialog, setShowDialog, onVerified }: VerifyEmai
     }
   }, [result]);
   return (
-    <Dialog open={showDialog} onClose={handleClose} PaperProps={{ sx: { minHeight: "240px", maxWidth: "350px", p: 3, pb: 1, borderRadius: 3 } }}>
+    <Dialog open={showDialog} onClose={handleClose} PaperProps={{ sx: { height: "240px", width: "350px", p: 3, pb: 1, borderRadius: 3 } }}>
       <DialogContent sx={{ textAlign: "center" }}>
         <Typography variant="bodyBold" color="content.500">
           Enjoy a generous extra discount by subscribing to our newsletter
@@ -91,7 +91,7 @@ const VerifyEmailDialog = ({ showDialog, setShowDialog, onVerified }: VerifyEmai
           onClick={handleOnVerify}
           sx={{ color: "content.0", textTransform: "capitalize", borderRadius: 5, fontWeight: 700, py: 1, px: 3 }}
         >
-          {result.isLoading ? "..." : "verify"}
+          {result.isLoading ? <CircularProgress color="secondary" /> : "verify"}
         </Button>
       </DialogActions>
     </Dialog>

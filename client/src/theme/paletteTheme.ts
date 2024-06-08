@@ -18,6 +18,9 @@ const palette = {
     400: "#9F9F9F",
     0: "#fff",
   },
+  success: {
+    main: "#2FCF1B",
+  },
 };
 
 export default palette;

@@ -12,6 +12,10 @@ export const currencyApi = createApi({
     getCurrency: builder.query<Currencies, void>({
       query: () => "",
       transformResponse: (response: Currencies): Currencies => {
+        const unwantedCurrency = ["BTC", "YER", "XPT", "XPF", "XPD", "XOF", "XDR", "XAU", "XAG", "SYP", "SSP", "SDP", "ILS", "LBP", "NGN"];
+        unwantedCurrency.forEach(value => {
+          if (value in response) delete response[value];
+        });
         return response;
       },
     }),

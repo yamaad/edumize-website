@@ -1,14 +1,12 @@
-import { Skeleton, Stack, Typography } from "@mui/material";
-import FeesDetailBox from "./components/FeesDetailBox.component";
+import { Button, Stack, Typography } from "@mui/material";
 import { RootState } from "redux/store";
 import { ConnectedProps, connect } from "react-redux";
-import InstituteCourseCard from "./components/InstituteCourseCard.component";
-
-import { SliderSelect } from "components/sliderSelect.component.tsx/SliderSelect.component";
-import { useEffect, useState } from "react";
-import { InstituteCourseFeeModel } from "redux/institute/institute.model";
 import { setSelectedCourseFee } from "redux/institute/institute.slice";
-import { useGetLanguageInstituteCourseFeeListQuery, useGetLanguageInstituteCourseListQuery } from "redux/institute/institute.api";
+import DiscoverPanel from "./components/DiscoverPanel.compnent";
+import { useState } from "react";
+import ComparePanel from "./components/ComparePanel.component";
+import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
+import { Accommodation } from "./components/Accommodation.component";
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({
@@ -36,86 +34,58 @@ interface InstitutesCoursesAndFees extends PropsFromRedux {}
 //---------------
 // component
 //---------------
-const InstitutesCoursesAndFees = ({
-  currentInstitute,
-  courseFeeList,
-  selectedCourse,
-  setSelectedCourseFee,
-  selectedCourseFee,
-}: InstitutesCoursesAndFees) => {
-  //-------------
-  // local states
-  //-------------
-  const [selectedCourseFeeList, setSelectedCourseFeeList] = useState<InstituteCourseFeeModel[]>();
-  //-------------
-  // hooks
-  //-------------
-  useGetLanguageInstituteCourseFeeListQuery(`filterByFormula={institute_id}="${currentInstitute?.id}"`, { skip: !currentInstitute });
-  useGetLanguageInstituteCourseListQuery(`filterByFormula=OR(${courseFeeList?.map(courseFee => `{id}="${courseFee.courseId}"`).join(",")})`, {
-    skip: !courseFeeList,
-  });
+const InstitutesCoursesAndFees = ({}: InstitutesCoursesAndFees) => {
+  //---------------
+  // local state
+  //---------------
+  const [tabValue, setTabValue] = useState(0);
 
-  //-------------
-  // triggers
-  //-------------
-  useEffect(() => {
-    setSelectedCourseFeeList(courseFeeList.filter(courseFee => courseFee.courseId === selectedCourse?.id));
-    setSelectedCourseFee(courseFeeList.filter(courseFee => courseFee.courseId === selectedCourse?.id)[0]);
-  }, [selectedCourse]);
+  const handleTabChange = (tabValue: number) => {
+    setTabValue(tabValue);
+  };
 
   return (
-    <Stack borderRadius={2} p={1} gap={2} maxWidth={"100%"}>
-      <Stack direction={"row"} gap={4} justifyContent="space-between">
-        <Stack flexGrow={1} gap={6}>
-          {
-            <Typography variant="h5" color="primary.900">
-              {currentInstitute?.name || <Skeleton width={200} />}
-            </Typography>
-          }
-          <Stack gap={2}>
-            <Typography variant="h4" color="content.500">
-              Course
-            </Typography>
-            <InstituteCourseCard />
-          </Stack>
-          {selectedCourseFeeList && (
-            <Stack gap={2}>
-              <Typography variant="h4" color="content.500">
-                Months
-              </Typography>
-              <SliderSelect
-                valueRange={selectedCourseFeeList?.map(course => course.duration)}
-                onIndexChange={index => {
-                  setSelectedCourseFee(selectedCourseFeeList[index]);
-                }}
-                renderTrigger={selectedCourse}
-              />
-            </Stack>
-          )}
-        </Stack>
-        <FeesDetailBox />
-      </Stack>
-      <Stack gap={0.5}>
-        {selectedCourseFee?.offer && (
-          <Stack bgcolor="secondary.100" borderRadius={2.5} p={2}>
-            <Typography variant="bodyBold" color={"primary.900"}>
-              Tuition Fees:
-            </Typography>
-            <Typography variant="bodyBold" color={"primary.900"}>
-              {selectedCourseFee?.offer}
-            </Typography>
-          </Stack>
-        )}
-        <Typography
-          variant="bodyNormal"
-          color="primary.main"
-          component="a"
-          href=""
-          sx={{ alignSelf: "start", fontWeight: 300, textTransform: "capitalize" }}
-        >
-          Terms & Conditions
+    <Stack gap={3}>
+      <Stack sx={{ textAlign: "center" }}>
+        <Typography variant="h2" color={"primary"}>
+          Customize You Study Package
+        </Typography>
+        <Typography variant="bodyNormal" color={"content.400"}>
+          bla bla bla blabla bla bla bla bla bla bla blabla bla bla bla bla bla bla blabla bla bla blabla bla bla
         </Typography>
       </Stack>
+      <Stack>
+        <Stack direction={"row"} gap={1}>
+          <Button
+            variant={tabValue === 0 ? "contained" : "outlined"}
+            color="secondary"
+            sx={{ color: tabValue === 0 ? "content.0" : "secondary", textTransform: "capitalize", fontWeight: "700", borderRadius: 5, py: 0 }}
+            onClick={() => handleTabChange(0)}
+          >
+            Discover
+          </Button>
+          <Button
+            variant={tabValue === 1 ? "contained" : "outlined"}
+            color="secondary"
+            sx={{
+              color: tabValue === 1 ? "content.0" : "secondary",
+              textTransform: "capitalize",
+              fontWeight: "700",
+              borderRadius: 5,
+              py: 0,
+            }}
+            onClick={() => handleTabChange(1)}
+          >
+            Compare
+          </Button>
+        </Stack>
+
+        {tabValue === 0 && <DiscoverPanel />}
+
+        {tabValue === 1 && <ComparePanel setTabValue={setTabValue} />}
+      </Stack>
+      <AddCircleOutlinedIcon color="secondary" sx={{ alignSelf: "center", fontSize: "142px" }} />
+      <Accommodation />
     </Stack>
   );
 };
