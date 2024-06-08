@@ -159,32 +159,34 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
             </SkeletonWrapper>
           </Stack>
           <Stack alignItems={"center"}>
-            <SkeletonWrapper condition={selectedCourseFee}>
-              <Box position="relative" ml={-20}>
-                <Typography
-                  variant="bodyBoldXS"
-                  color="secondary.400"
-                  sx={{
-                    fontSize: "10px",
-                    fontWeight: "700",
-                    "::before, ::after": {
-                      content: '""',
-                      position: "absolute",
-                      top: 8,
-                      left: -5,
-                      width: "65px",
-                      height: "1px",
-                      backgroundColor: "primary.900",
-                      transformOrigin: "center",
-                      transform: "rotate(-7deg)",
-                    },
-                  }}
-                >
-                  {selectedCurrency} {` `}
-                  {Math.ceil(selectedCourseFee?.originalFee || 0 * selectedCurrencyRate).toLocaleString()}
-                </Typography>
-              </Box>
-            </SkeletonWrapper>
+            {selectedCourseFee?.originalFee !== selectedCourseFee?.discountedFee && (
+              <SkeletonWrapper condition={selectedCourseFee}>
+                <Box position="relative" ml={-20}>
+                  <Typography
+                    variant="bodyBoldXS"
+                    color="secondary.400"
+                    sx={{
+                      fontSize: "10px",
+                      fontWeight: "700",
+                      "::before, ::after": {
+                        content: '""',
+                        position: "absolute",
+                        top: 8,
+                        left: -5,
+                        width: "65px",
+                        height: "1px",
+                        backgroundColor: "primary.900",
+                        transformOrigin: "center",
+                        transform: "rotate(-7deg)",
+                      },
+                    }}
+                  >
+                    {selectedCurrency} {` `}
+                    {Math.ceil(selectedCourseFee?.originalFee || 0 * selectedCurrencyRate).toLocaleString()}
+                  </Typography>
+                </Box>
+              </SkeletonWrapper>
+            )}
             <SkeletonWrapper condition={selectedCourseFee}>
               <Typography variant="h4" color={"primary.900"}>
                 {selectedCurrency} {` `}
