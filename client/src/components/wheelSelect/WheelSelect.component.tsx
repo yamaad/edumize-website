@@ -60,7 +60,7 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
       <Stack alignItems={"center"} bgcolor={"content.0"} sx={{ borderRadius: 2, py: 1 }}>
         <IconButton
           color="secondary"
-          sx={{ height: 40, width: 40, backgroundColor: "rgba(255, 255, 255, 0.5)", zIndex: 1 }}
+          sx={{ height: 40, width: 40, backgroundColor: "rgba(255, 255, 255, 0.5)", zIndex: 1, py: 0 }}
           onClick={handleOnArrowUp}
           disabled={selectedValueIndex === 0}
         >
@@ -73,7 +73,7 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
                 <motion.div
                   key={selectedValueIndex - 1}
                   initial={{ opacity: 0, y: 0 }}
-                  animate={{ opacity: 0.1, y: -20 }}
+                  animate={{ opacity: 0.1, y: -10 }}
                   transition={{ duration: 0.1 }}
                   style={{ position: "absolute" }}
                 >
@@ -88,7 +88,7 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
                 animate={{ opacity: 1, y: 20 }}
                 transition={{ duration: 0.1, type: "spring", stiffness: 100 }}
               >
-                <Typography variant="h1" color="primary.900">
+                <Typography variant="h1" color="primary.900" sx={{ fontSize: "2.5rem" }}>
                   {valueRange[selectedValueIndex]}
                 </Typography>
               </motion.div>
@@ -111,7 +111,7 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
         </motion.div>
         <IconButton
           color="secondary"
-          sx={{ height: 40, width: 40, backgroundColor: "rgba(255, 255, 255, 0.5)" }}
+          sx={{ height: 40, width: 40, backgroundColor: "rgba(255, 255, 255, 0.5)", py: 0 }}
           onClick={handleOnArrowDown}
           disabled={selectedValueIndex === valueRange.length - 1}
         >
