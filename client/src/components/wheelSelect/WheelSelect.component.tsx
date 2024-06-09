@@ -73,11 +73,19 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
                 <motion.div
                   key={selectedValueIndex - 1}
                   initial={{ opacity: 0, y: 0 }}
-                  animate={{ opacity: 0.1, y: -10 }}
+                  animate={{ opacity: 0.2, y: -10 }}
                   transition={{ duration: 0.1 }}
                   style={{ position: "absolute" }}
                 >
-                  <Typography variant="h1" color="primary.900">
+                  <Typography
+                    variant="h1"
+                    color="primary.900"
+                    sx={{
+                      background: "linear-gradient(to bottom,#F0F4F7 10%, #005260 50%, #005260 100%)",
+                      WebkitTextFillColor: "transparent",
+                      WebkitBackgroundClip: "text",
+                    }}
+                  >
                     {valueRange[selectedValueIndex - 1]}
                   </Typography>
                 </motion.div>
@@ -88,7 +96,15 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
                 animate={{ opacity: 1, y: 20 }}
                 transition={{ duration: 0.1, type: "spring", stiffness: 100 }}
               >
-                <Typography variant="h1" color="primary.900" sx={{ fontSize: "2.5rem" }}>
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontSize: "2.5rem",
+                    background: "linear-gradient(to bottom, #66979F 10%, #005260 90%,#66979F 10% )",
+                    WebkitTextFillColor: "transparent",
+                    WebkitBackgroundClip: "text",
+                  }}
+                >
                   {valueRange[selectedValueIndex]}
                 </Typography>
               </motion.div>
@@ -101,7 +117,15 @@ const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectPr
                   transition={{ duration: 0.1 }}
                   style={{ position: "absolute" }}
                 >
-                  <Typography variant="h1" color="primary.900">
+                  <Typography
+                    variant="h1"
+                    sx={{
+                      background: "linear-gradient(to top,#F0F4F7 10%, #005260 50%, #005260 100%)",
+                      WebkitTextFillColor: "transparent",
+                      WebkitBackgroundClip: "text",
+                    }}
+                  >
+                    {" "}
                     {valueRange[selectedValueIndex + 1]}
                   </Typography>
                 </motion.div>
