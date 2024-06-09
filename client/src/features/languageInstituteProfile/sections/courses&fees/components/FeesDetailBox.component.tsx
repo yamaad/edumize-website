@@ -118,7 +118,7 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
           const encodedMessage = encodeURIComponent(
             `Package Request For:\n*${currentInstitute?.name}*\ncourse: *${selectedCourse?.name}*\nfor *${
               selectedCourseFee?.duration
-            }* months\nTotal fee: *RM$ {totalFee.toLocaleString()}*${isEdumizePickup ? "\n`includes Edumize Pick up`" : ""}${
+            }* months\nTotal fee: *RM ${totalFee.toLocaleString()}*${isEdumizePickup ? "\n`includes Edumize Pick up`" : ""}${
               isEdumizeDiscount ? "\n`includes Edumize Additional Discount`" : ""
             }`
           );
