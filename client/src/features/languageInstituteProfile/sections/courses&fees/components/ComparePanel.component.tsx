@@ -322,13 +322,17 @@ const ComparePanel = ({
                   },
                 }}
               >
-                <Typography variant={isMobileScreen ? "h5" : "h2"} color={"primary"} sx={{ whiteSpace: "nowrap", zIndex: 1 }}>
+                <Typography
+                  variant={isMobileScreen ? "h5" : "h2"}
+                  color={"primary"}
+                  sx={{ whiteSpace: "nowrap", zIndex: 1, opacity: comparedTotalFee ? 1 : 0.5 }}
+                >
                   {isLoading ? (
                     <Skeleton />
-                  ) : comparedCourseFee ? (
+                  ) : comparedTotalFee ? (
                     currency + ` ` + Math.ceil(comparedTotalFee * currencyRate).toLocaleString()
                   ) : (
-                    "Not Offered"
+                    "Not Available"
                   )}
                 </Typography>
                 <Button
