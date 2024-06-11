@@ -82,7 +82,7 @@ const VerifyEmailDialog = ({ showDialog, setShowDialog, onVerified }: VerifyEmai
             height: "40px",
             borderRadius: 3,
             ".MuiInputBase-root": { height: "40px" },
-            ".MuiInputBase-input": { textAlign: "center", height: "40px" },
+            ".MuiInputBase-input": { textAlign: "center", height: "40px", borderRadius: 3 },
             ".MuiFormHelperText-root": { textAlign: "center", mt: 1.5 },
           }}
         ></TextField>
