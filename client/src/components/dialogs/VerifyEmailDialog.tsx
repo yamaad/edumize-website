@@ -54,7 +54,11 @@ const VerifyEmailDialog = ({ showDialog, setShowDialog, onVerified }: VerifyEmai
     }
   }, [result]);
   return (
-    <Dialog open={showDialog} onClose={handleClose} PaperProps={{ sx: { height: "240px", width: "350px", p: 3, pb: 1, borderRadius: 3 } }}>
+    <Dialog
+      open={showDialog}
+      onClose={handleClose}
+      PaperProps={{ sx: { boxSizing: "content-box", height: "240px", width: "350px", p: 3, pb: 1, borderRadius: 3 } }}
+    >
       <DialogContent sx={{ textAlign: "center" }}>
         <Typography variant="bodyBold" color="content.500">
           Enjoy a generous extra discount by subscribing to our newsletter
