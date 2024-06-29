@@ -2,9 +2,12 @@ import { Alert, Box, Button, Checkbox, Divider, Stack, Typography } from "@mui/m
 import { ConnectedProps, connect } from "react-redux";
 import { RootState } from "redux/store";
 import CurrencyMenu from "components/currencyMenu/CurrencyMenu";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import VerifyEmailDialog from "components/dialogs/VerifyEmailDialog";
 import { SkeletonWrapper } from "components/skeletonWrapper/SkeletonWrapper.component";
+import { useTranslation } from "react-i18next";
+import { NumberLang } from "utils/foramttingNumbers";
+import { LangContext } from "context/langContext";
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({
@@ -40,18 +43,23 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
   const [isEdumizePickup, setIsEdumizePickup] = useState<boolean>(false);
   const [isEdumizeDiscount, setIsEdumizeDiscount] = useState<boolean>(false);
   const [discountClaimTimes, setIsDiscountClaimTimes] = useState<number>(0);
+  //---------------
+  // hooks
+  //---------------
+  const { t } = useTranslation();
+  const lang = useContext(LangContext);
 
   //---------------
   // constants
   //---------------
   const mapFeeListToTitles = [
-    { title: "Registration Fees", fee: selectedCourseFee?.registrationFee || "Free" },
-    { title: "Placement Test", fee: selectedCourseFee?.placementTest || "Free" },
-    { title: "Student Visa & Medical Insurance", fee: selectedCourseFee?.visaAndInsurance || "Not Offered" },
-    { title: "Books & Materials", fee: selectedCourseFee?.booksAndMaterials || "Free" },
+    { title: t("Registration Fees"), fee: selectedCourseFee?.registrationFee || t("Free") },
+    { title: t("Placement Test"), fee: selectedCourseFee?.placementTest || t("Free") },
+    { title: t("Student Visa & Medical Insurance"), fee: selectedCourseFee?.visaAndInsurance || t("Not Offered") },
+    { title: t("Books & Materials"), fee: selectedCourseFee?.booksAndMaterials || t("Free") },
     {
-      title: "Airport & Immigration Clearance and Airport Pickup",
-      fee: selectedCourseFee?.immigrationClearanceAndAirportPickUp || "Not Offered",
+      title: t("Airport & Immigration Clearance and Airport Pickup"),
+      fee: selectedCourseFee?.immigrationClearanceAndAirportPickUp || t("Not Offered"),
     },
   ];
   //---------------
@@ -126,12 +134,12 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
           window.open(`${import.meta.env.VITE_EDUMIZE_WHATSAPP_URL}${encodedMessage}`, "_self");
         }}
       >
-        Request Package
+        {t("Request Package")}
       </Button>
       <Stack bgcolor="primary.100" borderRadius={2.5} py={3} px={4} gap={3}>
         <Stack gap={2}>
           <Typography textAlign="center" variant="h5" color="primary.900">
-            100% No Hidden Fees
+            {t("100% No Hidden Fees")}
           </Typography>
           <Stack direction={"row"} justifyContent={"space-between"} gap={2}>
             <SkeletonWrapper condition={selectedCourse}>
@@ -141,10 +149,11 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
             </SkeletonWrapper>
             <SkeletonWrapper condition={selectedCourseFee}>
               <Typography variant="h6" color="content.500">
-                for
+                {t("for")}
               </Typography>
               <Typography variant="h6" color={"primary.900"}>
-                {selectedCourseFee?.duration} Months
+                {selectedCourseFee?.duration + " "}
+                {t("Months")}
               </Typography>
             </SkeletonWrapper>
           </Stack>
@@ -152,7 +161,7 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
         <Stack gap={1}>
           <Stack direction={"row"} gap={2} justifyContent={"space-between"} alignItems={"center"}>
             <Typography variant="bodyBold" color="content.500">
-              Tuition Fees:
+              {t("Tuition Fees")}:
             </Typography>
             <SkeletonWrapper condition={selectedCourseFee}>
               <CurrencyMenu />
@@ -189,12 +198,15 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
             )}
             <SkeletonWrapper condition={selectedCourseFee}>
               <Typography variant="h4" color={"primary.900"}>
-                {selectedCurrency} {` `}
                 {selectedCourseFee &&
-                  Math.ceil(
-                    (isEdumizeDiscount
-                      ? selectedCourseFee.discountedFee - selectedCourseFee.edumizeDiscountRate * selectedCourseFee.discountedFee
-                      : selectedCourseFee.discountedFee) * selectedCurrencyRate
+                  NumberLang(
+                    Math.ceil(
+                      (isEdumizeDiscount
+                        ? selectedCourseFee.discountedFee - selectedCourseFee.edumizeDiscountRate * selectedCourseFee.discountedFee
+                        : selectedCourseFee.discountedFee) * selectedCurrencyRate
+                    ),
+                    lang,
+                    selectedCurrency
                   ).toLocaleString()}
               </Typography>
             </SkeletonWrapper>
@@ -215,13 +227,13 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
                 disabled={isEdumizeDiscount || !selectedCourseFee?.edumizeDiscountRate}
                 onClick={handleOnClaimDiscount}
               >
-                Claim Edumize Additional Discount
+                {t("Claim Edumize Additional Discount")}
               </Button>
             </SkeletonWrapper>
           </Stack>
         </Stack>
 
-        <Stack gap={2}>
+        <Stack gap={2} width={"350px"}>
           <SkeletonWrapper condition={selectedCourseFee}>
             {mapFeeListToTitles.map((value, index) => (
               <Stack key={index} direction={"row"} gap={4} justifyContent={"space-between"}>
@@ -229,7 +241,9 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
                   {value.title}
                 </Typography>
                 <Typography variant="bodyNormal" color="content.500" sx={{ whiteSpace: "nowrap" }}>
-                  {typeof value.fee === "number" ? selectedCurrency + " " + Math.ceil(value.fee * selectedCurrencyRate).toLocaleString() : value.fee}
+                  {typeof value.fee === "number"
+                    ? NumberLang(Math.ceil(value.fee * selectedCurrencyRate), lang, selectedCurrency).toLocaleString()
+                    : value.fee}
                 </Typography>
               </Stack>
             ))}
@@ -248,11 +262,15 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
                   color="secondary"
                 />
                 <Typography variant="bodyNormal" color="content.500" sx={{ whiteSpace: "wrap" }}>
-                  Edumize Airport Pickup
+                  {t("Edumize Airport Pickup")}
                 </Typography>
               </Stack>
               <Typography variant="bodyNormal" color="content.500" sx={{ whiteSpace: "nowrap" }}>
-                {selectedCurrency + " " + Math.ceil(import.meta.env.VITE_EDUMIZE_PICKUP_FEE || 600 * selectedCurrencyRate).toLocaleString()}
+                {NumberLang(
+                  Math.ceil(import.meta.env.VITE_EDUMIZE_PICKUP_FEE || 600 * selectedCurrencyRate),
+                  lang,
+                  selectedCurrency
+                ).toLocaleString()}
               </Typography>
             </Stack>
           </SkeletonWrapper>
@@ -261,16 +279,15 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
         <Stack gap={1}>
           <Divider sx={{ border: "1px solid", opacity: 0.35 }} />
           <SkeletonWrapper condition={selectedCourseFee}>
-            <Typography variant="bodyBold" color={"content.500"}>
-              Total for the entire duration: <br />
-              {selectedCurrency} {` `}
-              {Math.ceil(totalFee * selectedCurrencyRate).toLocaleString()}
+            <Typography variant="bodyBold" color={"content.500"} sx={{ fontFamily: "Tajawal" }}>
+              {t("Total for the entire duration")}: <br />
+              {NumberLang(Math.ceil(totalFee * selectedCurrencyRate), lang, selectedCurrency).toLocaleString()}
             </Typography>
           </SkeletonWrapper>
 
           {isEdumizeDiscount && (
             <Alert variant="filled" severity="success">
-              Edumize Discount Applied Successfully
+              {t("Edumize Discount Applied Successfully")}
             </Alert>
           )}
         </Stack>

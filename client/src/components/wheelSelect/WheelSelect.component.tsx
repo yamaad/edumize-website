@@ -16,10 +16,12 @@ interface WheelSelectProps {
 //---------------
 // component
 //---------------
+
 const WheelSelect = ({ valueRange, onValueChange, renderTrigger }: WheelSelectProps) => {
   //---------------
   // local states
   //---------------
+
   const [selectedValueIndex, setSelectedValueIndex] = useState<number>(0);
   const [previousValueIndex, setPreviousValueIndex] = useState<number>(0);
 

@@ -1,5 +1,6 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, TextField, Typography } from "@mui/material";
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useValidateEmailMutation } from "redux/lead/lead.api";
 import { emailValidator } from "utils/validator";
 
@@ -19,6 +20,7 @@ const VerifyEmailDialog = ({ showDialog, setShowDialog, onVerified }: VerifyEmai
   // hooks
   // ---------------
   const [validateEmail, result] = useValidateEmailMutation();
+  const { t } = useTranslation();
 
   // ---------------
   // handlers
@@ -48,7 +50,7 @@ const VerifyEmailDialog = ({ showDialog, setShowDialog, onVerified }: VerifyEmai
           setShowDialog(false);
           break;
         default:
-          setError("Sorry! We are unable to verify your email please email another email or contact us on whatsapp");
+          setError(t("Sorry! We are unable to verify your email please email another email or contact us on whatsapp"));
           break;
       }
     }
@@ -61,10 +63,10 @@ const VerifyEmailDialog = ({ showDialog, setShowDialog, onVerified }: VerifyEmai
     >
       <DialogContent sx={{ textAlign: "center" }}>
         <Typography variant="bodyBold" color="content.500">
-          Enjoy a generous extra discount by subscribing to our newsletter
+          {t("Enjoy a generous extra discount by subscribing to our newsletter")}
         </Typography>
         <TextField
-          placeholder="Type your email.."
+          placeholder={t("Type your email") + " ..."}
           fullWidth
           variant="standard"
           color={"primary"}
@@ -95,7 +97,7 @@ const VerifyEmailDialog = ({ showDialog, setShowDialog, onVerified }: VerifyEmai
           onClick={handleOnVerify}
           sx={{ color: "content.0", textTransform: "capitalize", borderRadius: 5, fontWeight: 700, py: 1, px: 3 }}
         >
-          {result.isLoading ? <CircularProgress color="secondary" /> : "verify"}
+          {result.isLoading ? <CircularProgress color="secondary" /> : t("verify")}
         </Button>
       </DialogActions>
     </Dialog>

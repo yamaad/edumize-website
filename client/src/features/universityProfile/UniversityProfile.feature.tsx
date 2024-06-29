@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Stack, Typography } from "@mui/material";
 import SearchBar, { SortItem, SortProps } from "../../components/controlBar/SearchBar.component";
 import FilterMenu from "../../components/filterMenu/FilterMenu.component";
 import { useEffect, useState } from "react";
@@ -7,6 +7,8 @@ import useDebounce from "../../hooks/useDebounce";
 import UniversityCourseCard from "./components/CourseCard.component";
 import { useGetCourseListMutation } from "../../redux/course/course.api";
 import { CourseModel } from "../../redux/course/course.model";
+import { useTranslation } from "react-i18next";
+import { SkeletonWrapper } from "components/skeletonWrapper/SkeletonWrapper.component";
 
 //--------------
 // interfaces
@@ -32,6 +34,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   //-------------
   // hooks
   //-------------
+  const { t } = useTranslation();
   const [getCourseList, { data, isLoading, isSuccess }] = useGetCourseListMutation();
   const debouncedSearch = useDebounce(search, 500);
   //-------------
@@ -51,7 +54,6 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   //-------------
   // triggers
   //-------------
-
   useEffect(() => {
     setCourses([]);
     getCourseList(queryBody);
@@ -77,9 +79,9 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   };
   const sortProps: SortProps = {
     sortItems: [
-      { label: "Most Wanted", value: { field: "ranking", direction: "asc" } },
-      { label: "Price Low to Hight", value: { field: "full_cost", direction: "asc" } },
-      { label: "Price Hight to Low", value: { field: "full_cost", direction: "desc" } },
+      { label: t("Most Wanted"), value: { field: "ranking", direction: "asc" } },
+      { label: t("Price Low to Hight"), value: { field: "full_cost", direction: "asc" } },
+      { label: t("Price Hight to Low"), value: { field: "full_cost", direction: "desc" } },
     ],
     onSelectSort: handleOnSort,
   };
@@ -97,7 +99,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
       <Stack direction={"row"} gap={1} width={"100%"}>
         <FilterMenu
           fieldName="degree"
-          label="Study Level"
+          label={t("Study Level")}
           onFilter={(value: string) => {
             setOffset(undefined);
             setStudyLevelFilter(value);
@@ -105,7 +107,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
         />
         <FilterMenu
           fieldName="study_field"
-          label="Study field"
+          label={t("Study field")}
           onFilter={(value: string) => {
             setOffset(undefined);
             setStudyFieldFilter(value);
@@ -113,7 +115,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
         />
         <FilterMenu
           fieldName="study_mode"
-          label="Study mode"
+          label={t("Study mode")}
           onFilter={(value: string) => {
             setOffset(undefined);
             setStudyModeFilter(value);
@@ -129,11 +131,16 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
           py: 0.5,
         }}
       >
-        {isLoading && courses.length === 0 && (
-          <Typography variant="h3" sx={{ alignSelf: "center" }}>
-            Loading...
-          </Typography>
-        )}
+        {isLoading &&
+          courses.length === 0 &&
+          Array(5)
+            .fill("")
+            .map((_, index) => (
+              <SkeletonWrapper condition={false} width={"100%"} key={index}>
+                <UniversityCourseCard name={"-"} fullCost={0} studyMode={"-"} duration={"-"} />
+              </SkeletonWrapper>
+            ))}
+
         {isSuccess && courses.length === 0 && (
           <Typography variant="h3" sx={{ alignSelf: "center" }}>
             No Matching Records
@@ -151,7 +158,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
           color="secondary"
           sx={{ maxWidth: "fit-content", borderRadius: 4 }}
         >
-          {isLoading ? "Loading..." : "Load More"}
+          {isLoading ? <CircularProgress size={18} color="secondary" sx={{ mx: 4, my: 0.5 }} /> : t("Load More")}
         </Button>
       )}
     </Stack>
@@ -159,4 +166,3 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
 };
 
 export { UniversityProfile };
-

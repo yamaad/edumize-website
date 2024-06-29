@@ -85,6 +85,7 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
         onChange={handleChange}
         fullWidth
         label={label}
+        MenuProps={{ sx: { direction: "ltr", maxHeight: "400px" } }}
       >
         <MenuItem value="">
           <em>None</em>

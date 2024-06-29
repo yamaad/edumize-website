@@ -1,6 +1,6 @@
 import { Box, Button, CircularProgress, Menu, MenuItem, Skeleton, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useGetLanguageInstituteCourseFeeListQuery, useGetLanguageInstituteCourseListQuery } from "redux/institute/institute.api";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { RootState } from "redux/store";
 import { ConnectedProps, connect } from "react-redux";
 import { setSelectedCourseFee } from "redux/institute/institute.slice";
@@ -9,6 +9,9 @@ import InstituteCourseCard, { InstituteCourseCard as InstituteCourseCardComponen
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CurrencyMenu from "components/currencyMenu/CurrencyMenu";
 import { WheelSelect } from "components/wheelSelect/WheelSelect.component";
+import { useTranslation } from "react-i18next";
+import { LangContext } from "context/langContext";
+import { NumberLang } from "utils/foramttingNumbers";
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({
@@ -73,6 +76,8 @@ const ComparePanel = ({
   //-------------
   // hooks
   //-------------
+  const { t } = useTranslation();
+  const lang = useContext(LangContext);
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { isLoading } = useGetLanguageInstituteCourseFeeListQuery(
@@ -161,7 +166,7 @@ const ComparePanel = ({
           window.open(`${import.meta.env.VITE_EDUMIZE_WHATSAPP_URL}${encodedMessage}`, "_self");
         }}
       >
-        Ask for help
+        {t("Ask for help")}
       </Button>
       <Stack direction={"row"} gap={4} flexWrap={"wrap"} justifyContent="space-between" alignItems={"center"}>
         <Stack gap={1}>
@@ -174,7 +179,7 @@ const ComparePanel = ({
           </Typography>
           <Stack>
             <Typography variant="h4" color="content.500">
-              Course
+              {t("Course")}
             </Typography>
 
             <Stack sx={{ px: 2, py: 1, borderRadius: 3 }}>
@@ -183,7 +188,7 @@ const ComparePanel = ({
           </Stack>
         </Stack>
         <Stack gap={2}>
-          <Button variant="text" onClick={handleToggleMenu} sx={{ textTransform: "capitalize", p: 0, whiteSpace: "nowrap" }}>
+          <Button variant="text" onClick={handleToggleMenu} sx={{ textTransform: "capitalize", p: 0, whiteSpace: "nowrap", direction: "ltr" }}>
             <Typography variant="h5" color="primary.900">
               {comparedInstitute?.name || <Skeleton width={200} />}
             </Typography>
@@ -206,7 +211,7 @@ const ComparePanel = ({
           </Menu>
           <Stack>
             <Typography variant="h4" color="primary.900">
-              Course
+              {t("Course")}
             </Typography>
 
             <Stack sx={{ px: 2, py: 1, borderRadius: 3 }}>
@@ -224,16 +229,18 @@ const ComparePanel = ({
       {selectedCourseFeeList && (
         <Stack gap={2}>
           <Typography variant="h4" color="content.500">
-            Months
+            {t("Months")}
           </Typography>
           <WheelSelect
-            valueRange={selectedCourseFeeList?.map(course => course.duration)}
+            valueRange={selectedCourseFeeList?.map(course => NumberLang(course.duration, lang))}
             onValueChange={value => {
               setSelectedCourseFee(
-                courseFeeList.filter(courseFee => courseFee.instituteId === currentInstitute?.id && courseFee.duration === value)[0]
+                courseFeeList.filter(courseFee => courseFee.instituteId === currentInstitute?.id && NumberLang(courseFee.duration, lang) === value)[0]
               );
               setComparedCourseFee(
-                courseFeeList.filter(courseFee => courseFee.instituteId === comparedInstitute?.id && courseFee.duration === value)[0]
+                courseFeeList.filter(
+                  courseFee => courseFee.instituteId === comparedInstitute?.id && NumberLang(courseFee.duration, lang) === value
+                )[0]
               );
             }}
             renderTrigger={[selectedCourse, comparedCourse, courseFeeList, isLoading, selectedCourseFeeList, comparedInstitute]}
@@ -245,10 +252,10 @@ const ComparePanel = ({
           <Stack direction={"row"} alignItems={"end"} gap={1} pr={2} justifyContent={"space-between"}>
             <Stack direction={"row"} flexWrap={"wrap"} alignItems={"end"} gap={1}>
               <Typography variant="h4" color="content.500">
-                Total Fees
+                {t("Total Fees")}
               </Typography>
               <Typography variant="bodyLightXS" color="content.500">
-                Including Miscellaneous fees
+                {t("Including Miscellaneous fees")}
               </Typography>
             </Stack>
             <Stack flexGrow={1} alignItems={"flex-end"}>
@@ -271,21 +278,28 @@ const ComparePanel = ({
                   "::after": {
                     content: '""',
                     position: "absolute",
-                    borderRight: "2px solid #9F9F9F",
-                    borderBottom: "1px solid #9F9F9F",
-                    top: { xs: 0, sm: 1 },
+                    borderRight: lang === "ar" ? "unset" : "2px solid #9F9F9F",
+                    borderBottom: lang === "ar" ? "unset" : "1px solid #9F9F9F",
+                    borderLeft: lang === "ar" ? "1px solid #9F9F9F" : "unset",
+                    borderTop: lang === "ar" ? "1px solid #9F9F9F" : "unset",
+                    top: lang === "ar" ? { xs: 0, sm: -1 } : { xs: 0, sm: 1 },
+                    clipPath: lang === "ar" ? "ellipse(130px 140px at 10% 30%)" : "unset",
                     left: 0,
                     width: "100%",
                     height: "100%",
                     backgroundColor: "primary.100",
-                    transform: "skewX(45deg)",
-                    borderTopLeftRadius: 200,
+                    transform: lang === "ar" ? "skewX(225deg)" : "skewX(45deg)",
+                    borderTopLeftRadius: lang === "ar" ? "unset" : 200,
                     zIndex: 1,
                   },
                 }}
               >
                 <Typography variant={isMobileScreen ? "h5" : "h2"} color={"content.600"} sx={{ whiteSpace: "nowrap", zIndex: 2 }}>
-                  {isLoading || !selectedTotalFee ? <Skeleton /> : currency + ` ` + Math.ceil(selectedTotalFee * currencyRate).toLocaleString()}
+                  {isLoading || !selectedTotalFee ? (
+                    <Skeleton />
+                  ) : (
+                    NumberLang(Math.ceil(selectedTotalFee * currencyRate), lang, currency).toLocaleString()
+                  )}
                 </Typography>
                 <Button
                   variant="outlined"
@@ -294,7 +308,7 @@ const ComparePanel = ({
                   onClick={() => setTabValue(0)}
                   sx={{ borderRadius: 5, backgroundColor: "content.0", textTransform: "capitalize", mx: { xs: 3, sm: 5 }, zIndex: 2 }}
                 >
-                  {currentInstitute ? "Get Details" : <CircularProgress color="secondary" />}
+                  {currentInstitute ? t("Get Details") : <CircularProgress color="secondary" />}
                 </Button>
               </Stack>
               <Stack
@@ -311,13 +325,13 @@ const ComparePanel = ({
                   "::after": {
                     content: '""',
                     position: "absolute",
-                    top: 0,
-                    left: 0,
+                    top: lang === "ar" ? 1 : 0,
+                    left: lang === "ar" ? 2 : 0,
                     width: "100%",
                     height: "100%",
                     backgroundColor: "content.0",
                     transform: "skewX(45deg)",
-                    clipPath: "ellipse(130px 140px at 10% 0%)",
+                    clipPath: lang === "ar" ? "ellipse(130px 140px at 100% 100%)" : "ellipse(130px 140px at 10% 0%)",
                     zIndex: 0,
                   },
                 }}
@@ -330,9 +344,9 @@ const ComparePanel = ({
                   {isLoading ? (
                     <Skeleton />
                   ) : comparedTotalFee ? (
-                    currency + ` ` + Math.ceil(comparedTotalFee * currencyRate).toLocaleString()
+                    NumberLang(Math.ceil(comparedTotalFee * currencyRate), lang, currency).toLocaleString()
                   ) : (
-                    "Not Available"
+                    t("Not Available")
                   )}
                 </Typography>
                 <Button
@@ -347,12 +361,12 @@ const ComparePanel = ({
                   }}
                   sx={{ borderRadius: 5, textTransform: "capitalize", color: "content.0", mx: { xs: 3, sm: 5 }, zIndex: 1 }}
                 >
-                  {comparedInstitute ? "Visit Page" : <CircularProgress color="secondary" />}
+                  {comparedInstitute ? t("Visit Page") : <CircularProgress color="secondary" />}
                 </Button>
               </Stack>
             </Stack>
             <Typography variant="bodyLightXS" color={"primary.900"}>
-              Fees Presented Do Not Include Edumize Discount
+              {t("Fees Presented Do Not Include Edumize Discount")}
             </Typography>
           </Stack>
         </Stack>
@@ -365,7 +379,7 @@ const ComparePanel = ({
           href=""
           sx={{ alignSelf: "start", fontWeight: 300, textTransform: "capitalize" }}
         >
-          Terms & Conditions
+          {t("Terms & Conditions")}
         </Typography>
       </Stack>
     </Stack>

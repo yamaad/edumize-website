@@ -3,6 +3,7 @@ import SwapVertIcon from "@mui/icons-material/SwapVert";
 import { useState } from "react";
 import { ConnectedProps, connect } from "react-redux";
 import CurrencyMenu from "components/currencyMenu/CurrencyMenu";
+import { useTranslation } from "react-i18next";
 
 // map state to props
 const mapStateToProps = () => ({});
@@ -46,6 +47,11 @@ const SearchBar = ({ sortProps, onSearch }: ISearchBarProps) => {
   const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedSortIndex, setSelectedSortIndex] = useState<number>();
   //--------------
+  // hooks
+  //--------------
+  const { t } = useTranslation();
+
+  //--------------
   // handlers
   //--------------
   const openSortMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -59,7 +65,7 @@ const SearchBar = ({ sortProps, onSearch }: ISearchBarProps) => {
 
   return (
     <Paper component="form" sx={{ px: 2, borderRadius: 6, display: "flex", alignItems: "center", backgroundColor: "#eff4f7" }}>
-      <InputBase sx={{ ml: 1, flex: 1, fontSize: "12px" }} placeholder="Course Name..." onChange={onSearch} />
+      <InputBase sx={{ ml: 1, flex: 1, fontSize: "12px" }} placeholder={`${t("Course Name")} ...`} onChange={onSearch} />
       <CurrencyMenu />
       <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
       <IconButton onClick={openSortMenu} color="primary" sx={{ p: 1 }}>

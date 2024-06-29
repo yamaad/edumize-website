@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Stack, Typography } from "@mui/material";
 import SearchBar, { SortItem, SortProps } from "../../components/controlBar/SearchBar.component";
 import FilterMenu from "../../components/filterMenu/FilterMenu.component";
 import { useEffect, useState } from "react";
@@ -8,7 +8,8 @@ import ProgramCourseCard, { IProgramCourseCard } from "./components/CourseCard.c
 import { useGetCourseListMutation } from "../../redux/course/course.api";
 import { useGetUniversityTypeListQuery } from "redux/universityType/universityType";
 import { useGetUniversityListQuery } from "redux/university/universityApi";
-
+import { useTranslation } from "react-i18next";
+import { SkeletonWrapper } from "components/skeletonWrapper/SkeletonWrapper.component";
 
 //--------------
 // interfaces
@@ -31,6 +32,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
   //-------------
   // hooks
   //-------------
+  const { t } = useTranslation();
   const [getCourseList, { data, isLoading, isSuccess }] = useGetCourseListMutation();
   const { currentData: universityData } = useGetUniversityListQuery();
   const { currentData: typeData } = useGetUniversityTypeListQuery();
@@ -85,9 +87,9 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
   };
   const sortProps: SortProps = {
     sortItems: [
-      { label: "Most Wanted", value: { field: "ranking", direction: "asc" } },
-      { label: "Price Low to Hight", value: { field: "full_cost", direction: "asc" } },
-      { label: "Price Hight to Low", value: { field: "full_cost", direction: "desc" } },
+      { label: t("Most Wanted"), value: { field: "ranking", direction: "asc" } },
+      { label: t("Price Low to Hight"), value: { field: "full_cost", direction: "asc" } },
+      { label: t("Price Hight to Low"), value: { field: "full_cost", direction: "desc" } },
     ],
     onSelectSort: handleOnSort,
   };
@@ -105,7 +107,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
       <Stack direction={"row"} gap={1} width={"100%"}>
         <FilterMenu
           fieldName="study_mode"
-          label="Study mode"
+          label={t("Study mode")}
           onFilter={(value: string) => {
             setOffset(undefined);
             setStudyModeFilter(value);
@@ -121,11 +123,15 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
           py: 0.5,
         }}
       >
-        {isLoading && courses.length === 0 && (
-          <Typography variant="h3" sx={{ alignSelf: "center" }}>
-            Loading...
-          </Typography>
-        )}
+        {isLoading &&
+          courses.length === 0 &&
+          Array(5)
+            .fill("")
+            .map((_, index) => (
+              <SkeletonWrapper condition={false} width={"100%"} key={index}>
+                <ProgramCourseCard name={"-"} fullCost={0} studyMode={"-"} duration={"-"} logoImage={"-"} typeImage={"-"} />
+              </SkeletonWrapper>
+            ))}
         {isSuccess && courses.length === 0 && (
           <Typography variant="h3" sx={{ alignSelf: "center" }}>
             No Matching Records
@@ -150,7 +156,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
           variant="outlined"
           sx={{ maxWidth: "fit-content", borderRadius: 4, color: "#ee8c00", borderColor: "#ee8c00" }}
         >
-          {isLoading ? "Loading..." : "Load More"}
+          {isLoading ? <CircularProgress size={18} color="secondary" sx={{ mx: 4, my: 0.5 }} /> : t("Load More")}
         </Button>
       )}
     </Stack>

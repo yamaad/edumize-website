@@ -7,6 +7,7 @@ import { useState } from "react";
 import ComparePanel from "./components/ComparePanel.component";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import { Accommodation } from "./components/Accommodation.component";
+import { useTranslation } from "react-i18next";
 
 // map state to props
 const mapStateToProps = (state: RootState) => ({
@@ -39,7 +40,13 @@ const InstitutesCoursesAndFees = ({}: InstitutesCoursesAndFees) => {
   // local state
   //---------------
   const [tabValue, setTabValue] = useState(0);
-
+  //---------------
+  // hooks
+  //---------------
+  const { t } = useTranslation();
+  //---------------
+  // handlers
+  //---------------
   const handleTabChange = (tabValue: number) => {
     setTabValue(tabValue);
   };
@@ -48,7 +55,7 @@ const InstitutesCoursesAndFees = ({}: InstitutesCoursesAndFees) => {
     <Stack gap={3}>
       <Stack sx={{ textAlign: "center" }} gap={1}>
         <Typography variant="h5" color={"primary"}>
-          Customize You Study Package
+          {t("Customize You Study Package")}
         </Typography>
         <Typography variant="bodyNormal" color={"content.400"}>
           bla bla bla blabla bla bla bla bla bla bla blabla bla bla bla bla bla bla blabla bla bla blabla bla bla
@@ -62,7 +69,7 @@ const InstitutesCoursesAndFees = ({}: InstitutesCoursesAndFees) => {
             sx={{ color: tabValue === 0 ? "content.0" : "secondary", textTransform: "capitalize", fontWeight: "700", borderRadius: 5, py: 0 }}
             onClick={() => handleTabChange(0)}
           >
-            Discover
+            {t("Discover")}
           </Button>
           <Button
             variant={tabValue === 1 ? "contained" : "outlined"}
@@ -76,7 +83,7 @@ const InstitutesCoursesAndFees = ({}: InstitutesCoursesAndFees) => {
             }}
             onClick={() => handleTabChange(1)}
           >
-            Compare
+            {t("Compare")}
           </Button>
         </Stack>
 

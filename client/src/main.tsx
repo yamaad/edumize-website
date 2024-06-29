@@ -9,6 +9,9 @@ import { ProgramProfile } from "features/programProfile/ProgramProfile.feature.t
 import { edumizeTheme } from "theme/theme.ts";
 import { ThemeProvider } from "@mui/material/styles";
 import LanguageInstitute from "features/languageInstituteProfile/LanguageInstituteProfile.feature.tsx";
+import i18n from "./i18n";
+import { I18nextProvider } from "react-i18next";
+import { LangContactProvider } from "context/langContext.tsx";
 
 // For WebFlow Embedding
 const webFlowEmbedders = [
@@ -53,10 +56,12 @@ webFlowEmbedders.map(obj => {
         acc[param.prop] = elementId.getAttribute(param.attribute);
         return acc;
       }, {});
-
+      const lang = elementId.getAttribute("lang");
       ReactDOM.createRoot(elementId).render(
         <Provider store={store}>
-          <ThemeProvider theme={edumizeTheme}>{component(props)}</ThemeProvider>
+          <ThemeProvider theme={edumizeTheme}>
+            <LangContactProvider lang={lang || "ar"}>{component(props)}</LangContactProvider>
+          </ThemeProvider>
         </Provider>
       );
     }
@@ -66,12 +71,16 @@ webFlowEmbedders.map(obj => {
 });
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={edumizeTheme}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ThemeProvider>
-    </Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>
+        <ThemeProvider theme={edumizeTheme}>
+          <BrowserRouter>
+            <LangContactProvider lang="ar">
+              <App />
+            </LangContactProvider>
+          </BrowserRouter>
+        </ThemeProvider>
+      </Provider>
+    </I18nextProvider>
   </React.StrictMode>
 );

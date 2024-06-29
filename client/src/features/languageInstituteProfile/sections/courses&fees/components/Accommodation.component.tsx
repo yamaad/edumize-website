@@ -1,4 +1,5 @@
 import { Stack, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { ConnectedProps, connect } from "react-redux";
 
 // map state to props
@@ -22,13 +23,14 @@ interface Accommodation extends PropsFromRedux {}
 //---------------
 const Accommodation = ({}: Accommodation) => {
   //---------------
-  // local state
+  // hooks
   //---------------
+  const { t } = useTranslation();
 
   return (
     <Stack>
       <Typography variant="h4" color={"content.500"}>
-        Accommodation
+        {t("Accommodation")}
       </Typography>
       <Stack
         alignItems={"center"}
@@ -36,7 +38,7 @@ const Accommodation = ({}: Accommodation) => {
         sx={{ borderRadius: 5, height: 200, background: "radial-gradient(circle, transparent 0%, rgba(32,79,88,0.4) 100%) " }}
       >
         <Typography variant="h2" color={"primary.900"} textAlign={"center"}>
-          Coming Soon!
+          {t("Coming Soon")}!
         </Typography>
       </Stack>
     </Stack>
