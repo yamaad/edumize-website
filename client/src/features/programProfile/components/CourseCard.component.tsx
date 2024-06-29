@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Tooltip, Typography } from "@mui/material";
 import { CourseModel } from "../../../redux/course/course.model";
 import { ConnectedProps, connect } from "react-redux";
 import { RootState } from "redux/store";
@@ -19,11 +19,22 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 export interface IProgramCourseCard extends CourseModel {
   typeImage: string;
+  typeName: string;
   logoImage: string;
 }
 interface ProgramCourseCardProps extends IProgramCourseCard, PropsFromRedux {}
 
-const ProgramCourseCard = ({ name, fullCost, duration, studyMode, typeImage, logoImage, currency, currencyRate }: ProgramCourseCardProps) => {
+const ProgramCourseCard = ({
+  name,
+  fullCost,
+  duration,
+  studyMode,
+  typeImage,
+  typeName,
+  logoImage,
+  currency,
+  currencyRate,
+}: ProgramCourseCardProps) => {
   const years = duration.toLowerCase().includes("years") ? duration.toLowerCase().split("years")[0] + ` Years` : undefined;
   const year = years ?? duration.toLowerCase().includes("year") ? duration.toLowerCase().split("year")[0] + ` Years` : undefined;
   const semester = years
@@ -71,12 +82,14 @@ const ProgramCourseCard = ({ name, fullCost, duration, studyMode, typeImage, log
       <Typography fontSize="12px" fontWeight="bold" sx={{ gridColumnStart: 2, gridColumnEnd: 4, alignSelf: "end", justifySelf: "start" }}>
         {name}
       </Typography>
-      <Box
-        component="img"
-        sx={{ maxWidth: "30px", gridRowStart: 1, gridRowEnd: 3, gridColumnStart: 4, gridColumnEnd: 5, alignSelf: "start", justifySelf: "center" }}
-        alt={typeImage}
-        src={typeImage}
-      />
+      <Tooltip title={typeName} placement="top" arrow>
+        <Box
+          component="img"
+          sx={{ maxWidth: "30px", gridRowStart: 1, gridRowEnd: 3, gridColumnStart: 4, gridColumnEnd: 5, alignSelf: "start", justifySelf: "center" }}
+          alt={typeName}
+          src={typeImage}
+        />
+      </Tooltip>
       <Typography fontSize="12px" alignSelf="start" justifySelf="start">
         {currency} {Math.ceil(fullCost * currencyRate).toLocaleString()} <strong>/</strong> {year ?? duration}
         {semester.length > 0 ? semester : ""}

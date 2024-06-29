@@ -68,6 +68,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
           ...course,
           logoImage: university?.image || university?.name || "",
           typeImage: type?.image || type?.type || "",
+          typeName: type?.type || "-",
         };
       });
       setCourses(prev => [...prev, ...programCourseList]);
@@ -129,7 +130,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
             .fill("")
             .map((_, index) => (
               <SkeletonWrapper condition={false} width={"100%"} key={index}>
-                <ProgramCourseCard name={"-"} fullCost={0} studyMode={"-"} duration={"-"} logoImage={"-"} typeImage={"-"} />
+                <ProgramCourseCard name={"-"} fullCost={0} studyMode={"-"} duration={"-"} logoImage={"-"} typeImage={"-"} typeName="-" />
               </SkeletonWrapper>
             ))}
         {isSuccess && courses.length === 0 && (
@@ -145,6 +146,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
             duration={value.duration}
             logoImage={value.logoImage}
             typeImage={value.typeImage}
+            typeName={value.typeName}
             key={index}
           />
         ))}
