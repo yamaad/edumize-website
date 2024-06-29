@@ -136,7 +136,7 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
       >
         {t("Request Package")}
       </Button>
-      <Stack bgcolor="primary.100" borderRadius={2.5} py={3} px={4} gap={3}>
+      <Stack bgcolor="primary.100" borderRadius={2.5} py={3} px={4} gap={3} width={"350px"}>
         <Stack gap={2}>
           <Typography textAlign="center" variant="h5" color="primary.900">
             {t("100% No Hidden Fees")}
@@ -233,7 +233,7 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
           </Stack>
         </Stack>
 
-        <Stack gap={2} width={"350px"}>
+        <Stack gap={2}>
           <SkeletonWrapper condition={selectedCourseFee}>
             {mapFeeListToTitles.map((value, index) => (
               <Stack key={index} direction={"row"} gap={4} justifyContent={"space-between"}>
