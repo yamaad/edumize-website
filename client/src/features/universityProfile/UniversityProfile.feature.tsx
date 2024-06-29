@@ -91,6 +91,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
         maxWidth: "100%",
         gap: 2,
         alignItems: "center",
+        px: 2,
       }}
     >
       <Box width={"100%"}>

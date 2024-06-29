@@ -100,6 +100,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
         maxWidth: "100%",
         gap: 2,
         alignItems: "center",
+        px: 2,
       }}
     >
       <Box width={"100%"}>
