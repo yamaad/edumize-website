@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Menu, MenuItem, Skeleton, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, CircularProgress, Menu, MenuItem, Paper, Skeleton, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useGetLanguageInstituteCourseFeeListQuery, useGetLanguageInstituteCourseListQuery } from "redux/institute/institute.api";
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { RootState } from "redux/store";
@@ -249,7 +249,7 @@ const ComparePanel = ({
       )}
       {selectedCourseFeeList && (
         <Stack gap={1}>
-          <Stack direction={"row"} alignItems={"end"} gap={1} pr={2} justifyContent={"space-between"}>
+          <Stack mx={{ xs: 0, md: 4 }} direction={"row"} alignItems={"end"} gap={1} pr={2} justifyContent={"space-between"}>
             <Stack direction={"row"} flexWrap={"wrap"} alignItems={"end"} gap={1}>
               <Typography variant="h4" color="content.500">
                 {t("Total Fees")}
@@ -262,110 +262,131 @@ const ComparePanel = ({
               <CurrencyMenu />
             </Stack>
           </Stack>
-          <Stack>
-            <Stack direction={"row"} justifyContent={"stretch"} px={{ xs: 0, md: 5 }} flexWrap={"nowrap"}>
-              <Stack
-                flexGrow={1}
-                border={"1px solid #9F9F9F"}
-                textAlign={"center"}
-                gap={1}
-                justifyContent={"center"}
-                borderRadius={5}
-                py={5}
-                px={{ xs: 1, lg: 5 }}
-                sx={{
-                  position: "relative",
-                  "::after": {
-                    content: '""',
-                    position: "absolute",
-                    borderRight: lang === "ar" ? "unset" : "2px solid #9F9F9F",
-                    borderBottom: lang === "ar" ? "unset" : "1px solid #9F9F9F",
-                    borderLeft: lang === "ar" ? "1px solid #9F9F9F" : "unset",
-                    borderTop: lang === "ar" ? "1px solid #9F9F9F" : "unset",
-                    top: lang === "ar" ? { xs: 0, sm: -1 } : { xs: 0, sm: 1 },
-                    clipPath: lang === "ar" ? "ellipse(130px 140px at 10% 30%)" : "unset",
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "primary.100",
-                    transform: lang === "ar" ? "skewX(225deg)" : "skewX(45deg)",
-                    borderTopLeftRadius: lang === "ar" ? "unset" : 200,
-                    zIndex: 1,
-                  },
-                }}
-              >
-                <Typography variant={isMobileScreen ? "h5" : "h2"} color={"content.600"} sx={{ whiteSpace: "nowrap", zIndex: 2 }}>
-                  {isLoading || !selectedTotalFee ? (
-                    <Skeleton />
-                  ) : (
-                    NumberLang(Math.ceil(selectedTotalFee * currencyRate), lang, currency).toLocaleString()
-                  )}
-                </Typography>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  disabled={!currentInstitute}
-                  onClick={() => setTabValue(0)}
-                  sx={{ borderRadius: 5, backgroundColor: "content.0", textTransform: "capitalize", mx: { xs: 3, sm: 5 }, zIndex: 2 }}
-                >
-                  {currentInstitute ? t("Get Details") : <CircularProgress color="secondary" />}
-                </Button>
-              </Stack>
-              <Stack
-                flexGrow={1}
-                gap={1}
-                textAlign={"center"}
-                justifyContent={"center"}
-                borderRadius={5}
-                py={5}
-                px={{ xs: 1, lg: 5 }}
-                sx={{
-                  backgroundColor: "content.0",
-                  position: "relative",
-                  "::after": {
-                    content: '""',
-                    position: "absolute",
-                    top: lang === "ar" ? 1 : 0,
-                    left: lang === "ar" ? 2 : 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "content.0",
-                    transform: "skewX(45deg)",
-                    clipPath: lang === "ar" ? "ellipse(130px 140px at 100% 100%)" : "ellipse(130px 140px at 10% 0%)",
-                    zIndex: 0,
-                  },
-                }}
-              >
-                <Typography
-                  variant={isMobileScreen ? "h5" : "h2"}
-                  color={"primary"}
-                  sx={{ whiteSpace: "nowrap", zIndex: 1, opacity: comparedTotalFee ? 1 : 0.5 }}
-                >
-                  {isLoading ? (
-                    <Skeleton />
-                  ) : comparedTotalFee ? (
-                    NumberLang(Math.ceil(comparedTotalFee * currencyRate), lang, currency).toLocaleString()
-                  ) : (
-                    t("Not Available")
-                  )}
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  disabled={!comparedInstitute}
-                  onClick={() => {
-                    window.open(
-                      `${import.meta.env.VITE_EDUMIZE_CLIENT_URL}/institutes/${comparedInstitute?.name.trim().replaceAll(" ", "-").toLowerCase()}`,
-                      "_self"
-                    );
+          <Stack gap={1} mx={{ xs: 0, md: 2 }}>
+            <Paper elevation={5} sx={{ borderRadius: 5, overflow: "hidden" }}>
+              <Stack direction={"row"} justifyContent={"stretch"} flexWrap={"nowrap"}>
+                <Stack
+                  flexGrow={1}
+                  textAlign={"center"}
+                  gap={1}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  borderRadius={5}
+                  py={5}
+                  px={{ xs: 1, lg: 5 }}
+                  sx={{
+                    position: "relative",
+                    backgroundColor: "primary.200",
+                    "::after": {
+                      content: '""',
+                      position: "absolute",
+                      top: lang === "ar" ? { xs: 0, sm: -1 } : { xs: 0, sm: 1 },
+                      clipPath: lang === "ar" ? "ellipse(130px 140px at 10% 30%)" : "unset",
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "primary.200",
+                      transform: lang === "ar" ? "skewX(225deg)" : "skewX(45deg)",
+                      borderTopLeftRadius: lang === "ar" ? "unset" : 200,
+                      zIndex: 1,
+                    },
                   }}
-                  sx={{ borderRadius: 5, textTransform: "capitalize", color: "content.0", mx: { xs: 3, sm: 5 }, zIndex: 1 }}
                 >
-                  {comparedInstitute ? t("Visit Page") : <CircularProgress color="secondary" />}
-                </Button>
+                  <Typography variant={isMobileScreen ? "h5" : "h2"} color={"content.600"} sx={{ whiteSpace: "nowrap", zIndex: 2 }}>
+                    {isLoading || !selectedTotalFee ? (
+                      <Skeleton />
+                    ) : (
+                      NumberLang(Math.ceil(selectedTotalFee * currencyRate), lang, currency).toLocaleString()
+                    )}
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    disabled={!currentInstitute}
+                    onClick={() => setTabValue(0)}
+                    sx={{
+                      whiteSpace: "nowrap",
+                      borderRadius: 5,
+                      backgroundColor: "content.0",
+                      width: "50%",
+                      minWidth: "fit-content",
+                      textTransform: "capitalize",
+                      mx: { xs: 3, sm: 5 },
+                      zIndex: 2,
+                    }}
+                  >
+                    {currentInstitute ? t("Get Details") : <CircularProgress color="secondary" />}
+                  </Button>
+                </Stack>
+
+                <Stack
+                  flexGrow={1}
+                  gap={1}
+                  textAlign={"center"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  borderRadius={5}
+                  py={5}
+                  px={{ xs: 1, lg: 5 }}
+                  sx={{
+                    backgroundColor: "content.0",
+                    position: "relative",
+                    "::after": {
+                      content: '""',
+                      position: "absolute",
+                      top: lang === "ar" ? 1 : 0,
+                      left: lang === "ar" ? 2 : 0,
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "content.0",
+                      transform: "skewX(45deg)",
+                      clipPath: lang === "ar" ? "ellipse(130px 140px at 100% 100%)" : "ellipse(130px 140px at 10% 0%)",
+                      zIndex: 0,
+                    },
+                  }}
+                >
+                  <Typography
+                    variant={isMobileScreen ? "h5" : "h2"}
+                    color={"primary"}
+                    sx={{ whiteSpace: "nowrap", zIndex: 1, opacity: comparedTotalFee ? 1 : 0.5 }}
+                  >
+                    {isLoading ? (
+                      <Skeleton />
+                    ) : comparedTotalFee ? (
+                      NumberLang(Math.ceil(comparedTotalFee * currencyRate), lang, currency).toLocaleString()
+                    ) : (
+                      t("Not Available")
+                    )}
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    disabled={!comparedInstitute}
+                    onClick={() => {
+                      window.open(
+                        `${import.meta.env.VITE_EDUMIZE_CLIENT_URL}/institutes/${comparedInstitute?.name.trim().replaceAll(" ", "-").toLowerCase()}`,
+                        "_self"
+                      );
+                    }}
+                    sx={{
+                      borderRadius: 5,
+                      whiteSpace: "nowrap",
+
+                      textTransform: "capitalize",
+                      color: "content.0",
+                      width: "50%",
+                      minWidth: "fit-content",
+
+                      mx: { xs: 3, sm: 5 },
+                      zIndex: 1,
+                    }}
+                  >
+                    {comparedInstitute ? t("Visit Page") : <CircularProgress color="secondary" />}
+                  </Button>
+                </Stack>
               </Stack>
-            </Stack>
-            <Typography variant="bodyLightXS" color={"primary.900"}>
+            </Paper>
+            <Typography variant="bodyLightXS" color={"primary.900"} mx={3}>
               {t("Fees Presented Do Not Include Edumize Discount")}
             </Typography>
           </Stack>

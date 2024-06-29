@@ -13,6 +13,12 @@ export default defineConfig({
         entryFileNames: "main.js",
       },
     },
+    terserOptions: {
+      compress: {
+        // Do not drop console statements
+        drop_console: true,
+      },
+    },
   },
   resolve: {
     alias: {

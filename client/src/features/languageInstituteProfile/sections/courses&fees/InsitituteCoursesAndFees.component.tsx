@@ -58,7 +58,7 @@ const InstitutesCoursesAndFees = ({}: InstitutesCoursesAndFees) => {
           {t("Customize You Study Package")}
         </Typography>
         <Typography variant="bodyNormal" color={"content.400"}>
-          bla bla bla blabla bla bla bla bla bla bla blabla bla bla bla bla bla bla blabla bla bla blabla bla bla
+
         </Typography>
       </Stack>
       <Stack gap={1}>

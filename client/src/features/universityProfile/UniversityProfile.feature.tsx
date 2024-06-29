@@ -55,11 +55,6 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
   // triggers
   //-------------
   useEffect(() => {
-    return () => {
-      setCourses([]);
-    };
-  }, []);
-  useEffect(() => {
     setCourses([]);
     getCourseList(queryBody);
   }, [debouncedSearch, sort, studyLevelFilter, studyFieldFilter, studyModeFilter]);

@@ -58,11 +58,13 @@ webFlowEmbedders.map(obj => {
       }, {});
       const lang = elementId.getAttribute("lang");
       ReactDOM.createRoot(elementId).render(
-        <Provider store={store}>
-          <ThemeProvider theme={edumizeTheme}>
-            <LangContactProvider lang={lang || "ar"}>{component(props)}</LangContactProvider>
-          </ThemeProvider>
-        </Provider>
+        <I18nextProvider i18n={i18n}>
+          <Provider store={store}>
+            <ThemeProvider theme={edumizeTheme}>
+              <LangContactProvider lang={lang || "en"}>{component(props)}</LangContactProvider>
+            </ThemeProvider>
+          </Provider>
+        </I18nextProvider>
       );
     }
   } catch (error) {
