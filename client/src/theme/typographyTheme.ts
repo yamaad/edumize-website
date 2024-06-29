@@ -37,7 +37,8 @@ declare module "@mui/material/Typography" {
 }
 
 const typography: Partial<ThemeOptions["typography"]> = {
-  fontFamily: "Poppins, Arial, sans-serif",
+  fontFamily: "Tajawal",
+  textAlign: "center",
   h1: {
     fontWeight: 700,
     fontSize: "2rem",

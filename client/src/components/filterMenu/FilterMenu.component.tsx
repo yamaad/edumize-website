@@ -1,7 +1,9 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AirTableQueryBody } from "../../redux/course/airtable.model";
 import { useGetFilterOptionListMutation } from "redux/dynamicFilters/filterApi";
+import { useTranslation } from "react-i18next";
+import { LangContext } from "context/langContext";
 
 //-------------
 // interfaces
@@ -25,7 +27,8 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
   // hooks
   //-------------
   const [getFilterOptionList, { data, isLoading, isSuccess }] = useGetFilterOptionListMutation();
-
+  const { t } = useTranslation();
+  const lang = useContext(LangContext);
   //-------------
   // constants
   //-------------
@@ -72,19 +75,38 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
         ".MuiInputLabel-shrink": { top: "3px" },
       }}
     >
-      <InputLabel sx={{ fontSize: "12px", top: "-7px" }}>{label}</InputLabel>
+      <InputLabel
+        sx={{
+          fontSize: "12px",
+          top: "-7px",
+          right: lang === "ar" ? 30 : "unset",
+          left: lang === "ar" ? "unset" : 0,
+          "&$focused": {
+            right: lang === "ar" ? 20 : "unset",
+            left: lang === "ar" ? "unset" : 0,
+          },
+        }}
+      >
+        {label}
+      </InputLabel>
       <Select
         sx={{
           borderRadius: 6,
-          backgroundColor: "#eff4f7",
+          backgroundColor: "primary.100",
           fontSize: "12px",
           ".MuiInputBase-input": { p: 1 },
+          ".MuiSelect-icon": {
+            right: lang === "ar" ? "unset" : 7,
+            left: lang === "ar" ? 7 : "unset",
+          },
+          "& legend": { textAlign: lang === "ar" ? "right" : "left", mr: "18px" },
         }}
-        value={isLoading ? "loading..." : filterList.length <= 0 ? "no option available" : filterValue}
+        value={isLoading ? "loading..." : filterList.length <= 0 ? t("no option available") : filterValue}
         disabled={filterList.length <= 0 || isLoading}
         onChange={handleChange}
         fullWidth
         label={label}
+        MenuProps={{ sx: { direction: "ltr", maxHeight: "400px" } }}
       >
         <MenuItem value="">
           <em>None</em>
@@ -96,7 +118,9 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
             </MenuItem>
           ))
         ) : (
-          <MenuItem value={isLoading ? "loading..." : "no option available"}>{isLoading ? "loading..." : "no option available"}</MenuItem>
+          <MenuItem value={isLoading ? t("Loading") + "..." : t("no option available")}>
+            {isLoading ? t("Loading") + "..." : t("no option available")}
+          </MenuItem>
         )}
       </Select>
     </FormControl>

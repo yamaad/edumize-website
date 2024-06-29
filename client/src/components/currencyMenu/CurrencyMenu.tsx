@@ -55,11 +55,11 @@ const CurrencyMenu = ({ selectedCurrency, setSelectedCurrency }: ICurrencyMenuPr
       onChange={handleCurrencyChange}
       onClick={() => setOpenCurrencySelect(prev => !prev)}
       color="primary"
-      sx={{ maxWidth: "fit-content" }}
+      sx={{ maxWidth: "fit-content", direction: "ltr" }}
       InputProps={{
         startAdornment: (
           <InputAdornment disablePointerEvents position="start">
-            <CurrencyExchangeIcon color="secondary" sx={{ fontSize: "16px" }} />
+            <CurrencyExchangeIcon color="primary" sx={{ fontSize: "16px" }} />
           </InputAdornment>
         ),
       }}
@@ -71,7 +71,7 @@ const CurrencyMenu = ({ selectedCurrency, setSelectedCurrency }: ICurrencyMenuPr
           currencySelectRef.current?.classList.remove("Mui-focused");
         },
         MenuProps: {
-          sx: { maxHeight: "450px" },
+          sx: { maxHeight: "450px", direction: "ltr" },
         },
         sx: {
           borderRadius: 6,

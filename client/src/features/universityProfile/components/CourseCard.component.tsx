@@ -34,16 +34,16 @@ const UniversityCourseCard = ({ name, fullCost, duration, studyMode, currencyRat
     : "";
   return (
     <Paper
-      elevation={3}
+      elevation={0}
       sx={{
         display: "grid",
         gridTemplateColumns: " 3fr 1fr",
         gridTemplateRows: "auto",
         justifyContent: "space-between",
         backdropFilter: "blur(20px)",
-        backgroundColor: "rgba(230, 230, 230, .8)",
-        border: "1px solid #005360",
-        borderRadius: 2.5,
+        backgroundColor: "primary.100",
+
+        borderRadius: 5,
         textAlign: "center",
         p: 2,
         pl: 1,
@@ -51,6 +51,10 @@ const UniversityCourseCard = ({ name, fullCost, duration, studyMode, currencyRat
         justifyItems: "stretch",
         rowGap: 0.5,
         columnGap: 1,
+        boxShadow: `
+        -5px -5px 10px 0px rgba(255, 255, 255, 0.8), /* White shadow on top and left */
+        5px 5px 10px 0px rgba(0, 0, 0, 0.3)         /* Black shadow on bottom and right */
+      `,
       }}
     >
       <Box sx={{ textAlign: "start" }}>
