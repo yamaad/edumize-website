@@ -143,7 +143,7 @@ const UniversityProfile = ({ universityId }: IUniversityProfile) => {
 
         {isSuccess && courses.length === 0 && (
           <Typography variant="h3" sx={{ alignSelf: "center" }}>
-            No Matching Records
+            {t("No Matching Records")}
           </Typography>
         )}
         {courses.map((value: CourseModel, index: number) => (

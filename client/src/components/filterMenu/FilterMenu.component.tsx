@@ -2,6 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@m
 import { useEffect, useState } from "react";
 import { AirTableQueryBody } from "../../redux/course/airtable.model";
 import { useGetFilterOptionListMutation } from "redux/dynamicFilters/filterApi";
+import { useTranslation } from "react-i18next";
 
 //-------------
 // interfaces
@@ -25,7 +26,7 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
   // hooks
   //-------------
   const [getFilterOptionList, { data, isLoading, isSuccess }] = useGetFilterOptionListMutation();
-
+  const { t } = useTranslation();
   //-------------
   // constants
   //-------------
@@ -76,11 +77,11 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
       <Select
         sx={{
           borderRadius: 6,
-          backgroundColor: "#eff4f7",
+          backgroundColor: "primary.100",
           fontSize: "12px",
           ".MuiInputBase-input": { p: 1 },
         }}
-        value={isLoading ? "loading..." : filterList.length <= 0 ? "no option available" : filterValue}
+        value={isLoading ? "loading..." : filterList.length <= 0 ? t("no option available") : filterValue}
         disabled={filterList.length <= 0 || isLoading}
         onChange={handleChange}
         fullWidth
@@ -97,7 +98,9 @@ const FilterMenu = ({ fieldName, label, onFilter }: IFilterMenuProps) => {
             </MenuItem>
           ))
         ) : (
-          <MenuItem value={isLoading ? "loading..." : "no option available"}>{isLoading ? "loading..." : "no option available"}</MenuItem>
+          <MenuItem value={isLoading ? t("Loading") + "..." : t("no option available")}>
+            {isLoading ? t("Loading") + "..." : t("no option available")}
+          </MenuItem>
         )}
       </Select>
     </FormControl>

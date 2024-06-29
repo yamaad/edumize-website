@@ -37,16 +37,17 @@ const ProgramCourseCard = ({ name, fullCost, duration, studyMode, typeImage, log
     : "";
   return (
     <Paper
-      elevation={3}
+      elevation={0}
       sx={{
         display: "grid",
         gridTemplateColumns: " auto 5fr 2fr auto",
         gridTemplateRows: "auto auto",
         justifyContent: "space-between",
         backdropFilter: "blur(20px)",
-        backgroundColor: "rgba(230, 230, 230, .8)",
-        border: "1px solid #ee8c00",
-        borderRadius: 2.5,
+        backgroundColor: "primary.100",
+
+        // border: "1px solid #ee8c00",
+        borderRadius: 5,
         textAlign: "center",
         pt: 1,
         pb: 0.5,
@@ -55,6 +56,10 @@ const ProgramCourseCard = ({ name, fullCost, duration, studyMode, typeImage, log
         justifyItems: "stretch",
         rowGap: 0,
         columnGap: 0.5,
+        boxShadow: `
+          -5px -5px 10px 0px rgba(255, 255, 255, 0.8), /* White shadow on top and left */
+          5px 5px 10px 0px rgba(0, 0, 0, 0.3)         /* Black shadow on bottom and right */
+        `,
       }}
     >
       <Box

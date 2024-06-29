@@ -134,7 +134,7 @@ const ProgramProfile = ({ programId }: IProgramProfile) => {
             ))}
         {isSuccess && courses.length === 0 && (
           <Typography variant="h3" sx={{ alignSelf: "center" }}>
-            No Matching Records
+            {t("No Matching Records")}
           </Typography>
         )}
         {courses.map((value: IProgramCourseCard, index: number) => (

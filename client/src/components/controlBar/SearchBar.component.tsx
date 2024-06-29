@@ -64,7 +64,7 @@ const SearchBar = ({ sortProps, onSearch }: ISearchBarProps) => {
   };
 
   return (
-    <Paper component="form" sx={{ px: 2, borderRadius: 6, display: "flex", alignItems: "center", backgroundColor: "#eff4f7" }}>
+    <Paper component="form" sx={{ px: 2, borderRadius: 6, display: "flex", alignItems: "center", backgroundColor: "primary.100" }}>
       <InputBase sx={{ ml: 1, flex: 1, fontSize: "12px" }} placeholder={`${t("Course Name")} ...`} onChange={onSearch} />
       <CurrencyMenu />
       <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
