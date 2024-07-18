@@ -1,24 +1,19 @@
-import { Box, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const ComingSoonOverlay = () => {
+  const { t } = useTranslation();
+
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 1300,
-        color: "#fff",
-      }}
+    <Stack
+      alignItems={"center"}
+      justifyContent={"center"}
+      sx={{ borderRadius: 5, height: 200, background: "radial-gradient(circle, transparent 0%, rgba(32,79,88,0.4) 100%) " }}
     >
-      <Typography variant="h3">Coming Soon</Typography>
-    </Box>
+      <Typography variant="h2" color={"primary.900"} textAlign={"center"}>
+        {t("Coming Soon")}!
+      </Typography>
+    </Stack>
   );
 };
 
