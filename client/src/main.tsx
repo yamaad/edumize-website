@@ -12,6 +12,7 @@ import LanguageInstitute from "features/languageInstituteProfile/LanguageInstitu
 import i18n from "./i18n";
 import { I18nextProvider } from "react-i18next";
 import { LangContactProvider } from "context/langContext.tsx";
+import ComingSoonOverlay from "components/comingSoonOverlay/ComingSoonOverlay.tsx";
 
 // For WebFlow Embedding
 const webFlowEmbedders = [
@@ -44,6 +45,11 @@ const webFlowEmbedders = [
         attribute: "language-institute-id",
       },
     ],
+  },
+  {
+    id: "catalogue-li",
+    component: (_: any) => <ComingSoonOverlay />,
+    parameters: [],
   },
 ];
 
