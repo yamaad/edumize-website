@@ -16,6 +16,10 @@ class LeadRepoODM {
   async updateLeadEmailEntryNumber(email: string): Promise<ILeadODM | null> {
     return await LeadODM.findOneAndUpdate({ email }, { $inc: { numberOfEntry: 1 } }, { new: true });
   }
+
+  async findAll(): Promise<ILeadODM[]> {
+    return LeadODM.find().exec();
+  }
 }
 
 export default new LeadRepoODM();

@@ -8,12 +8,16 @@ class LeadService {
     if (existingLead) {
       if (existingLead.emailStatus !== EmailStatuses.ERROR && existingLead.emailStatus !== EmailStatuses.UNKNOWN)
         leadRepoODM.updateEmailStatus(existingLead);
-        leadRepoODM.updateLeadEmailEntryNumber(email);
+      leadRepoODM.updateLeadEmailEntryNumber(email);
       return existingLead;
     }
     const emailValidation = await validateEmail(email);
     const newLead: ILeadODM = { email, emailStatus: emailValidation.email_status || EmailStatuses.ERROR, numberOfEntry: 1 };
     return leadRepoODM.createOne(newLead);
+  }
+
+  async getAllLeads(): Promise<ILeadODM[]> {
+    return leadRepoODM.findAll();
   }
 }
 

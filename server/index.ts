@@ -23,7 +23,6 @@ app.use(cors());
 // use routers
 app.use("/api/currency", currencyRouter);
 app.use("/api/lead", express.json(), leadRouter);
-
 // serve static file
 app.use(express.static(__dirname));
 app.get("/client", (req, res) => {
