@@ -1,6 +1,6 @@
 export const PageRoute = {
   home: "/",
-  university: "/universities",
-  program: "/programmes",
-  languageInstitute: "/institutes",
+  university: "/university",
+  program: "/program",
+  languageInstitute: "/language-institute",
 };
