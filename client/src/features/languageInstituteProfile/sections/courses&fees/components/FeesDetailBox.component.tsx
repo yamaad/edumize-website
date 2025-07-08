@@ -124,12 +124,11 @@ const FeesDetailBox = ({ currentInstitute, selectedCourse, selectedCourseFee, se
         }}
         onClick={() => {
           const encodedMessage = encodeURIComponent(
-            `Package Request For:\n*${currentInstitute?.name}*\ncourse: *${selectedCourse?.name}*\nfor *${
-              selectedCourseFee?.duration
-            }* months\nTotal fee: *RM ${totalFee.toLocaleString()}*${isEdumizePickup ? "\n`includes Edumize Pick up`" : ""}${
-              isEdumizeDiscount ? "\n`includes Edumize Additional Discount`" : ""
-            }`
-          );
+  `Hello Edumize,\n\nWe are interested in the following package:\n\nInstitute: 
+  *${currentInstitute?.name}*\nCourse: *${selectedCourse?.name}*\nDuration: 
+  *${selectedCourseFee?.duration}* months\nTotal Fee: *RM ${totalFee.toLocaleString()}*${isEdumizePickup ? "\n`Includes Edumize Pick up`" : ""}${isEdumizeDiscount ? "\n`Includes Edumize Additional Discount`" : ""}`
+);
+
 
           window.open(`${import.meta.env.VITE_EDUMIZE_WHATSAPP_URL}${encodedMessage}`, "_self");
         }}
